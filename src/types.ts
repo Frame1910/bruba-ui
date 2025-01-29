@@ -38,3 +38,22 @@ export interface UserInvite {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface InviteWithUsers {
+  code: string;
+  allowPlusOne: boolean;
+  firstSeenAt: string;
+  lastSeenAt: string;
+  createdAt: string;
+  updatedAt: string;
+  UserInvite: UserInvite[];
+}
+
+export interface UserInvite {
+  userId: string;
+  inviteCode: string;
+  isPlusOne: boolean;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+}
