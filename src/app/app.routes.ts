@@ -1,3 +1,13 @@
-import { Routes } from '@angular/router';
+import { Route } from '@angular/router';
+import { InviteSigninComponentComponent } from './invite-signin/invite-signin.component';
 
-export const routes: Routes = [];
+export const appRoutes: Route[] = [
+  {
+    path: '',
+    component: InviteSigninComponentComponent,
+  },
+  {
+    path: 'invite/:code',
+    component: InviteSigninComponentComponent,
+  },
+];
