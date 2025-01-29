@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
 import { Invite } from '../types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  baseUrl = environment.apiUrl;
+  baseUrl = 'http://localhost:3000/api';
   constructor(private http: HttpClient) {}
 
   getInviteByCode(code: string) {

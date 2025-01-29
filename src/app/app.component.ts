@@ -1,9 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { environment } from '../environments/environment';
+import { ApiService } from './api.service';
 import { Invite } from '../types';
 
 @Component({
@@ -14,7 +13,6 @@ import { Invite } from '../types';
 })
 export class AppComponent implements OnInit {
   title = 'ui';
-  environment: string = environment.production ? 'production' : 'development';
 
   invite$: Observable<Invite> | undefined;
 

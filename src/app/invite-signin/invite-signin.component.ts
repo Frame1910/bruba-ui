@@ -1,26 +1,30 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from '../api.service';
+
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { RouterLink } from '@angular/router';
 import { Invite } from '../../types';
 
 @Component({
   selector: 'app-invite-signin.component',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
   templateUrl: './invite-signin.component.html',
   styleUrl: './invite-signin.component.scss',
 })
 export class InviteSigninComponentComponent {
-  @Input() code: string | undefined;
-
+  codeControl = new FormControl<string>('', { nonNullable: true });
   invite$: Observable<Invite> | undefined;
-
-  constructor(private api: ApiService) {}
-
-  ngOnInit(): void {
-    if (!this.code) {
-      return;
-    }
-    this.invite$ = this.api.getInviteByCode(this.code);
-  }
 }

@@ -1,0 +1,5 @@
+@if (invite$ | async; as invite) {
+<p>{{ invite.createdAt | date : 'medium' }}</p>
+} @else {
+<p>Nothing here</p>
+}
