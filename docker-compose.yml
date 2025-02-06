@@ -1,36 +1,6 @@
 services:
-  database:
-    image: postgres:15
-    container_name: postgres_db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: naRBpy6Lp77w
-      POSTGRES_DB: bruba
-    ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-  backend:
-    image: bruba-api:latest
-    container_name: nestjs_app
-    depends_on:
-      - database
-    environment:
-      DATABASE_URL: postgresql://postgres:naRBpy6Lp77w@database:5432/bruba?schema=public
-      NODE_ENV: production
-    ports:
-      - "3000:3000"
-    command: [ "sh", "-c", "npx prisma generate && npx prisma migrate deploy && node dist/src/main" ]
-
   frontend:
     image: bruba-ui:latest
     container_name: angular_app
-    depends_on:
-      - backend
     ports:
       - "4200:80"
-
-volumes:
-  db_data:
