@@ -1,26 +1,28 @@
-# Stage 1: Build Angular App
-FROM node:22.12 AS builder
+# Stage 1: Compile and Build angular codebase
 
-WORKDIR /app
+# Use official node image as the base image
+FROM node:22.12-alpine AS build
 
-# Install dependencies
-COPY package.json package-lock.json ./
+# Set the working directory
+WORKDIR /usr/local/app
+
+# Add the source code to app
+COPY ./ /usr/local/app/
+
+# Install all the dependencies
 RUN npm ci
 
-# Copy the full source code
-COPY . .
-
-# Build Angular for production (output goes to dist/<app_name>/)
+# Generate the build of the application
 RUN npm run build --prod
 
-# Stage 2: Serve with Nginx
-FROM nginx:latest AS runner
 
-# Copy build output to Nginx
-COPY --from=builder /app/dist/bruba-ui /usr/share/nginx/html
+# Stage 2: Serve app with nginx server
 
-# Copy custom Nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Use official nginx image as the base image
+FROM nginx:latest
 
-# Expose port 80 for serving the frontend
+# Copy the build output to replace the default nginx contents.
+COPY --from=build /usr/local/app/dist/bruba-ui/browser /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# Expose port 80
 EXPOSE 80
