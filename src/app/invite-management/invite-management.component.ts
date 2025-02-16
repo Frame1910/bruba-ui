@@ -45,19 +45,17 @@ export class InviteManagementComponentComponent implements OnInit {
   firstFormGroup = this._formBuilder.group({});
 
   ngOnInit() {
-    if (this.invite$){
     this.invite$?.subscribe(invite => {
       const group: { [key: string]: any } = {};
       invite.UserInvite.forEach((userInvite) => {
         console.log(userInvite.user.firstName);
         group[`${userInvite.user.firstName}y_n`] = ['', Validators.required];
       })
-      if (invite.allowPlusOne){
+      if (invite.allowPlusOne) {
         group['plusOne'] = ['', Validators.required];
       }
       this.firstFormGroup = this._formBuilder.group(group);
     });
-  }
   }
 
   secondFormGroup = this._formBuilder.group({
