@@ -1,7 +1,7 @@
 import { User, UserInvite } from './../../types';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { InviteWithUsers } from '../../types';
 import { ApiService } from '../api.service';
@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
   templateUrl: './invite-management.component.html',
   styleUrl: './invite-management.component.scss',
 })
-export class InviteManagementComponentComponent {
+export class InviteManagementComponentComponent implements OnInit {
   private api = inject(ApiService);
   private router = inject(Router);
   @Input() set code(code: string) {
@@ -42,10 +42,24 @@ export class InviteManagementComponentComponent {
   }
   invite$: Observable<InviteWithUsers> | undefined;
   private _formBuilder = inject(FormBuilder);
+  firstFormGroup = this._formBuilder.group({});
 
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: [''],
-  });
+  ngOnInit() {
+    if (this.invite$){
+    this.invite$?.subscribe(invite => {
+      const group: { [key: string]: any } = {};
+      invite.UserInvite.forEach((userInvite) => {
+        console.log(userInvite.user.firstName);
+        group[`${userInvite.user.firstName}y_n`] = ['', Validators.required];
+      })
+      if (invite.allowPlusOne){
+        group['plusOne'] = ['', Validators.required];
+      }
+      this.firstFormGroup = this._formBuilder.group(group);
+    });
+  }
+  }
+
   secondFormGroup = this._formBuilder.group({
     secondCtrl1: ['', Validators.required],
     secondCtrl2: ['', Validators.required],
@@ -59,9 +73,14 @@ export class InviteManagementComponentComponent {
   }
 
   acceptFlow(): void { //TODO: potentially use this to redirect if the user does not accept the invite
-    if (this.firstFormGroup.get('firstCtrl')?.value == 'false') {
+    // if (this.firstFormGroup.get('firstCtrl')?.value == 'false') {
       // this.router.navigate(['/']);
-      return;
-    }
+      console.log(this.firstFormGroup.get('Paigey_n')?.value);
+      console.log(this.firstFormGroup.get('Eltony_n')?.value);
+      console.log(this.firstFormGroup.get('Adhamy_n')?.value);
+      console.log(this.firstFormGroup.get('Rexy_n')?.value);
+      console.log(this.firstFormGroup.get('plusOne')?.value);
+      // return;
+    // }
   }
 }

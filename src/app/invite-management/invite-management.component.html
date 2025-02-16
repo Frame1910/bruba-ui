@@ -11,7 +11,7 @@
             <div class="card-container">
               <mat-card>
               <mat-card-content class="accept-card">
-                <mat-chip-listbox class="mat-mdc-chip-set" formControlName="firstCtrl" required>
+                <mat-chip-listbox class="mat-mdc-chip-set" formControlName={{user.user.firstName}}y_n required>
                 <div class="card-content">
                   <span>{{user.user.firstName}}?</span>
                   <span>
@@ -28,9 +28,9 @@
           <div class="card-container">
             <mat-card>
             <mat-card-content class="accept-card">
-              <mat-chip-listbox class="mat-mdc-chip-set" formControlName="firstCtrl" required>
+              <mat-chip-listbox class="mat-mdc-chip-set" formControlName="plusOne" required>
               <div class="card-content">
-                <span>Plus</span>
+                <span>Plus One?</span>
                 <span>
                 <mat-chip-option value=True>Yes</mat-chip-option>
                 <mat-chip-option value=False>No</mat-chip-option>
