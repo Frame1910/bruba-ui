@@ -1,47 +1,48 @@
-<!-- <main>
-  @if (invite$ | async; as invite) {
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Invite {{ invite.code }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-list>
-        @for (user of invite.UserInvite; track user.userId) {
-        <mat-list-item>
-          <mat-icon matListItemIcon>person</mat-icon>
-          <div matListItemTitle>Name</div>
-          <div matListItemLine>
-            {{ user.user.firstName }} {{ user.user.lastName }}
-          </div>
-        </mat-list-item>
-        }
-      </mat-list>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>Accept</button>
-      <button mat-button>Reject</button>
-    </mat-card-actions>
-  </mat-card>
-  } @else {
-  <p>Nothing here</p>
-  }
-</main> -->
-
 @if (invite$ | async; as invite) {
 <mat-vertical-stepper [linear]=true #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Hey! @for (user of invite.UserInvite; track user.userId) {<span>{{user.user.firstName}}</span><span> and </span>}, <span>do you want to celebrate with us?</span> </ng-template>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-      </mat-form-field>
-      <mat-chip-listbox class="mat-mdc-chip-set">
-          <mat-chip-option>YES!</mat-chip-option>
-          <mat-chip-option>no</mat-chip-option>
-      </mat-chip-listbox>
-      <div>
-        <button mat-button matStepperNext>Next</button>
+      <ng-template matStepLabel>
+        <div class="step-label">
+          Hey {{ labelConstructor(invite) }} do you want to celebrate with us?
+        </div>
+      </ng-template>
+        @for (user of invite.UserInvite; track user.userId) {
+            <div class="card-container">
+              <mat-card>
+              <mat-card-content class="accept-card">
+                <mat-chip-listbox class="mat-mdc-chip-set" formControlName="firstCtrl" required>
+                <div class="card-content">
+                  <span>{{user.user.firstName}}?</span>
+                  <span>
+                  <mat-chip-option value=True>Yes</mat-chip-option>
+                  <mat-chip-option value=False>No</mat-chip-option>
+                  </span>
+                </div>
+                </mat-chip-listbox>
+              </mat-card-content>
+              </mat-card>
+            </div>
+        }
+        @if (invite.allowPlusOne){
+          <div class="card-container">
+            <mat-card>
+            <mat-card-content class="accept-card">
+              <mat-chip-listbox class="mat-mdc-chip-set" formControlName="firstCtrl" required>
+              <div class="card-content">
+                <span>Plus</span>
+                <span>
+                <mat-chip-option value=True>Yes</mat-chip-option>
+                <mat-chip-option value=False>No</mat-chip-option>
+                </span>
+              </div>
+              </mat-chip-listbox>
+            </mat-card-content>
+            </mat-card>
+          </div>
+        }
+      <div class="button-container">
+        <button mat-button matStepperNext (click)="acceptFlow()">Next</button>
       </div>
     </form>
   </mat-step>
@@ -49,10 +50,20 @@
     <form [formGroup]="secondFormGroup">
       <mat-form-field>
         <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+        <input matInput formControlName="secondCtrl1" placeholder=""
               required>
       </mat-form-field>
-      <div>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="secondCtrl2" placeholder=""
+              required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="secondCtrl3" placeholder=""
+              required>
+      </mat-form-field>
+      <div class="button-container">
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
@@ -61,7 +72,7 @@
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
-    <div>
+    <div class="button-container">
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>

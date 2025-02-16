@@ -1,0 +1,21 @@
+.step-label{
+  white-space: normal;
+}
+
+.card-container{
+  padding-bottom: 10px;
+}
+
+.card-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
