@@ -51,7 +51,6 @@ export class InviteManagementComponentComponent {
     secondCtrl2: ['', Validators.required],
     secondCtrl3: ['', Validators.required],
   });
-  isLinear = false;
 
   labelConstructor(Invite: InviteWithUsers) {
     const userNames = Invite.UserInvite.map(userInvite => userInvite.user.firstName);
