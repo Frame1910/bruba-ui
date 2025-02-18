@@ -45,17 +45,19 @@ export class InviteManagementComponentComponent implements OnInit {
   firstFormGroup = this._formBuilder.group({});
 
   ngOnInit() {
-    this.invite$?.subscribe(invite => {
-      const group: { [key: string]: any } = {};
-      invite.UserInvite.forEach((userInvite) => {
-        console.log(userInvite.user.firstName);
-        group[`${userInvite.user.firstName}y_n`] = ['', Validators.required];
-      })
-      if (invite.allowPlusOne) {
-        group['plusOne'] = ['', Validators.required];
-      }
-      this.firstFormGroup = this._formBuilder.group(group);
-    });
+    if (this.invite$){
+      this.invite$.subscribe(invite => {
+        const group: { [key: string]: any } = {};
+        invite.UserInvite.forEach((userInvite) => {
+          console.log(userInvite.user.firstName);
+          group[`${userInvite.user.firstName}y_n`] = ['', Validators.required];
+        })
+        if (invite.allowPlusOne) {
+          group['plusOne'] = ['', Validators.required];
+        }
+        this.firstFormGroup = this._formBuilder.group(group);
+      });
+    }
   }
 
   secondFormGroup = this._formBuilder.group({
@@ -70,15 +72,15 @@ export class InviteManagementComponentComponent implements OnInit {
     return label;
   }
 
-  acceptFlow(): void { //TODO: potentially use this to redirect if the user does not accept the invite
+  //TODO: potentially use this to redirect if the user does not accept the invite
+  acceptFlow() {
     // if (this.firstFormGroup.get('firstCtrl')?.value == 'false') {
-      // this.router.navigate(['/']);
-      console.log(this.firstFormGroup.get('Paigey_n')?.value);
-      console.log(this.firstFormGroup.get('Eltony_n')?.value);
-      console.log(this.firstFormGroup.get('Adhamy_n')?.value);
-      console.log(this.firstFormGroup.get('Rexy_n')?.value);
-      console.log(this.firstFormGroup.get('plusOne')?.value);
-      // return;
+    //   this.router.navigate(['/']);
+    //   return;
     // }
+    for (let user in this.firstFormGroup.controls) {
+      console.log(user);
+      console.log(this.firstFormGroup.get(user)?.value);
+    }
   }
 }
