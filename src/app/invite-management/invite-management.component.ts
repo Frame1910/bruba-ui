@@ -10,8 +10,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule} from '@angular/material/form-field';
+import {
+  FormBuilder,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+  FormGroup,
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { Router } from '@angular/router';
@@ -41,17 +47,22 @@ export class InviteManagementComponentComponent implements OnInit {
     this.invite$ = this.api.getInvitees(code);
   }
   invite$: Observable<InviteWithUsers> | undefined;
+  invite: InviteWithUsers | undefined;
   private _formBuilder = inject(FormBuilder);
-  firstFormGroup = this._formBuilder.group({});
+  firstFormGroup: FormGroup | undefined;
+  welcomeMessage: string | undefined;
 
   ngOnInit() {
-    if (this.invite$){
-      this.invite$.subscribe(invite => {
+    if (this.invite$) {
+      this.invite$.subscribe((invite) => {
+        this.invite = invite;
+        this.welcomeMessage = this.labelConstructor(invite);
         const group: { [key: string]: any } = {};
-        invite.UserInvite.forEach((userInvite) => {
+        for (let index = 0; index < invite.UserInvite.length; index++) {
+          const userInvite = invite.UserInvite[index];
           console.log(userInvite.user.firstName);
           group[`${userInvite.user.firstName}y_n`] = ['', Validators.required];
-        })
+        }
         if (invite.allowPlusOne) {
           group['plusOne'] = ['', Validators.required];
         }
@@ -67,7 +78,9 @@ export class InviteManagementComponentComponent implements OnInit {
   });
 
   labelConstructor(Invite: InviteWithUsers) {
-    const userNames = Invite.UserInvite.map(userInvite => userInvite.user.firstName);
+    const userNames = Invite.UserInvite.map(
+      (userInvite) => userInvite.user.firstName
+    );
     const label = userNames.join(' and ') + ',';
     return label;
   }
@@ -78,9 +91,9 @@ export class InviteManagementComponentComponent implements OnInit {
     //   this.router.navigate(['/']);
     //   return;
     // }
-    for (let user in this.firstFormGroup.controls) {
+    for (let user in this.firstFormGroup!.controls) {
       console.log(user);
-      console.log(this.firstFormGroup.get(user)?.value);
+      console.log(this.firstFormGroup!.get(user)?.value);
     }
   }
 }
