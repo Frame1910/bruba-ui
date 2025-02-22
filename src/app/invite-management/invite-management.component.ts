@@ -118,6 +118,7 @@ export class InviteManagementComponentComponent implements OnInit {
       && this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')) {
       this.router.navigate(['/']);
       return;
+      //TODO: Call API to update invite status to declined
     }
 
     for (let user in this.inviteAcceptFormGroup!.controls) {
