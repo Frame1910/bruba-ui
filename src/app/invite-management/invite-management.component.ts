@@ -72,22 +72,24 @@ export class InviteManagementComponentComponent implements OnInit {
   }
 
   generateAdditionalInfoFormGroup(){
-    const acceptedUsersGroup: { [key: string]: any } = {};
-    for (let user in this.inviteAcceptFormGroup!.controls) {
-      if (this.inviteAcceptFormGroup!.get(user)?.value == 'True') {
-        acceptedUsersGroup[`${user}_email`] = ['', Validators.required];
-        acceptedUsersGroup[`${user}_dietary`] = [''];
-        acceptedUsersGroup[`${user}_allergies`] = [''];
+    if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value !== '' && control.value !== undefined)) {
+      const acceptedUsersGroup: { [key: string]: any } = {};
+      for (let user in this.inviteAcceptFormGroup!.controls) {
+        if (this.inviteAcceptFormGroup!.get(user)?.value == 'True') {
+          acceptedUsersGroup[`${user}_email`] = ['', Validators.required];
+          acceptedUsersGroup[`${user}_dietary`] = [''];
+          acceptedUsersGroup[`${user}_allergies`] = [''];
+        }
+        if (this.inviteAcceptFormGroup!.get('plusOne')?.value == 'True') {
+          acceptedUsersGroup['plusOne_name'] = ['', Validators.required];
+          acceptedUsersGroup['plusOne_surname'] = ['', Validators.required];
+          acceptedUsersGroup['plusOne_email'] = ['', Validators.required];
+          acceptedUsersGroup['plusOne_dietary'] = [''];
+          acceptedUsersGroup['plusOne_allergies'] = [''];
+        }
       }
-      if (this.inviteAcceptFormGroup!.get('plusOne')?.value == 'True') {
-        acceptedUsersGroup['plusOne_name'] = ['', Validators.required];
-        acceptedUsersGroup['plusOne_surname'] = ['', Validators.required];
-        acceptedUsersGroup['plusOne_email'] = ['', Validators.required];
-        acceptedUsersGroup['plusOne_dietary'] = [''];
-        acceptedUsersGroup['plusOne_allergies'] = [''];
-      }
+      this.additionalInfoFormGroup = this._formBuilder.group(acceptedUsersGroup);
     }
-    this.additionalInfoFormGroup = this._formBuilder.group(acceptedUsersGroup);
   }
 
   nullifyAdditionalInfoFormGroup(){
