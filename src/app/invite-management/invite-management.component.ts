@@ -20,7 +20,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-invite-management.component',
   imports: [
@@ -36,6 +36,7 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatChipsModule,
+    RouterModule
   ],
   templateUrl: './invite-management.component.html',
   styleUrl: './invite-management.component.scss',

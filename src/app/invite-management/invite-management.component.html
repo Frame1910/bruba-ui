@@ -59,15 +59,15 @@
       @for (user of invite.UserInvite; track user.userId) {
         @if (checkAcceptance(user) === 'True') {
           <div>{{user.user.firstName}}</div>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput formControlName="{{ user.user.id }}_email" placeholder="" required />
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
           <mat-label>Dietary Restrictions</mat-label>
           <input matInput formControlName="{{ user.user.id }}_dietary" placeholder=""/>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field appearance="outline">
           <mat-label>Allergies?</mat-label>
           <input matInput formControlName="{{ user.user.id }}_allergies" placeholder=""/>
             </mat-form-field>
@@ -75,23 +75,23 @@
       }
       @if (invite.allowPlusOne && checkPlusOneAcceptance() === 'True') {
         <div>Plus One</div>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
             <input matInput formControlName="plusOne_name" placeholder="" required />
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Surname</mat-label>
             <input matInput formControlName="plusOne_surname" placeholder="" required />
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
             <input matInput formControlName="plusOne_email" placeholder="" required />
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Dietary Restrictions</mat-label>
             <input matInput formControlName="plusOne_dietary" placeholder=""/>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Allergies?</mat-label>
             <input matInput formControlName="plusOne_allergies" placeholder=""/>
         </mat-form-field>
@@ -105,10 +105,10 @@
   }
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <p>YAHOO</p>
     <div class="button-container">
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button [routerLink]="['../../']">Reset</button>
     </div>
   </mat-step>
 </mat-vertical-stepper>
