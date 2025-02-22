@@ -50,17 +50,17 @@ export class InviteManagementComponentComponent implements OnInit {
   invite: InviteWithUsers | undefined;
   private _formBuilder = inject(FormBuilder);
   inviteAcceptFormGroup: FormGroup | undefined;
+  additionalInfoFormGroup: FormGroup | undefined;
   welcomeMessage: string | undefined;
 
   ngOnInit() {
     if (this.invite$) {
       this.invite$.subscribe((invite) => {
         this.invite = invite;
-        this.welcomeMessage = this.labelConstructor(invite);
         const group: { [key: string]: any } = {};
         for (let index = 0; index < invite.UserInvite.length; index++) {
+          // console.log(userInvite.user.firstName);
           const userInvite = invite.UserInvite[index];
-          console.log(userInvite.user.firstName);
           group[`${userInvite.user.id}`] = ['', Validators.required];
         }
         if (invite.allowPlusOne) {
@@ -71,11 +71,28 @@ export class InviteManagementComponentComponent implements OnInit {
     }
   }
 
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl1: ['', Validators.required],
-    secondCtrl2: ['', Validators.required],
-    secondCtrl3: ['', Validators.required],
-  });
+  generateAdditionalInfoFormGroup(){
+    const acceptedUsersGroup: { [key: string]: any } = {};
+    for (let user in this.inviteAcceptFormGroup!.controls) {
+      if (this.inviteAcceptFormGroup!.get(user)?.value == 'True') {
+        acceptedUsersGroup[`${user}_email`] = ['', Validators.required];
+        acceptedUsersGroup[`${user}_dietary`] = [''];
+        acceptedUsersGroup[`${user}_allergies`] = [''];
+      }
+      if(this.inviteAcceptFormGroup!.get('plusOne')?.value == 'True'){
+        acceptedUsersGroup['plusOne_name'] = ['', Validators.required];
+        acceptedUsersGroup['plusOne_surname'] = ['', Validators.required];
+        acceptedUsersGroup['plusOne_email'] = ['', Validators.required];
+        acceptedUsersGroup['plusOne_dietary'] = [''];
+        acceptedUsersGroup['plusOne_allergies'] = [''];
+      }
+    }
+    this.additionalInfoFormGroup = this._formBuilder.group(acceptedUsersGroup);
+  }
+
+  nullifyAdditionalInfoFormGroup(){
+    this.additionalInfoFormGroup = undefined;
+  }
 
   labelConstructor(Invite: InviteWithUsers) {
     const userNames = Invite.UserInvite.map(
@@ -85,12 +102,21 @@ export class InviteManagementComponentComponent implements OnInit {
     return label;
   }
 
+  checkAcceptance(user: UserInvite) {
+    return this.inviteAcceptFormGroup?.get(user.user.id)?.value;
+  }
+
+  checkPlusOneAcceptance() {
+    return this.inviteAcceptFormGroup?.get('plusOne')?.value;
+  }
+
   //TODO: potentially use this to redirect if the user does not accept the invite
   acceptFlow() {
     // if (this.firstFormGroup.get('firstCtrl')?.value == 'false') {
     //   this.router.navigate(['/']);
     //   return;
     // }
+
     for (let user in this.inviteAcceptFormGroup!.controls) {
       console.log(user);
       console.log(this.inviteAcceptFormGroup!.get(user)?.value);

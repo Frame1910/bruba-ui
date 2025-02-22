@@ -4,7 +4,7 @@
     <form [formGroup]="inviteAcceptFormGroup!">
       <ng-template matStepLabel>
         <div class="step-label">
-          {{ welcomeMessage }}
+          Hello {{ this.labelConstructor(invite) }} would you like to join us for our wedding?
         </div>
       </ng-template>
       @for (user of invite.UserInvite; track user.userId) {
@@ -19,8 +19,8 @@
               <div class="card-content">
                 <span>{{ user.user.firstName }}?</span>
                 <span>
-                  <mat-chip-option value="True">Yes</mat-chip-option>
-                  <mat-chip-option value="False">No</mat-chip-option>
+                  <mat-chip-option value=True>Yes</mat-chip-option>
+                  <mat-chip-option value=False>No</mat-chip-option>
                 </span>
               </div>
             </mat-chip-listbox>
@@ -39,8 +39,8 @@
               <div class="card-content">
                 <span>Plus One?</span>
                 <span>
-                  <mat-chip-option value="True">Yes</mat-chip-option>
-                  <mat-chip-option value="False">No</mat-chip-option>
+                  <mat-chip-option value=True>Yes</mat-chip-option>
+                  <mat-chip-option value=False>No</mat-chip-option>
                 </span>
               </div>
             </mat-chip-listbox>
@@ -49,30 +49,60 @@
       </div>
       }
       <div class="button-container">
-        <button mat-button matStepperNext (click)="acceptFlow()">Next</button>
+        <button mat-button matStepperNext (click)="acceptFlow(); generateAdditionalInfoFormGroup()">Next</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-    <form [formGroup]="secondFormGroup">
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl1" placeholder="" required />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl2" placeholder="" required />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl3" placeholder="" required />
-      </mat-form-field>
+  @if (additionalInfoFormGroup) {
+  <mat-step [stepControl]="additionalInfoFormGroup!" label="Some more info">
+    <form [formGroup]="additionalInfoFormGroup">
+      @for (user of invite.UserInvite; track user.userId) {
+        @if (checkAcceptance(user) === 'True') {
+          <div>{{user.user.firstName}}</div>
+            <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="{{ user.user.id }}_email" placeholder="" required />
+            </mat-form-field>
+            <mat-form-field>
+          <mat-label>Dietary Restrictions</mat-label>
+          <input matInput formControlName="{{ user.user.id }}_dietary" placeholder=""/>
+            </mat-form-field>
+            <mat-form-field>
+          <mat-label>Allergies?</mat-label>
+          <input matInput formControlName="{{ user.user.id }}_allergies" placeholder=""/>
+            </mat-form-field>
+        }
+      }
+      @if (invite.allowPlusOne && checkPlusOneAcceptance() === 'True') {
+        <div>Plus One</div>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+            <input matInput formControlName="plusOne_name" placeholder="" required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Surname</mat-label>
+            <input matInput formControlName="plusOne_surname" placeholder="" required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+            <input matInput formControlName="plusOne_email" placeholder="" required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Dietary Restrictions</mat-label>
+            <input matInput formControlName="plusOne_dietary" placeholder=""/>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Allergies?</mat-label>
+            <input matInput formControlName="plusOne_allergies" placeholder=""/>
+        </mat-form-field>
+      }
       <div class="button-container">
-        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperPrevious (click)="nullifyAdditionalInfoFormGroup()">Back</button>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
+  }
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
