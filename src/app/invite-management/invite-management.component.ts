@@ -49,7 +49,7 @@ export class InviteManagementComponentComponent implements OnInit {
   invite$: Observable<InviteWithUsers> | undefined;
   invite: InviteWithUsers | undefined;
   private _formBuilder = inject(FormBuilder);
-  firstFormGroup: FormGroup | undefined;
+  inviteAcceptFormGroup: FormGroup | undefined;
   welcomeMessage: string | undefined;
 
   ngOnInit() {
@@ -61,12 +61,12 @@ export class InviteManagementComponentComponent implements OnInit {
         for (let index = 0; index < invite.UserInvite.length; index++) {
           const userInvite = invite.UserInvite[index];
           console.log(userInvite.user.firstName);
-          group[`${userInvite.user.firstName}y_n`] = ['', Validators.required];
+          group[`${userInvite.user.id}`] = ['', Validators.required];
         }
         if (invite.allowPlusOne) {
           group['plusOne'] = ['', Validators.required];
         }
-        this.firstFormGroup = this._formBuilder.group(group);
+        this.inviteAcceptFormGroup = this._formBuilder.group(group);
       });
     }
   }
@@ -91,9 +91,9 @@ export class InviteManagementComponentComponent implements OnInit {
     //   this.router.navigate(['/']);
     //   return;
     // }
-    for (let user in this.firstFormGroup!.controls) {
+    for (let user in this.inviteAcceptFormGroup!.controls) {
       console.log(user);
-      console.log(this.firstFormGroup!.get(user)?.value);
+      console.log(this.inviteAcceptFormGroup!.get(user)?.value);
     }
   }
 }

@@ -1,7 +1,7 @@
-@if (firstFormGroup && invite) {
+@if (inviteAcceptFormGroup && invite) {
 <mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="firstFormGroup!">
-    <form [formGroup]="firstFormGroup!">
+  <mat-step [stepControl]="inviteAcceptFormGroup!">
+    <form [formGroup]="inviteAcceptFormGroup!">
       <ng-template matStepLabel>
         <div class="step-label">
           {{ welcomeMessage }}
@@ -13,7 +13,7 @@
           <mat-card-content class="accept-card">
             <mat-chip-listbox
               class="mat-mdc-chip-set"
-              formControlName="{{ user.user.firstName }}y_n"
+              formControlName="{{ user.user.id }}"
               required
             >
               <div class="card-content">
