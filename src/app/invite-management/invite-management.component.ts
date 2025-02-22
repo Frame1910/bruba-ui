@@ -79,7 +79,7 @@ export class InviteManagementComponentComponent implements OnInit {
         acceptedUsersGroup[`${user}_dietary`] = [''];
         acceptedUsersGroup[`${user}_allergies`] = [''];
       }
-      if(this.inviteAcceptFormGroup!.get('plusOne')?.value == 'True'){
+      if (this.inviteAcceptFormGroup!.get('plusOne')?.value == 'True') {
         acceptedUsersGroup['plusOne_name'] = ['', Validators.required];
         acceptedUsersGroup['plusOne_surname'] = ['', Validators.required];
         acceptedUsersGroup['plusOne_email'] = ['', Validators.required];
@@ -110,9 +110,8 @@ export class InviteManagementComponentComponent implements OnInit {
     return this.inviteAcceptFormGroup?.get('plusOne')?.value;
   }
 
-  //TODO: potentially use this to redirect if the user does not accept the invite
   acceptFlow() {
-    // if (this.firstFormGroup.get('firstCtrl')?.value == 'false') {
+    // if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value === 'False')) {
     //   this.router.navigate(['/']);
     //   return;
     // }
