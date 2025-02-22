@@ -113,10 +113,12 @@ export class InviteManagementComponentComponent implements OnInit {
   }
 
   acceptFlow() {
-    // if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value === 'False')) {
-    //   this.router.navigate(['/']);
-    //   return;
-    // }
+    if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value === 'False')
+      || (Object.values(this.inviteAcceptFormGroup!.controls).filter(control => control !== this.inviteAcceptFormGroup!.get('plusOne')).every(control => control.value === 'False')
+      && this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')) {
+      this.router.navigate(['/']);
+      return;
+    }
 
     for (let user in this.inviteAcceptFormGroup!.controls) {
       console.log(user);
