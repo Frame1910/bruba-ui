@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Invite } from '../../types';
 
 @Component({
@@ -19,7 +19,6 @@ import { Invite } from '../../types';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    RouterLink,
   ],
   templateUrl: './invite-signin.component.html',
   styleUrl: './invite-signin.component.scss',
