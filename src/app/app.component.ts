@@ -1,24 +1,50 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
-import { Invite } from '../types';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 @Component({
-  imports: [RouterModule, CommonModule],
+  imports: [
+    RouterModule,
+    CommonModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+  ],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'ui';
 
-  invite$: Observable<Invite> | undefined;
+  readonly navItems = [
+    { name: 'Home', route: ['main'], icon: 'home' },
+    // { name: 'Manage', route: [`invite/740521`], icon: 'settings' },
+  ];
 
-  constructor(private api: ApiService) {}
+  protected readonly isMobile = signal(true);
 
-  ngOnInit(): void {
-    this.invite$ = this.api.getInviteByCode('000000');
+  private readonly _mobileQuery: MediaQueryList;
+  private readonly _mobileQueryListener: () => void;
+
+  constructor() {
+    const media = inject(MediaMatcher);
+
+    this._mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.isMobile.set(this._mobileQuery.matches);
+    this._mobileQueryListener = () =>
+      this.isMobile.set(this._mobileQuery.matches);
+    this._mobileQuery.addEventListener('change', this._mobileQueryListener);
+  }
+
+  ngOnDestroy(): void {
+    this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
 }
