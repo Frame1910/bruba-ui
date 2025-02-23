@@ -1,1 +1,64 @@
-<p>peepeepoopoo</p>
+<main class="home-container">
+  <mat-card style="width: 100%">
+    <mat-card-header>
+      <mat-card-title>Wedding Overview</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <mat-icon matListItemIcon>event</mat-icon>
+          <div matListItemTitle>{{ weddingDate | date }}</div>
+          <!-- Add time in environment.ts Date Object -->
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListItemIcon>location_on</mat-icon>
+          <div matListItemTitle>{{ weddingVenueName }}</div>
+          <div matListItemLine>{{ weddingAddress }}</div>
+          <div matListItemMeta>
+            <button mat-icon-button (click)="copyWeddingAddress()">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+      <google-map
+        style="border-radius: 25px !important"
+        height="300px"
+        width="100%"
+        [center]="center"
+        [zoom]="zoom"
+        mapId="wedding_location"
+        [options]="mapDisplayOptions"
+      >
+        <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
+      </google-map>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card style="width: 100%">
+    <mat-card-header>
+      <mat-card-title>Recommended Stays</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Here are some places we think you'll like. Make sure to tell us where
+        you're staying, so we can organise a party bus to pick you up 🎉
+      </p>
+      <!-- TODO -->
+      <p>Placeholder</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button>Add your Stay <mat-icon>add</mat-icon></button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card style="width: 100%">
+    <mat-card-header>
+      <mat-card-title>Bridal Party Sports Carnival</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- TODO -->
+      <p>Placeholder</p>
+    </mat-card-content>
+  </mat-card>
+</main>

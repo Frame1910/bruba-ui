@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Invite } from '../types';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   imports: [RouterModule, CommonModule],
@@ -16,9 +17,9 @@ export class AppComponent implements OnInit {
 
   invite$: Observable<Invite> | undefined;
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private matIconReg: MatIconRegistry) {}
 
   ngOnInit(): void {
-    this.invite$ = this.api.getInviteByCode('000000');
+    this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
   }
 }
