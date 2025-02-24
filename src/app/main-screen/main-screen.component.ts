@@ -1,17 +1,17 @@
+import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
+import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { environment } from '../../environments/environment';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { DatePipe } from '@angular/common';
-import { ClipboardModule } from '@angular/cdk/clipboard';
-import { Clipboard } from '@angular/cdk/clipboard';
+import { MatListModule } from '@angular/material/list';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 import { Invite } from '../../types';
 import { ApiService } from '../api.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-screen',
@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
     DatePipe,
     ClipboardModule,
     MatSnackBarModule,
+    MatTooltipModule,
   ],
   templateUrl: './main-screen.component.html',
   styleUrl: './main-screen.component.scss',
