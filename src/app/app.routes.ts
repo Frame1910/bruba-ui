@@ -15,11 +15,11 @@ export const appRoutes: Route[] = [
     path: 'app',
     component: HomeComponent,
     children: [
-      {
-        path: 'invite/:code',
-        component: OnboardingComponent,
-      },
     ],
+  },
+  {
+    path: 'invite/:code',
+    component: OnboardingComponent,
   },
   {
     path: 'sign-in',
