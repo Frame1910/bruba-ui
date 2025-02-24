@@ -1,27 +1,36 @@
 import { Route } from '@angular/router';
 import { InviteSigninComponentComponent } from './invite-signin/invite-signin.component';
 import { InviteManagementComponentComponent } from './invite-management/invite-management.component';
+import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { MainScreenComponent } from './main-screen/main-screen.component';
-import { inviteCodeGuard } from './invite-code.guard';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    redirectTo: 'invite',
+    redirectTo: 'app',
     pathMatch: 'full',
   },
   {
-    path: 'invite',
+    path: 'app',
+    component: HomeComponent,
+    children: [
+      {
+        path: 'invite/:code',
+        component: InviteManagementComponentComponent,
+      },
+      {
+        path: 'main',
+        component: MainScreenComponent,
+      },
+    ],
+  },
+  {
+    path: 'sign-in',
     component: InviteSigninComponentComponent,
   },
   {
-    path: 'invite/:code',
-    component: InviteManagementComponentComponent,
-    canActivate: [inviteCodeGuard],
-  },
-  {
-    path: 'main',
-    component: MainScreenComponent,
-    canActivate: [inviteCodeGuard],
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
