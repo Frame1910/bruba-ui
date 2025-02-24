@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { InviteWithUsers } from '../../types';
 import { ApiService } from '../api.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card'
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
