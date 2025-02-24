@@ -1,19 +1,31 @@
 import { Route } from '@angular/router';
 import { InviteSigninComponentComponent } from './invite-signin/invite-signin.component';
 import { InviteManagementComponentComponent } from './invite-management/invite-management.component';
+import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    redirectTo: 'invite',
+    redirectTo: 'app',
     pathMatch: 'full',
   },
   {
-    path: 'invite',
+    path: 'app',
+    component: HomeComponent,
+    children: [
+      {
+        path: 'invite/:code',
+        component: InviteManagementComponentComponent,
+      },
+    ],
+  },
+  {
+    path: 'sign-in',
     component: InviteSigninComponentComponent,
   },
   {
-    path: 'invite/:code',
-    component: InviteManagementComponentComponent,
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
