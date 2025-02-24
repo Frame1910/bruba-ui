@@ -1,7 +1,36 @@
-<mat-toolbar class="example-toolbar">
+<mat-toolbar class="example-toolbar" color="primary">
   <h1 class="example-app-name">bruba.wedding</h1>
   <span style="width: 40px"></span>
-  <button mat-button>Home</button>
+  @if (isMobile()) {
   <span style="flex: 1 1 auto"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    @for (item of navItems; track item.route) {
+    <button
+      mat-menu-item
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <span>{{ item.name }}</span>
+      <mat-icon>{{ item.icon }}</mat-icon>
+    </button>
+    }
+  </mat-menu>
+  } @else { @for (item of navItems; track item.route) {
+  <a
+    mat-button
+    [routerLink]="item.route"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <span>{{ item.name }}</span>
+    <mat-icon>{{ item.icon }}</mat-icon>
+  </a>
+  } }
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div class="content-container">
+  <router-outlet></router-outlet>
+</div>
