@@ -23,5 +23,4 @@
 
 ### Accept Screen TODO
 - Navigate to a sad screen if RSVP is declined by all users on an invite
-- Update step 2 with relevant formcontrols and validators
 - Call API to save the input data
