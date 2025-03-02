@@ -82,7 +82,7 @@
                 />
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Dietary Restrictions</mat-label>
+                <mat-label>Dietaries?</mat-label>
                 <mat-select
                   formControlName="{{ user.user.id }}_dietary"
                   multiple
@@ -112,7 +112,7 @@
       <div class="card-container">
         <mat-card appearance="outlined" class="fit-content">
           <mat-card-header>
-            <mat-card-title>Plus One</mat-card-title>
+            <mat-card-title>{{ (additionalInfoFormGroup.get('plusOne_name')?.value || 'Plus One') + ' ' + (additionalInfoFormGroup.get('plusOne_surname')?.value || '') }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <div class="input-container">
@@ -146,7 +146,7 @@
                 />
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Dietary Restrictions</mat-label>
+                <mat-label>Dietaries?</mat-label>
                 <mat-select formControlName="plusOne_dietary" multiple required>
                   <mat-option value="None">None</mat-option>
                   <mat-option value="Vegetarian">Vegetarian</mat-option>
