@@ -112,7 +112,12 @@
       <div class="card-container">
         <mat-card appearance="outlined" class="fit-content">
           <mat-card-header>
-            <mat-card-title>{{ (additionalInfoFormGroup.get('plusOne_name')?.value || 'Plus One') + ' ' + (additionalInfoFormGroup.get('plusOne_surname')?.value || '') }}</mat-card-title>
+            <mat-card-title>{{
+              (additionalInfoFormGroup.get("plusOne_name")?.value ||
+                "Plus One") +
+                " " +
+                (additionalInfoFormGroup.get("plusOne_surname")?.value || "")
+            }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <div class="input-container">
@@ -158,7 +163,11 @@
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Allergies?</mat-label>
-                <input matInput formControlName="plusOne_allergies" placeholder="" />
+                <input
+                  matInput
+                  formControlName="plusOne_allergies"
+                  placeholder=""
+                />
               </mat-form-field>
             </div>
           </mat-card-content>
