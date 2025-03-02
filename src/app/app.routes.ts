@@ -4,6 +4,7 @@ import { InviteManagementComponentComponent } from './invite-management/invite-m
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MainScreenComponent } from './main-screen/main-screen.component';
+import { OnboardingComponent } from './onboarding/onboarding.component';
 
 export const appRoutes: Route[] = [
   {
@@ -24,6 +25,10 @@ export const appRoutes: Route[] = [
         component: MainScreenComponent,
       },
     ],
+  },
+  {
+    path: 'invite/:code',
+    component: OnboardingComponent,
   },
   {
     path: 'sign-in',
