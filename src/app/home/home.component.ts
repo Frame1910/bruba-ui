@@ -24,6 +24,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class HomeComponent implements OnInit, OnDestroy {
   navItems = [{ name: 'Home', route: ['main'], icon: 'home' }];
   protected readonly isMobile = signal(true);
+  randomSource: number | undefined;
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.randomSource = Math.floor(Math.random() * 9) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
     if (inviteCode) {
       this.navItems.push({
