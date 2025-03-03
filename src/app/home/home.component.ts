@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const inviteCode = localStorage.getItem('inviteCode');
     if (inviteCode) {
       this.navItems.push({
-        name: 'Manage Invite',
+        name: 'Manage RSVP',
         route: ['invite', inviteCode],
         icon: 'mark_email_read',
       });
