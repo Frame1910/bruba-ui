@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Invite } from '../../types';
 import { ApiService } from '../api.service';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-main-screen',
@@ -25,6 +26,7 @@ import { ApiService } from '../api.service';
     ClipboardModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatTabsModule,
   ],
   templateUrl: './main-screen.component.html',
   styleUrl: './main-screen.component.scss',

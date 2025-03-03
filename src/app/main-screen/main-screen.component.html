@@ -1,71 +1,79 @@
 <main class="home-container">
-  <mat-card style="width: 100%">
-    <mat-card-header>
-      <mat-card-title>Wedding Location</mat-card-title>
-    </mat-card-header>
-    <div mat-card-image style="margin-top: 15px">
-      <google-map
-        style="border-radius: 25px !important"
-        height="300px"
-        width="100%"
-        [center]="center"
-        [zoom]="zoom"
-        mapId="wedding_location"
-        [options]="mapDisplayOptions"
-      >
-        <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
-      </google-map>
-    </div>
-    <mat-card-content>
-      <mat-list>
-        <mat-list-item>
-          <mat-icon matListItemIcon>location_on</mat-icon>
-          <div matListItemTitle>{{ weddingVenueName }}</div>
-          <div matListItemLine>{{ weddingAddress }}</div>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-icon matListItemIcon>event</mat-icon>
-          <div matListItemTitle>{{ weddingDate | date }}</div>
+  <mat-tab-group>
+    <mat-tab label="Location">
+      <mat-card style="width: 100%">
+        <mat-card-header>
+          <mat-card-title>Wedding Location</mat-card-title>
+        </mat-card-header>
+        <div mat-card-image style="margin-top: 15px">
+          <google-map
+            style="border-radius: 25px !important"
+            height="300px"
+            width="100%"
+            [center]="center"
+            [zoom]="zoom"
+            mapId="wedding_location"
+            [options]="mapDisplayOptions"
+          >
+            <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
+          </google-map>
+        </div>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <mat-icon matListItemIcon>location_on</mat-icon>
+              <div matListItemTitle>{{ weddingVenueName }}</div>
+              <div matListItemLine>{{ weddingAddress }}</div>
+            </mat-list-item>
+            <mat-list-item>
+              <mat-icon matListItemIcon>event</mat-icon>
+              <div matListItemTitle>{{ weddingDate | date }}</div>
           <!-- Add time in environment.ts Date Object -->
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button (click)="copyWeddingAddress()">
-        Copy Address
-        <mat-icon>content_copy</mat-icon>
-      </button>
-      <a mat-button href="https://maps.app.goo.gl/SytR1SB6a94Uhi7FA">
-        Open in Maps
-        <mat-icon>map</mat-icon>
-      </a>
-    </mat-card-actions>
-  </mat-card>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="copyWeddingAddress()">
+            Copy Address
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <a mat-button href="https://maps.app.goo.gl/SytR1SB6a94Uhi7FA">
+            Open in Maps
+            <mat-icon>map</mat-icon>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </mat-tab>
 
-  <mat-card style="width: 100%">
-    <mat-card-header>
-      <mat-card-title>Recommended Stays</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        Here are some places we think you'll like. Make sure to tell us where
-        you're staying, so we can organise a party bus to pick you up 🎉
-      </p>
-      <!-- TODO -->
-      <p>Placeholder</p>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button>Add your Stay <mat-icon>add</mat-icon></button>
-    </mat-card-actions>
-  </mat-card>
+    <mat-tab label="Accommodation">
+      <mat-card style="width: 100%">
+        <mat-card-header>
+          <mat-card-title>Recommended Stays</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Here are some places we think you'll like. Make sure to tell us where
+            you're staying, so we can organise a party bus to pick you up 🎉
+          </p>
+          <!-- TODO -->
+          <p>Placeholder</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button>Add your Stay <mat-icon>add</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-tab>
 
-  <mat-card style="width: 100%">
-    <mat-card-header>
-      <mat-card-title>Special Invite Sports Carnival</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <!-- TODO -->
-      <p>Placeholder</p>
-    </mat-card-content>
-  </mat-card>
+    <mat-tab label="Sports Carnival">
+      <mat-card style="width: 100%">
+        <mat-card-header>
+          <mat-card-title>Special Invite Sports Carnival</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- TODO -->
+          <p>Placeholder</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
 </main>
