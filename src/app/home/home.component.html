@@ -32,10 +32,65 @@
   </a>
   } }
   </mat-toolbar>
-  <img src="{{randomSource}}.jpg" style="max-height: 50%; width: 100%" alt="">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
-    <h1>Wedding of Brooke and Kuba</h1>
-  </div>
+  @switch (randomSource) {
+    @case (1) {
+      <img src="1.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 15%; left: 10%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (2) {
+      <img src="2.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 33%; left: 33%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (3) {
+      <img src="3.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 37%; left: 5%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (4) {
+      <img src="4.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 60%; left: 71%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (5) {
+      <img src="5.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 30%; left: 66%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (6) {
+      <img src="6.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 15%; left: 50%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (7) {
+      <img src="7.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 65%; left: 50%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (8) {
+      <img src="8.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 60%; left: 23%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (9) {
+      <img src="9.jpg" style="width: 100%" alt="">
+      <div style="position: absolute; top: 36%; left: 1%; color: white; text-align: center;">
+        <h1 style="font-size: 4vw;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @default () {
+    }
+  }
+
 </div>
 <div class="content-container">
   <router-outlet></router-outlet>
