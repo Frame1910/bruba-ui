@@ -18,7 +18,7 @@
     <mat-card-content style="margin-top: 15px">
       <mat-form-field appearance="outline">
         <mat-label>Invite Code</mat-label>
-        <input style="text-align:center;" matInput placeholder="000000" [formControl]="codeControl" />
+        <input style="text-align:center;" matInput placeholder="000000" [formControl]="codeControl" (keyup.enter)="routeToInvite()" />
         <mat-error>Invalid Code</mat-error>
       </mat-form-field>
     </mat-card-content>
