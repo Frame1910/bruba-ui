@@ -1,19 +1,12 @@
 .content-container {
   justify-content: center;
+  background: var(--mat-sys-surface);
 }
 
 .background-image {
   height: 100vh;
   width: 100%;
   object-fit: cover;
-}
-
-.l {
-  object-position: left;
-}
-
-.r {
-  object-position: right;
 }
 
 .name-title {

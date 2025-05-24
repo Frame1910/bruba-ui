@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.randomSource = Math.floor(Math.random() * 9) + 1; // chooses random imgage
+    this.randomSource = Math.floor(Math.random() * 5) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
     if (inviteCode) {
       this.navItems.push({
@@ -57,8 +57,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         icon: 'mark_email_read',
       });
     }
-    if (inviteCode === '111111'){
-      this.customImage = 'custom-main/breejake.jpg';
+    this.customBakgroundCheck(inviteCode);
+  }
+
+  customBakgroundCheck(inviteCode: string | null){
+    switch (inviteCode) {
+      case '111111':
+        this.customImage = 'custom-main/breejake.jpg';
+        break;
     }
   }
 
