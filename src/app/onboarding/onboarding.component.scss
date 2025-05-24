@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: var(--mat-sys-surface);
   }
 
 .step-label{
@@ -35,8 +36,14 @@
   padding-top: 10px;
 }
 
-
 .fit-content{
   width: fit-content;
   padding-bottom: 10px;
+}
+
+.name-title {
+  font-family: 'Ms Madi';
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--mat-sys-on-surface);
 }

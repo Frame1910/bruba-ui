@@ -1,11 +1,11 @@
 @if (inviteAcceptFormGroup && invite) {
 <main class="main">
-  <mat-card>
+  <mat-card appearance="raised">
     <mat-card-header>
-      <mat-card-title>Brooke & Kuba</mat-card-title>
+      <mat-card-title class="name-title">Brooke & Kuba</mat-card-title>
       <mat-card-subtitle>22 November, 2025</mat-card-subtitle>
     </mat-card-header>
-    <mat-vertical-stepper [linear]="true" #stepper>
+    <mat-vertical-stepper style="background: var(--mat-sys-surface-container-low)" [linear]="true" #stepper>
       <mat-step [stepControl]="inviteAcceptFormGroup!">
         <form [formGroup]="inviteAcceptFormGroup!">
           <ng-template matStepLabel>
