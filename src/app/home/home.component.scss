@@ -1,3 +1,21 @@
-.content-container {
-  margin: 15px 15px 0 15px;
+.main-container {
+  height: 100vh;
+  overflow: hidden;
 }
+.content-container {
+  justify-content: center;
+  background: var(--mat-sys-surface);
+}
+
+.background-image {
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.name-title {
+  font-family: 'Ms Madi';
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+

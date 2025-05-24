@@ -1,0 +1,19 @@
+.center-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.name-title {
+  font-family: 'Ms Madi';
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--mat-sys-on-surface);
+}
+
+#wedding-image{
+  object-fit: cover;
+  width: 100%;
+  height: 300px;
+}

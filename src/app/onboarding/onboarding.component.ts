@@ -121,7 +121,8 @@ export class OnboardingComponent implements OnInit {
     if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value === 'False')
       || (Object.values(this.inviteAcceptFormGroup!.controls).filter(control => control !== this.inviteAcceptFormGroup!.get('plusOne')).every(control => control.value === 'False')
       && this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')) {
-      this.router.navigate(['/']);
+        console.log('No users accepted the invite');
+      this.router.navigate(['/sign-in']);
       return;
       //TODO: Call API to update invite status to declined
     }

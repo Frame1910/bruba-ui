@@ -1,36 +1,95 @@
-<mat-toolbar class="example-toolbar" color="primary">
-  <h1 class="example-app-name">bruba.wedding</h1>
-  <span style="width: 40px"></span>
-  @if (isMobile()) {
-  <span style="flex: 1 1 auto"></span>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    @for (item of navItems; track item.route) {
-    <button
-      mat-menu-item
-      [routerLink]="item.route"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <span>{{ item.name }}</span>
-      <mat-icon>{{ item.icon }}</mat-icon>
-    </button>
-    }
-  </mat-menu>
+<div class="main-container">
+  <mat-toolbar class="example-toolbar" style="position: absolute; top: 0; left: 0; right: 0; z-index: 1; background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent); color: white;">
+    <h1 class="name-title">Brooke & Kuba</h1>
+    <span style="flex: 1 1 auto"></span>
+    @if (isMobile()) {
+      <span style="flex: 1 1 auto"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon style="color: white;">menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        @for (item of navItems; track item.route) {
+          <button
+          mat-menu-item
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="scrollToContent()"
+          >
+          <span>{{ item.name }}</span>
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </button>
+      }
+    </mat-menu>
   } @else { @for (item of navItems; track item.route) {
-  <a
+    <a
     mat-button
     [routerLink]="item.route"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
-  >
-    <span>{{ item.name }}</span>
-    <mat-icon>{{ item.icon }}</mat-icon>
+    (click)="scrollToContent()"
+    >
+    <span style="color: white;">{{ item.name }}</span>
+    <mat-icon style="color: white;">{{ item.icon }}</mat-icon>
   </a>
   } }
-</mat-toolbar>
-<div class="content-container">
+  </mat-toolbar>
+  @if (customImage) {
+    <img src="{{customImage}}" class="background-image" style="object-position: 4%" alt="">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center;">
+      <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" style="font-weight:400" class="name-title">Wedding of Brooke & Kuba</h1>
+    </div>
+  }
+  @else {
+  @switch (randomSource) {
+    @case (1) {
+      <img src="1.jpg" class="background-image" style="object-position: 39%;" alt="">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white">
+        <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (2) {
+      <img src="4.jpg" class="background-image" style="object-position: 39%;" alt="">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white">
+        <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (3) {
+      <img src="5.jpg" class="background-image" style="object-position: 50%;" alt="">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white">
+        <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title" style="mix-blend-mode: difference;">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (4) {
+      <img src="6.jpg" class="background-image" style="object-position: 42%;" alt="">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white">
+        <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @case (5) {
+      <img src="9.jpg" class="background-image" style="object-position: 78%;" alt="">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white">
+        <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">Wedding of Brooke and Kuba</h1>
+      </div>
+    }
+    @default () {
+    }
+  }
+  }
+</div>
+  @if(isMobile()){
+    <button mat-raised-button color="primary" (click)="scrollToContent()"
+      style="position: absolute; bottom: 200px; left: 50%; transform: translateX(-50%); z-index: 1;">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+      Wedding Details
+    </button>
+  } @else {
+    <button mat-raised-button color="primary" (click)="scrollToContent()"
+    style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1;">
+    <mat-icon>keyboard_arrow_down</mat-icon>
+    Wedding Details
+    </button>
+  }
+<div class="content-container" id="content">
   <router-outlet></router-outlet>
 </div>

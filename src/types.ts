@@ -12,6 +12,7 @@ export enum DietaryRestriction {
 export interface Invite {
   code: string;
   allowPlusOne: boolean;
+  sportsCarnival: boolean;
   firstSeenAt: string;
   lastSeenAt: string;
   createdAt: string;

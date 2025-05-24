@@ -1,9 +1,18 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--mat-sys-surface);
+  }
+
 .step-label{
   white-space: normal;
 }
 
 .card-container{
   padding-bottom: 10px;
+  color: var(--mat-sys-on-surface)
 }
 
 .card-content{
@@ -11,6 +20,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    color: var(--mat-sys-on-surface);
 }
 
 .button-container{
@@ -28,8 +38,14 @@
   padding-top: 10px;
 }
 
-
 .fit-content{
   width: fit-content;
   padding-bottom: 10px;
+}
+
+.name-title {
+  font-family: 'Ms Madi';
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--mat-sys-on-surface);
 }

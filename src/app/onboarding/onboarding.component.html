@@ -1,201 +1,197 @@
 @if (inviteAcceptFormGroup && invite) {
-<mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="inviteAcceptFormGroup!">
-    <form [formGroup]="inviteAcceptFormGroup!">
-      <ng-template matStepLabel>
-        <div class="step-label">
-          Hello {{ this.labelConstructor(invite) }} would you like to join us
-          for our wedding?
-        </div>
-      </ng-template>
-      @for (user of invite.UserInvite; track user.userId) {
-      <div class="card-container">
-        <mat-card>
-          <mat-card-content class="accept-card">
-            <mat-chip-listbox
-              class="mat-mdc-chip-set"
-              formControlName="{{ user.user.id }}"
-              required
-            >
-              <div class="card-content">
-                <span>{{ user.user.firstName }}?</span>
-                <span>
-                  <mat-chip-option value="True">Yes</mat-chip-option>
-                  <mat-chip-option value="False">No</mat-chip-option>
-                </span>
-              </div>
-            </mat-chip-listbox>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      } @if (invite.allowPlusOne){
-      <div class="card-container">
-        <mat-card>
-          <mat-card-content class="accept-card">
-            <mat-chip-listbox
-              class="mat-mdc-chip-set"
-              formControlName="plusOne"
-              required
-            >
-              <div class="card-content">
-                <span>Plus One?</span>
-                <span>
-                  <mat-chip-option value="True">Yes</mat-chip-option>
-                  <mat-chip-option value="False">No</mat-chip-option>
-                </span>
-              </div>
-            </mat-chip-listbox>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      }
-      <div class="button-container">
-        <button
-          mat-button
-          matStepperNext
-          (click)="acceptFlow(); generateAdditionalInfoFormGroup()"
-        >
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
-  @if (additionalInfoFormGroup) {
-  <mat-step [stepControl]="additionalInfoFormGroup!" label="Some more info">
-    <form [formGroup]="additionalInfoFormGroup">
-      @for (user of invite.UserInvite; track user.userId) { @if
-      (checkAcceptance(user) === 'True') {
-      <div class="card-container">
-        <mat-card appearance="outlined" class="fit-content">
-          <mat-card-header>
-            <mat-card-title>{{ user.user.firstName }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="input-container">
-              <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Email</mat-label>
-                <input
-                  matInput
-                  formControlName="{{ user.user.id }}_email"
-                  placeholder=""
-                  required
-                />
-              </mat-form-field>
-              <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Dietaries?</mat-label>
-                <mat-select
-                  formControlName="{{ user.user.id }}_dietary"
-                  multiple
+<main class="main">
+  <mat-card appearance="raised">
+    <mat-card-header>
+      <mat-card-title class="name-title">Brooke & Kuba</mat-card-title>
+      <mat-card-subtitle>22 November, 2025</mat-card-subtitle>
+    </mat-card-header>
+    <mat-vertical-stepper style="background: var(--mat-sys-surface-container-low)" [linear]="true" #stepper>
+      <mat-step [stepControl]="inviteAcceptFormGroup!">
+        <form [formGroup]="inviteAcceptFormGroup!">
+          <ng-template matStepLabel>
+            <div class="step-label">
+              Hello {{ this.labelConstructor(invite) }} would you like to join us
+              for our wedding?
+            </div>
+          </ng-template>
+          @for (user of invite.UserInvite; track user.userId) {
+          <div class="card-container">
+                <mat-chip-listbox
+                  class="mat-mdc-chip-set"
+                  formControlName="{{ user.user.id }}"
                   required
                 >
-                  <mat-option value="None">None</mat-option>
-                  <mat-option value="Vegetarian">Vegetarian</mat-option>
-                  <mat-option value="Vegan">Vegan</mat-option>
-                  <mat-option value="Gluten-Free">Gluten-Free</mat-option>
-                  <mat-option value="Kosher">Kosher</mat-option>
-                  <mat-option value="Halal">Halal</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Allergies?</mat-label>
-                <input
-                  matInput
-                  formControlName="{{ user.user.id }}_allergies"
-                  placeholder=""
-                />
-              </mat-form-field>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      } } @if (invite.allowPlusOne && checkPlusOneAcceptance() === 'True') {
-      <div class="card-container">
-        <mat-card appearance="outlined" class="fit-content">
-          <mat-card-header>
-            <mat-card-title>{{
-              (additionalInfoFormGroup.get("plusOne_name")?.value ||
-                "Plus One") +
-                " " +
-                (additionalInfoFormGroup.get("plusOne_surname")?.value || "")
-            }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="input-container">
-              <div>
-                <mat-form-field class="input-field" appearance="outline">
-                  <mat-label>Name</mat-label>
-                  <input
-                    matInput
-                    formControlName="plusOne_name"
-                    placeholder=""
-                    required
-                  />
-                </mat-form-field>
-                <mat-form-field class="input-field" appearance="outline">
-                  <mat-label>Surname</mat-label>
-                  <input
-                    matInput
-                    formControlName="plusOne_surname"
-                    placeholder=""
-                    required
-                  />
-                </mat-form-field>
-              </div>
-              <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Email</mat-label>
-                <input
-                  matInput
-                  formControlName="plusOne_email"
-                  placeholder=""
+                  <div class="card-content">
+                    <span>{{ user.user.firstName }}?</span>
+                    <span>
+                      <mat-chip-option value="True">Yes</mat-chip-option>
+                      <mat-chip-option value="False">No</mat-chip-option>
+                    </span>
+                  </div>
+                </mat-chip-listbox>
+          </div>
+            @if (!$last) {
+            <mat-divider style="padding: 5px;"></mat-divider>
+            }
+          } @if (invite.allowPlusOne){
+          <mat-divider style="padding: 5px;"></mat-divider>
+          <div class="card-container">
+                <mat-chip-listbox
+                  class="mat-mdc-chip-set"
+                  formControlName="plusOne"
                   required
-                />
-              </mat-form-field>
-              <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Dietaries?</mat-label>
-                <mat-select formControlName="plusOne_dietary" multiple required>
-                  <mat-option value="None">None</mat-option>
-                  <mat-option value="Vegetarian">Vegetarian</mat-option>
-                  <mat-option value="Vegan">Vegan</mat-option>
-                  <mat-option value="Gluten-Free">Gluten-Free</mat-option>
-                  <mat-option value="Kosher">Kosher</mat-option>
-                  <mat-option value="Halal">Halal</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Allergies?</mat-label>
-                <input
-                  matInput
-                  formControlName="plusOne_allergies"
-                  placeholder=""
-                />
-              </mat-form-field>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
+                >
+                  <div class="card-content">
+                    <span>Plus One?</span>
+                    <span>
+                      <mat-chip-option value="True">Yes</mat-chip-option>
+                      <mat-chip-option value="False">No</mat-chip-option>
+                    </span>
+                  </div>
+                </mat-chip-listbox>
+          </div>
+          }
+          <div class="button-container">
+            <button
+              mat-button
+              matStepperNext
+              (click)="acceptFlow(); generateAdditionalInfoFormGroup()"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      @if (additionalInfoFormGroup) {
+      <mat-step [stepControl]="additionalInfoFormGroup!" label="Some more info">
+        <form [formGroup]="additionalInfoFormGroup">
+          @for (user of invite.UserInvite; track user.userId) { @if
+          (checkAcceptance(user) === 'True') {
+          <div class="card-container">
+                <h2>{{ user.user.firstName }}</h2>
+                <div class="input-container">
+                  <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input
+                      matInput
+                      formControlName="{{ user.user.id }}_email"
+                      placeholder=""
+                      required
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Dietaries?</mat-label>
+                    <mat-select
+                      formControlName="{{ user.user.id }}_dietary"
+                      multiple
+                      required
+                    >
+                      <mat-option value="None">None</mat-option>
+                      <mat-option value="Vegetarian">Vegetarian</mat-option>
+                      <mat-option value="Vegan">Vegan</mat-option>
+                      <mat-option value="Gluten-Free">Gluten-Free</mat-option>
+                      <mat-option value="Kosher">Kosher</mat-option>
+                      <mat-option value="Halal">Halal</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Allergies?</mat-label>
+                    <input
+                      matInput
+                      formControlName="{{ user.user.id }}_allergies"
+                      placeholder=""
+                    />
+                  </mat-form-field>
+                </div>
+          </div>
+            }
+            @if (!$last && checkAcceptance(invite.UserInvite[$index + 1]) === 'True') {
+            <mat-divider style="padding: 5px;"></mat-divider>
+            }
+         } @if (invite.allowPlusOne && checkPlusOneAcceptance() === 'True') {
+          <mat-divider>style="padding: 5px;"></mat-divider>
+          <div class="card-container">
+                <h2>{{
+                  (additionalInfoFormGroup.get("plusOne_name")?.value ||
+                    "Plus One") +
+                    " "
+                }}</h2>
+                <div class="input-container">
+                  <div>
+                    <mat-form-field class="input-field" appearance="outline">
+                      <mat-label>Name</mat-label>
+                      <input
+                        matInput
+                        formControlName="plusOne_name"
+                        placeholder=""
+                        required
+                      />
+                    </mat-form-field>
+                    <mat-form-field class="input-field" appearance="outline">
+                      <mat-label>Surname</mat-label>
+                      <input
+                        matInput
+                        formControlName="plusOne_surname"
+                        placeholder=""
+                        required
+                      />
+                    </mat-form-field>
+                  </div>
+                  <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input
+                      matInput
+                      formControlName="plusOne_email"
+                      placeholder=""
+                      required
+                    />
+                  </mat-form-field>
+                  <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Dietaries?</mat-label>
+                    <mat-select formControlName="plusOne_dietary" multiple required>
+                      <mat-option value="None">None</mat-option>
+                      <mat-option value="Vegetarian">Vegetarian</mat-option>
+                      <mat-option value="Vegan">Vegan</mat-option>
+                      <mat-option value="Gluten-Free">Gluten-Free</mat-option>
+                      <mat-option value="Kosher">Kosher</mat-option>
+                      <mat-option value="Halal">Halal</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Allergies?</mat-label>
+                    <input
+                      matInput
+                      formControlName="plusOne_allergies"
+                      placeholder=""
+                    />
+                  </mat-form-field>
+                </div>
+          </div>
+          }
+          <div class="button-container">
+            <button
+              mat-button
+              matStepperPrevious
+              (click)="nullifyAdditionalInfoFormGroup()"
+            >
+              Back
+            </button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
       }
-      <div class="button-container">
-        <button
-          mat-button
-          matStepperPrevious
-          (click)="nullifyAdditionalInfoFormGroup()"
-        >
-          Back
-        </button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  }
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>YAHOO</p>
-    <div class="button-container">
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button [routerLink]="['../../']">Let's Go!</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>YAHOO</p>
+        <div class="button-container">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button [routerLink]="['../../app/main']">Let's Go!</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card>
+</main>
 } @else {
 <p>Nothing here</p>
 }
