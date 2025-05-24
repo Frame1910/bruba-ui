@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   navItems = [{ name: 'Home', route: ['main'], icon: 'home' }];
   protected readonly isMobile = signal(true);
   randomSource: number | undefined;
+  customImageFlag: boolean = false;
+  customImage: string | undefined;
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
@@ -54,6 +56,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         route: ['invite', inviteCode],
         icon: 'mark_email_read',
       });
+    }
+    if (inviteCode === '111111'){
+      this.customImage = 'custom-main/breejake.jpg';
     }
   }
 

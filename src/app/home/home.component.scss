@@ -1,14 +1,23 @@
 .content-container {
-  // display: flex;
   justify-content: center;
-  // max-width: 800px;
-  // width: 100%;
-  // margin: 12px auto;
-  // padding: 0 12px;
 }
 
 .background-image {
   height: 100vh;
   width: 100%;
   object-fit: cover;
+}
+
+.l {
+  object-position: left;
+}
+
+.r {
+  object-position: right;
+}
+
+.name-title {
+  font-family: 'Ms Madi';
+  font-size: 2.5rem;
+  font-weight: 400;
 }

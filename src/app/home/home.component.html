@@ -1,6 +1,6 @@
 <div style="position: relative;">
   <mat-toolbar class="example-toolbar" style="position: absolute; top: 0; left: 0; right: 0; z-index: 1; background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent); color: white;">
-    <h1 class="example-app-name">Brooke & Kuba</h1>
+    <h1 class="name-title">Brooke & Kuba</h1>
     <span style="flex: 1 1 auto"></span>
     @if (isMobile()) {
       <span style="flex: 1 1 auto"></span>
@@ -34,6 +34,10 @@
   </a>
   } }
   </mat-toolbar>
+  @if (customImage) {
+    <img src="{{customImage}}" class="background-image l" alt="">
+  }
+  @else {
   @switch (randomSource) {
     @case (1) {
       <img src="1.jpg" class="background-image" alt="">
@@ -91,6 +95,7 @@
     }
     @default () {
     }
+  }
   }
 </div>
   @if(isMobile()){
