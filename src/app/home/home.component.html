@@ -8,7 +8,6 @@
       right: 0;
       z-index: 1;
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
-      color: white;
     "
   >
     <h1 class="name-title">Brooke & Kuba</h1>
@@ -16,7 +15,7 @@
     @if (isMobile()) {
     <span style="flex: 1 1 auto"></span>
     <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon style="color: white">menu</mat-icon>
+      <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       @for (item of navItems; track item.route) {
@@ -40,8 +39,8 @@
       [routerLinkActiveOptions]="{ exact: true }"
       (click)="scrollToContent()"
     >
-      <span style="color: white">{{ item.name }}</span>
-      <mat-icon style="color: white">{{ item.icon }}</mat-icon>
+      <span>{{ item.name }}</span>
+      <mat-icon>{{ item.icon }}</mat-icon>
     </a>
     } }
   </mat-toolbar>
@@ -58,7 +57,6 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: white;
       text-align: center;
     "
   >
@@ -67,14 +65,14 @@
       style="font-weight: 400"
       class="name-title"
     >
-      Wedding of Brooke & Kuba
+      {{weddingName}}
     </h1>
   </div>
   } @else { @switch (randomSource) { @case (1) {
   <img
-    src="1.jpg"
+    src="1.jpeg"
     class="background-image"
-    style="object-position: 39%"
+    style="object-position: 39% 65%"
     alt=""
   />
   <div
@@ -84,16 +82,15 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      color: white;
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      Wedding of Brooke and Kuba
+      {{weddingName}}
     </h1>
   </div>
   } @case (2) {
   <img
-    src="4.jpg"
+    src="2.jpg"
     class="background-image"
     style="object-position: 39%"
     alt=""
@@ -105,16 +102,15 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      color: white;
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      Wedding of Brooke and Kuba
+      {{weddingName}}
     </h1>
   </div>
   } @case (3) {
   <img
-    src="5.jpg"
+    src="3.jpg"
     class="background-image"
     style="object-position: 50%"
     alt=""
@@ -126,7 +122,6 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      color: white;
     "
   >
     <h1
@@ -134,12 +129,12 @@
       class="name-title"
       style="mix-blend-mode: difference"
     >
-      Wedding of Brooke and Kuba
+      {{weddingName}}
     </h1>
   </div>
   } @case (4) {
   <img
-    src="6.jpg"
+    src="4.jpg"
     class="background-image"
     style="object-position: 42%"
     alt=""
@@ -151,16 +146,15 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      color: white;
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      Wedding of Brooke and Kuba
+      {{weddingName}}
     </h1>
   </div>
   } @case (5) {
   <img
-    src="9.jpg"
+    src="5.jpeg"
     class="background-image"
     style="object-position: 78%"
     alt=""
@@ -172,11 +166,70 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      color: white;
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      Wedding of Brooke and Kuba
+      {{weddingName}}
+    </h1>
+  </div>
+    } @case (6) {
+  <img
+    src="6.jpeg"
+    class="background-image"
+    style="object-position: 40%"
+    alt=""
+  />
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    "
+  >
+    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
+      {{weddingName}}
+    </h1>
+  </div>
+    } @case (7) {
+  <img
+    src="7.jpeg"
+    class="background-image"
+    style="object-position: 45%"
+    alt=""
+  />
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    "
+  >
+    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
+      {{weddingName}}
+    </h1>
+  </div>
+    } @case (8) {
+  <img
+    src="8.jpeg"
+    class="background-image"
+    style="object-position: 52%"
+    alt=""
+  />
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    "
+  >
+    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
+      {{weddingName}}
     </h1>
   </div>
   } @default () { } } }
@@ -188,7 +241,7 @@
   (click)="scrollToContent()"
   style="
     position: absolute;
-    bottom: 200px;
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
