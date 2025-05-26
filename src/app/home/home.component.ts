@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   randomSource: number | undefined;
   customImageFlag: boolean = false;
   customImage: string | undefined;
+  weddingName: string = 'Wedding of Brooke & Kuba';
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
@@ -48,7 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.randomSource = Math.floor(Math.random() * 5) + 1; // chooses random imgage
+    this.randomSource = Math.floor(Math.random() * 8) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
     if (inviteCode) {
       this.navItems.push({
