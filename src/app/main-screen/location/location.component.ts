@@ -29,7 +29,6 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class LocationComponent {
 
   protected readonly isMobile = signal(true);
-
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
 
@@ -54,6 +53,12 @@ export class LocationComponent {
     lng: environment.swingsLatLong.lng,
   };
   zoom = 12;
+  mapOptions: google.maps.MapOptions = {
+  disableDefaultUI: true,
+  clickableIcons: false,
+  // colorScheme: 'DARK',
+  mapId: '4434e0984ef31fa4'
+  };
 
 
   copyWeddingAddress() {
