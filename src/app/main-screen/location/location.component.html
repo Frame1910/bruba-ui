@@ -1,39 +1,34 @@
-<!-- Card approach aint working here, I cant figure out a good way of making it look nice -->
-<div class="location-container">
+@if (isMobile()) {
+<div style="padding: 1rem; text-align: center">
+  <h2 class="wedding-venue-name">{{ weddingVenueName }}</h2>
+  <p class="wedding-address">{{ weddingAddress }}</p>
+  <p class="wedding-date">{{ weddingDate | date }}</p>
   <google-map
     [center]="center"
     [zoom]="zoom"
     mapId="wedding_location"
-    class="map-container"
-    width="50vw"
-    height="100%"
+    width="100%"
   >
-    <map-advanced-marker #marker="mapAdvancedMarker" [position]="center"/>
+    <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
   </google-map>
+</div>
+} @else {
+<div class="location-container">
+  <div class="map-container">
+    <google-map
+      [center]="center"
+      [zoom]="zoom"
+      mapId="wedding_location"
+      width="50vw"
+      height="100%"
+    >
+      <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
+    </google-map>
+  </div>
   <div class="location-details">
     <h2 class="wedding-venue-name">{{ weddingVenueName }}</h2>
     <p class="wedding-address">{{ weddingAddress }}</p>
     <p class="wedding-date">{{ weddingDate | date }}</p>
   </div>
-  <!-- <mat-list>
-        <mat-list-item>
-
-          <mat-icon matListItemIcon>location_on</mat-icon>
-          <div matListItemTitle>{{ weddingVenueName }}</div>
-          <div matListItemLine>{{ weddingAddress }}</div>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-icon matListItemIcon>event</mat-icon>
-          <div matListItemTitle>{{ weddingDate | date }}</div>
-        </mat-list-item>
-      </mat-list> -->
-
-  <!-- <button mat-button (click)="copyWeddingAddress()">
-        Copy Address
-        <mat-icon>content_copy</mat-icon>
-      </button>
-      <a mat-button href="https://maps.app.goo.gl/SytR1SB6a94Uhi7FA">
-        Open in Maps
-        <mat-icon>map</mat-icon>
-      </a> -->
 </div>
+}
