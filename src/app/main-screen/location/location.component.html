@@ -1,41 +1,39 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Wedding Location</mat-card-title>
-  </mat-card-header>
-  <div mat-card-image style="margin-top: 15px">
-    <google-map
-      style="border-radius: 25px !important"
-      height="300px"
-      width="100%"
-      [center]="center"
-      [zoom]="zoom"
-      mapId="wedding_location"
-      [options]="mapDisplayOptions"
-    >
-      <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
-    </google-map>
+<!-- Card approach aint working here, I cant figure out a good way of making it look nice -->
+<div class="location-container">
+  <google-map
+    [center]="center"
+    [zoom]="zoom"
+    mapId="wedding_location"
+    class="map-container"
+    width="50vw"
+    height="100%"
+  >
+    <map-advanced-marker #marker="mapAdvancedMarker" [position]="center"/>
+  </google-map>
+  <div class="location-details">
+    <h2 class="wedding-venue-name">{{ weddingVenueName }}</h2>
+    <p class="wedding-address">{{ weddingAddress }}</p>
+    <p class="wedding-date">{{ weddingDate | date }}</p>
   </div>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item>
-        <mat-icon matListItemIcon>location_on</mat-icon>
-        <div matListItemTitle>{{ weddingVenueName }}</div>
-        <div matListItemLine>{{ weddingAddress }}</div>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon matListItemIcon>event</mat-icon>
-        <div matListItemTitle>{{ weddingDate | date }}</div>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-button (click)="copyWeddingAddress()">
-      Copy Address
-      <mat-icon>content_copy</mat-icon>
-    </button>
-    <a mat-button href="https://maps.app.goo.gl/SytR1SB6a94Uhi7FA">
-      Open in Maps
-      <mat-icon>map</mat-icon>
-    </a>
-  </mat-card-actions>
-</mat-card>
+  <!-- <mat-list>
+        <mat-list-item>
+
+          <mat-icon matListItemIcon>location_on</mat-icon>
+          <div matListItemTitle>{{ weddingVenueName }}</div>
+          <div matListItemLine>{{ weddingAddress }}</div>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListItemIcon>event</mat-icon>
+          <div matListItemTitle>{{ weddingDate | date }}</div>
+        </mat-list-item>
+      </mat-list> -->
+
+  <!-- <button mat-button (click)="copyWeddingAddress()">
+        Copy Address
+        <mat-icon>content_copy</mat-icon>
+      </button>
+      <a mat-button href="https://maps.app.goo.gl/SytR1SB6a94Uhi7FA">
+        Open in Maps
+        <mat-icon>map</mat-icon>
+      </a> -->
+</div>

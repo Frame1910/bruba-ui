@@ -38,14 +38,8 @@ export class LocationComponent {
     lat: environment.swingsLatLong.lat,
     lng: environment.swingsLatLong.lng,
   };
-  zoom = 8;
+  zoom = 12;
 
-  mapDisplayOptions: google.maps.MapOptions = {
-    disableDefaultUI: true,
-    disableDoubleClickZoom: true,
-    scrollwheel: false,
-    gestureHandling: 'none',
-  };
 
   copyWeddingAddress() {
     this._snackbar.open('Address copied to clipboard!', undefined, {

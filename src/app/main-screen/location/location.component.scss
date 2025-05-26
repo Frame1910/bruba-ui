@@ -1,0 +1,15 @@
+.location-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  height: calc(100vh - var(--mat-tab-height));
+}
+
+.map-container {
+  display: flex;
+}
+
+.location-details {
+  height: 100%;
+}
