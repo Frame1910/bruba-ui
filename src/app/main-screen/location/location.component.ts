@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { ThemeService } from '../../services/theme.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class LocationComponent {
   protected readonly isMobile = signal(true);
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
+  readonly themeService = inject(ThemeService);
 
   constructor() {
     const media = inject(MediaMatcher);
@@ -54,12 +56,10 @@ export class LocationComponent {
   };
   zoom = 12;
   mapOptions: google.maps.MapOptions = {
-  disableDefaultUI: true,
-  clickableIcons: false,
-  // colorScheme: 'DARK',
-  mapId: '4434e0984ef31fa4'
+    disableDefaultUI: true,
+    clickableIcons: false,
+    colorScheme: this.themeService.setMapTheme() // This currently only works if the component is rendered after the theme is set
   };
-
 
   copyWeddingAddress() {
     this._snackbar.open('Address copied to clipboard!', undefined, {
