@@ -30,6 +30,27 @@
         <mat-icon>{{ item.icon }}</mat-icon>
       </button>
       }
+      @switch (themeService.currentTheme()) { @case ('dark') {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>Dark</span>
+        <mat-icon>dark_mode</mat-icon>
+      </button>
+        } @case ('light') {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>Light</span>
+        <mat-icon>light_mode</mat-icon>
+      </button>
+        } @case ('dumb') {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>Dumb</span>
+        <mat-icon>emoji_objects</mat-icon>
+      </button>
+        } @default () {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>huh</span>
+        <mat-icon>help_outline</mat-icon>
+      </button>
+        }}
     </mat-menu>
     } @else { @for (item of navItems; track item.route) {
     <a
@@ -42,7 +63,29 @@
       <span>{{ item.name }}</span>
       <mat-icon>{{ item.icon }}</mat-icon>
     </a>
-    } }
+    }
+      @switch (themeService.currentTheme()) { @case ('dark') {
+      <a (click)="themeService.toggleTheme()" mat-button>
+        <span>Dark</span>
+        <mat-icon>dark_mode</mat-icon>
+      </a>
+      } @case ('light') {
+      <a (click)="themeService.toggleTheme()" mat-button>
+        <span>Light</span>
+        <mat-icon>light_mode</mat-icon>
+      </a>
+      } @case ('dumb') {
+      <a (click)="themeService.toggleTheme()" mat-button>
+        <span>Dumb</span>
+        <mat-icon>emoji_objects</mat-icon>
+      </a>
+      } @default () {
+      <a (click)="themeService.toggleTheme()" mat-button>
+        <span>huh</span>
+        <mat-icon>help_outline</mat-icon>
+      </a>
+      }}
+    }
   </mat-toolbar>
   @if (customImage) {
   <img
@@ -65,7 +108,7 @@
       style="font-weight: 400"
       class="name-title"
     >
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
   } @else { @switch (randomSource) { @case (1) {
@@ -85,7 +128,7 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
   } @case (2) {
@@ -105,7 +148,7 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
   } @case (3) {
@@ -129,7 +172,7 @@
       class="name-title"
       style="mix-blend-mode: difference"
     >
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
   } @case (4) {
@@ -149,7 +192,7 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
   } @case (5) {
@@ -169,10 +212,10 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
-    } @case (6) {
+  } @case (6) {
   <img
     src="6.jpeg"
     class="background-image"
@@ -189,10 +232,10 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
-    } @case (7) {
+  } @case (7) {
   <img
     src="7.jpeg"
     class="background-image"
@@ -209,10 +252,10 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
-    } @case (8) {
+  } @case (8) {
   <img
     src="8.jpeg"
     class="background-image"
@@ -229,7 +272,7 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{weddingName}}
+      {{ weddingName }}
     </h1>
   </div>
   } @default () { } } }

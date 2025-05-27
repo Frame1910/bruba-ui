@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { ThemeService } from '../services/theme.service';
 @Component({
   selector: 'app-home',
   imports: [
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   navItems = [{ name: 'Home', route: ['main'], icon: 'home' }];
   protected readonly isMobile = signal(true);
+  readonly themeService = inject(ThemeService);
   randomSource: number | undefined;
   customImageFlag: boolean = false;
   customImage: string | undefined;

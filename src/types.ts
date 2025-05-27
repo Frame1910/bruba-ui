@@ -58,3 +58,5 @@ export interface UserInvite {
   updatedAt: string;
   user: User;
 }
+
+export type Theme = 'light' | 'dark' | 'dumb';
