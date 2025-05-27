@@ -30,6 +30,27 @@
         <mat-icon>{{ item.icon }}</mat-icon>
       </button>
       }
+      @switch (themeService.currentTheme()) { @case ('dark') {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>Dark</span>
+        <mat-icon>dark_mode</mat-icon>
+      </button>
+        } @case ('light') {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>Light</span>
+        <mat-icon>light_mode</mat-icon>
+      </button>
+        } @case ('dumb') {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>Dumb</span>
+        <mat-icon>emoji_objects</mat-icon>
+      </button>
+        } @default () {
+      <button (click)="themeService.toggleTheme()" mat-menu-item>
+        <span>huh</span>
+        <mat-icon>help_outline</mat-icon>
+      </button>
+        }}
     </mat-menu>
     } @else { @for (item of navItems; track item.route) {
     <a
@@ -43,29 +64,27 @@
       <mat-icon>{{ item.icon }}</mat-icon>
     </a>
     }
-    <a (click)="themeService.toggleTheme()">
       @switch (themeService.currentTheme()) { @case ('dark') {
-      <a mat-button>
+      <a (click)="themeService.toggleTheme()" mat-button>
         <span>Dark</span>
         <mat-icon>dark_mode</mat-icon>
       </a>
       } @case ('light') {
-      <a mat-button>
+      <a (click)="themeService.toggleTheme()" mat-button>
         <span>Light</span>
         <mat-icon>light_mode</mat-icon>
       </a>
       } @case ('dumb') {
-      <a mat-button>
+      <a (click)="themeService.toggleTheme()" mat-button>
         <span>Dumb</span>
         <mat-icon>emoji_objects</mat-icon>
       </a>
       } @default () {
-      <a mat-button>
+      <a (click)="themeService.toggleTheme()" mat-button>
         <span>huh</span>
         <mat-icon>help_outline</mat-icon>
       </a>
       }}
-    </a>
     }
   </mat-toolbar>
   @if (customImage) {
