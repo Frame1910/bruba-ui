@@ -5,3 +5,45 @@
   width: 100%;
   height: calc(100vh - var(--mat-tab-height));
 }
+
+.card-container {
+  width: 50vw;
+  height: calc(100vh - var(--mat-tab-height));
+}
+.location-details {
+  padding: 15px;
+}
+
+.venue-card {
+
+}
+
+.venue-title {
+  font-family: 'Ms Madi';
+  font-size: 3rem;
+  font-weight: 400;
+  padding-bottom: 1rem;
+}
+
+.venue-image {
+  object-fit: cover;
+  height: 30vh;
+}
+
+.venue-name {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.venue-address {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.time-title {
+  font-family: 'Ms Madi';
+  font-size: 3rem;
+  font-weight: 400;
+  padding-bottom: 1rem;
+}

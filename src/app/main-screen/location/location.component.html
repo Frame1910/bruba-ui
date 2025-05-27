@@ -13,6 +13,10 @@
     <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
   </google-map>
 </div>
+<a mat-button href="wedding.ics">
+  Add to Calendar
+  <mat-icon>map</mat-icon>
+</a>
 } @else {
 <div class="location-container">
   <div class="map-container">
@@ -27,10 +31,56 @@
       <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
     </google-map>
   </div>
-  <div class="location-details">
-    <h2 class="wedding-venue-name">{{ weddingVenueName }}</h2>
-    <p class="wedding-address">{{ weddingAddress }}</p>
-    <p class="wedding-date">{{ weddingDate | date }}</p>
+  <div class="card-container">
+    <div class="location-details">
+      <mat-card appearance="raised" class="venue-card">
+        <mat-card-header>
+          <mat-card-title class="venue-title">Venue</mat-card-title>
+          <mat-divider></mat-divider>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="https://www.swings.com.au/media/banners/_bannerLarge/SwingsSoftOpen2019_KellyHarwoodPhotography-6.jpg"
+          alt="Venue image"
+          class="venue-image"
+        />
+        <mat-card-content class="venue-content">
+          <h2 class="venue-name">{{ weddingVenueName }}</h2>
+          <p class="venue-address">2807 Caves Road,</p>
+          <p class="venue-address">Yallingup, WA</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="copyWeddingAddress()">
+            Copy Address
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <a mat-button href="https://maps.app.goo.gl/aPU52pQzKv71pgky7">
+            Open in Maps
+            <mat-icon>map</mat-icon>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="location-details">
+      <mat-card appearance="raised" class="time-card">
+        <mat-card-header>
+          <mat-card-title class="time-title">On The Day</mat-card-title>
+          <mat-divider></mat-divider>
+        </mat-card-header>
+        <mat-card-content class="time-content">
+          <h2 class="time-name">Ceremony</h2>
+          <p class="time">3:30PM</p>
+          <h2 class="time-name">Reception</h2>
+          <p class="time">4:30PM</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <a mat-button href="wedding.ics">
+            Add to Calendar
+            <mat-icon>event</mat-icon>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </div>
 }

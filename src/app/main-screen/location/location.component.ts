@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from '../../services/theme.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @Component({
@@ -22,7 +23,8 @@ import { ThemeService } from '../../services/theme.service';
     MatListModule,
     MatIconModule,
     DatePipe,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss'
