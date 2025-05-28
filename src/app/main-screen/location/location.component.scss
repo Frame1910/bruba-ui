@@ -8,14 +8,26 @@
 
 .card-container {
   width: 50vw;
-  height: calc(100vh - var(--mat-tab-height));
+  height: calc(100vh - var(--mat-tab-height) - 30px);
 }
+
+.card-container-mobile {
+  width: 100vw;
+  // height: 100%;
+}
+
 .location-details {
-  padding: 15px;
+  padding: 15px 15px 15px 15px;
+  height: 50%;
+}
+
+.location-details-mobile {
+  padding: 0 15px 15px 15px;
+  height: 50%;
 }
 
 .venue-card {
-
+  height: 100%;
 }
 
 .venue-title {
@@ -27,7 +39,7 @@
 
 .venue-image {
   object-fit: cover;
-  height: 30vh;
+  height: 100%;
 }
 
 .venue-name {
@@ -41,9 +53,50 @@
   margin: 0;
 }
 
+.time-details {
+  padding: 0 15px 0 15px;
+  height: calc(50% - 15px)
+}
+
+.time-details-mobile {
+  padding: 0 15px 15px 15px;
+}
+
+.time-card {
+  height: 100%;
+}
+
 .time-title {
   font-family: 'Ms Madi';
   font-size: 3rem;
   font-weight: 400;
   padding-bottom: 1rem;
+}
+
+.time-image {
+  object-fit: cover;
+  object-position: 50% 75%;
+  height: 100%;
+}
+
+.time-content {
+  // height: 100%;
+}
+
+.time-name {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.time-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.time-section {
+  // width: 30%;
+  // height: 100%;
 }
