@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -8,6 +8,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ThemeService } from '../../services/theme.service';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @Component({
@@ -20,31 +24,48 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatIconModule,
     DatePipe,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule,
+    MatMenuModule
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss'
 })
 export class LocationComponent {
 
+  protected readonly isMobile = signal(true);
+  private readonly _mobileQuery: MediaQueryList;
+  private readonly _mobileQueryListener: () => void;
+  readonly themeService = inject(ThemeService);
+
+  constructor() {
+    const media = inject(MediaMatcher);
+    this._mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.isMobile.set(this._mobileQuery.matches);
+    this._mobileQueryListener = () =>
+      this.isMobile.set(this._mobileQuery.matches);
+    this._mobileQuery.addEventListener('change', this._mobileQueryListener);
+  }
+
   private clipboard = inject(Clipboard);
   private _snackbar = inject(MatSnackBar);
   weddingDate: Date = environment.weddingDate;
   weddingAddress: string = environment.weddingAddress;
   weddingVenueName: string = environment.weddingVenueName;
+  googleCalendarURL: string = environment.googleCalendarURL;
+  outlookCalendarURL: string = environment.outlookCalendarURL;
+
 
   // Latitude & Longitude for the location
   center: google.maps.LatLngLiteral = {
     lat: environment.swingsLatLong.lat,
     lng: environment.swingsLatLong.lng,
   };
-  zoom = 8;
-
-  mapDisplayOptions: google.maps.MapOptions = {
+  zoom = 12;
+  mapOptions: google.maps.MapOptions = {
     disableDefaultUI: true,
-    disableDoubleClickZoom: true,
-    scrollwheel: false,
-    gestureHandling: 'none',
+    clickableIcons: false,
+    colorScheme: this.themeService.setMapTheme() // This currently only works if the component is rendered after the theme is set
   };
 
   copyWeddingAddress() {

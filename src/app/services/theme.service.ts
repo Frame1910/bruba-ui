@@ -40,4 +40,18 @@ export class ThemeService {
         break;
     }
   }
+
+  setMapTheme() {
+    switch (this.currentTheme())
+    {
+      case 'dark':
+        return 'DARK';
+      case 'light':
+        return 'LIGHT';
+      case 'dumb':
+        return 'DARK';
+      default:
+        return 'DARK';
+    }
+  }
 }

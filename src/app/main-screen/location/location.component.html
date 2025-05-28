@@ -1,41 +1,179 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Wedding Location</mat-card-title>
-  </mat-card-header>
-  <div mat-card-image style="margin-top: 15px">
+@if (isMobile()) {
+<div style="padding: 1rem; text-align: center">
+  <google-map
+    [center]="center"
+    [zoom]="zoom"
+    [options]="mapOptions"
+    mapId="wedding_location"
+    width="100%"
+    padding="0"
+  >
+    <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
+  </google-map>
+</div>
+<div class="card-container-mobile">
+  <div class="location-details-mobile">
+    <mat-card appearance="raised" class="venue-card">
+      <mat-card-header>
+        <mat-card-title class="venue-title">Venue</mat-card-title>
+        <mat-divider></mat-divider>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="https://www.swings.com.au/media/banners/_bannerLarge/SwingsSoftOpen2019_KellyHarwoodPhotography-6.jpg"
+        alt="Venue image"
+        class="venue-image"
+        style="max-height: 200px"
+      />
+      <mat-card-content class="venue-content">
+        <h2 class="venue-name">{{ weddingVenueName }}</h2>
+        <p class="venue-address">2807 Caves Road,</p>
+        <p class="venue-address">Yallingup, WA</p>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button (click)="copyWeddingAddress()">
+          Copy Address
+          <mat-icon>content_copy</mat-icon>
+        </button>
+        <a mat-button href="https://maps.app.goo.gl/aPU52pQzKv71pgky7">
+          Open in Maps
+          <mat-icon>map</mat-icon>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="time-details-mobile">
+    <mat-card appearance="raised" class="time-card">
+      <mat-card-header>
+        <mat-card-title class="time-title">On The Day</mat-card-title>
+      </mat-card-header>
+      <img
+        mat-card-image
+        src="https://www.swings.com.au/media/images/_gallery/kelsie_leigh-164.jpg"
+        alt="Venue image"
+        class="time-image"
+        style="max-height: 200px"
+      />
+      <mat-card-content class="time-content">
+        <div class="time-container">
+          <div class="time-section">
+            <h2 class="time-name">Ceremony</h2>
+            <p class="time">3:30PM</p>
+          </div>
+          <mat-divider [vertical]="true"></mat-divider>
+          <div class="time-section">
+            <h2 class="time-name">Reception</h2>
+            <p class="time">4:30PM - Late</p>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button [matMenuTriggerFor]="menu">
+          Add to Calendar
+          <mat-icon>event</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <a mat-menu-item href="wedding.ics">
+            <span>iCalendar</span>
+          </a>
+          <a mat-menu-item href="{{ googleCalendarURL }}">
+            <span>Google</span>
+          </a>
+          <a mat-menu-item href="{{ outlookCalendarURL }}">
+            <span>Outlook</span>
+          </a>
+        </mat-menu>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+} @else {
+<div class="location-container">
+  <div class="map-container">
     <google-map
-      style="border-radius: 25px !important"
-      height="300px"
-      width="100%"
       [center]="center"
       [zoom]="zoom"
+      [options]="mapOptions"
       mapId="wedding_location"
-      [options]="mapDisplayOptions"
+      width="50vw"
+      height="100%"
     >
       <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
     </google-map>
   </div>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item>
-        <mat-icon matListItemIcon>location_on</mat-icon>
-        <div matListItemTitle>{{ weddingVenueName }}</div>
-        <div matListItemLine>{{ weddingAddress }}</div>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon matListItemIcon>event</mat-icon>
-        <div matListItemTitle>{{ weddingDate | date }}</div>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-button (click)="copyWeddingAddress()">
-      Copy Address
-      <mat-icon>content_copy</mat-icon>
-    </button>
-    <a mat-button href="https://maps.app.goo.gl/SytR1SB6a94Uhi7FA">
-      Open in Maps
-      <mat-icon>map</mat-icon>
-    </a>
-  </mat-card-actions>
-</mat-card>
+  <div class="card-container">
+    <div class="location-details">
+      <mat-card appearance="raised" class="venue-card">
+        <mat-card-header>
+          <mat-card-title class="venue-title">Venue</mat-card-title>
+          <mat-divider></mat-divider>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="https://www.swings.com.au/media/banners/_bannerLarge/SwingsSoftOpen2019_KellyHarwoodPhotography-6.jpg"
+          alt="Venue image"
+          class="venue-image"
+        />
+        <mat-card-content class="venue-content">
+          <h2 class="venue-name">{{ weddingVenueName }}</h2>
+          <p class="venue-address">2807 Caves Road,</p>
+          <p class="venue-address">Yallingup, WA</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="copyWeddingAddress()">
+            Copy Address
+            <mat-icon>content_copy</mat-icon>
+          </button>
+          <a mat-button href="https://maps.app.goo.gl/aPU52pQzKv71pgky7">
+            Open in Maps
+            <mat-icon>map</mat-icon>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="time-details">
+      <mat-card appearance="raised" class="time-card">
+        <mat-card-header>
+          <mat-card-title class="time-title">On The Day</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="https://www.swings.com.au/media/images/_gallery/kelsie_leigh-164.jpg"
+          alt="Venue image"
+          class="time-image"
+        />
+        <mat-card-content class="time-content">
+          <div class="time-container">
+            <div class="time-section">
+              <h2 class="time-name">Ceremony</h2>
+              <p class="time">3:30PM</p>
+            </div>
+            <mat-divider [vertical]="true"></mat-divider>
+            <div class="time-section">
+              <h2 class="time-name">Reception</h2>
+              <p class="time">4:30PM - Late</p>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button [matMenuTriggerFor]="menu">
+            Add to Calendar
+            <mat-icon>event</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <a mat-menu-item href="wedding.ics">
+              <span>iCalendar</span>
+            </a>
+            <a mat-menu-item href="{{ googleCalendarURL }}">
+              <span>Google</span>
+            </a>
+            <a mat-menu-item href="{{ outlookCalendarURL }}">
+              <span>Outlook</span>
+            </a>
+          </mat-menu>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+}
