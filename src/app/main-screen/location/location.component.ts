@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from '../../services/theme.service';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     DatePipe,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    MatMenuModule
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss'
@@ -50,6 +52,9 @@ export class LocationComponent {
   weddingDate: Date = environment.weddingDate;
   weddingAddress: string = environment.weddingAddress;
   weddingVenueName: string = environment.weddingVenueName;
+  googleCalendarURL: string = environment.googleCalendarURL;
+  outlookCalendarURL: string = environment.outlookCalendarURL;
+
 
   // Latitude & Longitude for the location
   center: google.maps.LatLngLiteral = {

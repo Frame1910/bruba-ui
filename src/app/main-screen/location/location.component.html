@@ -13,10 +13,21 @@
     <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
   </google-map>
 </div>
-<a mat-button href="wedding.ics">
+<button mat-button [matMenuTriggerFor]="menu">
   Add to Calendar
-  <mat-icon>map</mat-icon>
-</a>
+  <mat-icon>event</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <a mat-menu-item href="wedding.ics">
+    <span>iCalendar</span>
+  </a>
+  <a mat-menu-item href="{{ googleCalendarURL }}">
+    <span>Google</span>
+  </a>
+  <a mat-menu-item href="{{ outlookCalendarURL }}">
+    <span>Outlook</span>
+  </a>
+</mat-menu>
 } @else {
 <div class="location-container">
   <div class="map-container">
@@ -74,10 +85,21 @@
           <p class="time">4:30PM</p>
         </mat-card-content>
         <mat-card-actions align="end">
-          <a mat-button href="wedding.ics">
+          <button mat-button [matMenuTriggerFor]="menu">
             Add to Calendar
             <mat-icon>event</mat-icon>
-          </a>
+          </button>
+          <mat-menu #menu="matMenu">
+            <a mat-menu-item href="wedding.ics">
+              <span>iCalendar</span>
+            </a>
+            <a mat-menu-item href="{{ googleCalendarURL }}">
+              <span>Google</span>
+            </a>
+            <a mat-menu-item href="{{ outlookCalendarURL }}">
+              <span>Outlook</span>
+            </a>
+          </mat-menu>
         </mat-card-actions>
       </mat-card>
     </div>
