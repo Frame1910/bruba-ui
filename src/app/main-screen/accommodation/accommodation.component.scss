@@ -1,3 +1,7 @@
+.accommodation-container {
+  height: calc(100vh - var(--mat-tab-height) - 20px);
+}
+
 .accommodation-cards {
   display: flex;
   flex-wrap: wrap;
@@ -24,8 +28,15 @@
   width: 100%;
 }
 
-.stay-input-card {
-  width: 80vw;
-  justify-content: center;
+.card-title {
+  font-family: 'Ms Madi';
+  font-size: 3rem;
+  font-weight: 400;
+  padding-bottom: 1rem;
 }
 
+.card-image {
+  object-fit: cover;
+  max-width: 100vw;
+  // max-height: 200px;
+}
