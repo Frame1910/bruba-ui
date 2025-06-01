@@ -40,6 +40,7 @@ export class AccommodationComponent {
     const results = await placesLib.Place.searchByText({
       textQuery: inputValue,
       fields: ['displayName', 'formattedAddress', 'location'],
+      region: 'au'
     });
     this.suggestions = results.places;
   }
@@ -51,6 +52,7 @@ export class AccommodationComponent {
   }
 
   async onSubmit() {
+    console.log('Submitting address:', this.address);
     console.log('Selected address:', this.address.formattedAddress);
   }
 
