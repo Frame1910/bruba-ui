@@ -1,16 +1,273 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Recommended Stays</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>
-      Here are some places we think you'll like. Make sure to tell us where
-      you're staying, so we can organise a party bus to pick you up 🎉
-    </p>
-    <!-- TODO -->
-    <p>Placeholder</p>
-  </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-button>Add your Stay <mat-icon>add</mat-icon></button>
-  </mat-card-actions>
-</mat-card>
+@if (deviceService.isMobile()){
+<div class="accommodation-cards-mobile">
+  <div class="accommodation-card-container-mobile">
+    <mat-card appearance="raised">
+      <mat-card-header>
+        <mat-card-title class="card-title">Yallingup</mat-card-title>
+      </mat-card-header>
+      <img
+        mat-card-image
+        class="card-image"
+        src="https://media.margaretriver.com/wp-content/uploads/2021/07/MRBTA-Yallingup-007-web.jpeg?tr=w-1500,h-1000"
+        alt=""
+      />
+      <mat-card-content>
+        <p>
+          Yallingup is a beautiful coastal town with various accommodation
+          options. Popular choices include Seashells Yallingup, offering ocean
+          view apartments, and Smiths Beach Resort with luxury villas. There are
+          also numerous holiday homes and B&Bs available through platforms like
+          Airbnb and Stayz.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="accommodation-cards-mobile">
+    <div class="accommodation-card-container-mobile">
+      <mat-card appearance="raised" class="accommodation-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">Margaret River</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          class="card-image"
+          src="https://media.margaretriver.com/wp-content/uploads/2022/02/Beef-Farmer-Tom-Tate-30.3.2016-1-web-Credit-Elements-Margaret-River-.jpg"
+          alt=""
+        />
+        <mat-card-content>
+          <p>
+            Margaret River town offers a wide range of accommodation options.
+            You'll find boutique hotels like Heritage Trail Lodge, comfortable
+            motels such as Edge of the Forest, and numerous self-contained
+            apartments. The area is known for its charming bed & breakfasts and
+            forest retreats, all available through direct booking or platforms
+            like Airbnb and Stayz.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="accommodation-cards-mobile">
+    <div class="accommodation-card-container-mobile">
+      <mat-card appearance="raised" class="accommodation-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">Dunsborough</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          class="card-image"
+          src="https://media.margaretriver.com/wp-content/uploads/2022/02/Dunsborough-Town-scaled.jpg?tr=w-1500,h-1000"
+          alt=""
+        />
+        <mat-card-content>
+          <p>
+            Dunsborough offers diverse accommodation options, from luxury
+            resorts to cozy holiday homes. The Dunsborough Beach Lodge and Bay
+            Village Resort provide comfortable stays close to town. The area
+            also features numerous private rentals through Airbnb and Stayz.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div class="accommodation-cards-mobile">
+  <div class="accommodation-card-container-mobile">
+    <mat-card appearance="raised" class="stay-input-card">
+      <mat-card-header style="padding-bottom: 5px">
+        <mat-card-title class="card-title"
+          >Let us know where you're staying</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          We are organising a bus to transport guests from their accommodation
+          to the wedding venue and back. If you would like to be included in the
+          bus transport, please let us know where you will be staying.
+        </p>
+        <p>Please let us know by the <strong>end of July</strong></p>
+        <div class="bus-transport">
+          <span>Do you require bus transport?</span>
+          <mat-chip-listbox required>
+            <div>
+              <mat-chip-option value="True">Yes</mat-chip-option>
+              <mat-chip-option value="False">No</mat-chip-option>
+            </div>
+          </mat-chip-listbox>
+        </div>
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Where are you staying?</mat-label>
+          <input
+            type="text"
+            matInput
+            [matAutocomplete]="auto"
+            [(ngModel)]="addressText"
+            (input)="onAddressInput()"
+            autocomplete="off"
+            required
+          />
+        </mat-form-field>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selectSuggestion($event.option.value)"
+        >
+          <mat-option
+            *ngFor="let suggestion of suggestions"
+            [value]="suggestion"
+          >
+            <span
+              [innerHTML]="highlightMatch(suggestion.displayName, addressText)"
+            ></span>
+            <br />
+            <span
+              class="address"
+              [innerHTML]="
+                highlightMatch(suggestion.formattedAddress, addressText)
+              "
+            ></span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button (click)="onSubmit()">
+          Add your Stay <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+} @else {
+<div class="accommodation-container">
+  <div class="accommodation-cards">
+    <div class="accommodation-card-container">
+      <mat-card appearance="raised" class="accommodation-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">Yallingup</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          class="card-image"
+          src="https://media.margaretriver.com/wp-content/uploads/2021/07/MRBTA-Yallingup-007-web.jpeg?tr=w-1500,h-1000"
+          alt=""
+        />
+        <mat-card-content>
+          <p>
+            Yallingup is a beautiful coastal town with various accommodation
+            options. Popular choices include Seashells Yallingup, offering ocean
+            view apartments, and Smiths Beach Resort with luxury villas. There
+            are also numerous holiday homes and B&Bs available through platforms
+            like Airbnb and Stayz.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="accommodation-card-container">
+      <mat-card appearance="raised" class="accommodation-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">Margaret River</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          class="card-image"
+          src="https://media.margaretriver.com/wp-content/uploads/2022/02/Beef-Farmer-Tom-Tate-30.3.2016-1-web-Credit-Elements-Margaret-River-.jpg"
+          alt=""
+        />
+        <mat-card-content>
+          <p>
+            Margaret River town offers a wide range of accommodation options.
+            You'll find boutique hotels like Heritage Trail Lodge, comfortable
+            motels such as Edge of the Forest, and numerous self-contained
+            apartments. The area is known for its charming bed & breakfasts and
+            forest retreats, all available through direct booking or platforms
+            like Airbnb and Stayz.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="accommodation-card-container">
+      <mat-card appearance="raised" class="accommodation-card">
+        <mat-card-header>
+          <mat-card-title class="card-title">Dunsborough</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          class="card-image"
+          src="https://media.margaretriver.com/wp-content/uploads/2022/02/Dunsborough-Town-scaled.jpg?tr=w-1500,h-1000"
+          alt=""
+        />
+        <mat-card-content>
+          <p>
+            Dunsborough offers diverse accommodation options, from luxury
+            resorts to cozy holiday homes. The Dunsborough Beach Lodge and Bay
+            Village Resort provide comfortable stays close to town. The area
+            also features numerous private rentals through Airbnb and Stayz.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="stay-input-card-container">
+    <mat-card appearance="raised" class="stay-input-card">
+      <mat-card-header style="padding-bottom: 5px">
+        <mat-card-title class="card-title"
+          >Let us know where you're staying</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          We are organising a bus to transport guests from their accommodation
+          to the wedding venue and back. If you would like to be included in the
+          bus transport, please let us know where you will be staying.
+        </p>
+        <p>Please let us know by the <strong>end of July</strong></p>
+        <div class="bus-transport">
+          <span>Do you require bus transport?</span>
+          <mat-chip-listbox required>
+            <div>
+              <mat-chip-option value="True">Yes</mat-chip-option>
+              <mat-chip-option value="False">No</mat-chip-option>
+            </div>
+          </mat-chip-listbox>
+        </div>
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Where are you staying?</mat-label>
+          <input
+            type="text"
+            matInput
+            [matAutocomplete]="auto"
+            [(ngModel)]="addressText"
+            (input)="onAddressInput()"
+            autocomplete="off"
+            required
+          />
+        </mat-form-field>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selectSuggestion($event.option.value)"
+        >
+          <mat-option
+            *ngFor="let suggestion of suggestions"
+            [value]="suggestion"
+          >
+            <span
+              [innerHTML]="highlightMatch(suggestion.displayName, addressText)"
+            ></span>
+            <br />
+            <span
+              class="address"
+              [innerHTML]="
+                highlightMatch(suggestion.formattedAddress, addressText)
+              "
+            ></span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button (click)="onSubmit()">
+          Add your Stay <mat-icon>add</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+}
