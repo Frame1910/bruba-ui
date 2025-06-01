@@ -17,17 +17,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: calc(90rem + 40px);
+  max-width: 92rem;
   margin: 0 auto;
 }
 
 .accommodation-card-container {
   display: flex;
-  padding: 10px;
+  padding: 0.5rem;
 }
 
 .accommodation-card-container-mobile {
-  padding: 0 15px 15px 15px
+  padding: 0.5rem
 }
 
 .accommodation-card {
@@ -60,7 +60,7 @@
 .bus-transport {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 1rem;
   padding-bottom: 0.5rem;
 }
 
