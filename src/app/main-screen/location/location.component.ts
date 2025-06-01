@@ -12,7 +12,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ThemeService } from '../../services/theme.service';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { DeviceService } from '../../services/device.service';
 
 @Component({
   selector: 'app-location',
@@ -26,27 +26,14 @@ import { MatMenuModule } from '@angular/material/menu';
     DatePipe,
     MatButtonModule,
     MatDividerModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   templateUrl: './location.component.html',
-  styleUrl: './location.component.scss'
+  styleUrl: './location.component.scss',
 })
 export class LocationComponent {
-
-  protected readonly isMobile = signal(true);
-  private readonly _mobileQuery: MediaQueryList;
-  private readonly _mobileQueryListener: () => void;
+  readonly deviceService = inject(DeviceService);
   readonly themeService = inject(ThemeService);
-
-  constructor() {
-    const media = inject(MediaMatcher);
-    this._mobileQuery = media.matchMedia('(max-width: 600px)');
-    this.isMobile.set(this._mobileQuery.matches);
-    this._mobileQueryListener = () =>
-      this.isMobile.set(this._mobileQuery.matches);
-    this._mobileQuery.addEventListener('change', this._mobileQueryListener);
-  }
-
   private clipboard = inject(Clipboard);
   private _snackbar = inject(MatSnackBar);
   weddingDate: Date = environment.weddingDate;
@@ -54,7 +41,6 @@ export class LocationComponent {
   weddingVenueName: string = environment.weddingVenueName;
   googleCalendarURL: string = environment.googleCalendarURL;
   outlookCalendarURL: string = environment.outlookCalendarURL;
-
 
   // Latitude & Longitude for the location
   center: google.maps.LatLngLiteral = {
@@ -65,7 +51,7 @@ export class LocationComponent {
   mapOptions: google.maps.MapOptions = {
     disableDefaultUI: true,
     clickableIcons: false,
-    colorScheme: this.themeService.setMapTheme() // This currently only works if the component is rendered after the theme is set
+    colorScheme: this.themeService.setMapTheme(), // This currently only works if the component is rendered after the theme is set
   };
 
   copyWeddingAddress() {
@@ -74,5 +60,4 @@ export class LocationComponent {
     });
     this.clipboard.copy(this.weddingAddress);
   }
-
 }
