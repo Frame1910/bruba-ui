@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @Component({
   selector: 'app-accommodation',
   imports: [
@@ -12,11 +15,53 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatDividerModule
+    MatDividerModule,
+    FormsModule,
+    CommonModule,
+    MatListModule,
+    MatAutocompleteModule,
   ],
   templateUrl: './accommodation.component.html',
-  styleUrl: './accommodation.component.scss'
+  styleUrl: './accommodation.component.scss',
 })
 export class AccommodationComponent {
+  @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
+  address: any | null | undefined;
+  addressText: string = '';
+  suggestions: any[] = [];
 
+  async onAddressInput() {
+    const inputValue = this.addressText;
+    if (!inputValue) {
+      this.suggestions = [];
+      return;
+    }
+    const placesLib = (await google.maps.importLibrary('places')) as any;
+    const results = await placesLib.Place.searchByText({
+      textQuery: inputValue,
+      fields: ['displayName', 'formattedAddress', 'location'],
+    });
+    this.suggestions = results.places;
+  }
+
+  async selectSuggestion(suggestion: any) {
+    this.address = suggestion;
+    this.addressText = suggestion.formattedAddress;
+    this.suggestions = [];
+  }
+
+  async onSubmit() {
+    console.log('Selected address:', this.address.formattedAddress);
+  }
+
+  highlightMatch(text: string, query: string): string {
+    if (!query) return text;
+    // Match words in the text that contain the query letters in order, but not necessarily consecutively
+    const pattern = query
+      .split('')
+      .map((char) => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('.*?');
+    const regex = new RegExp(`(${pattern})`, 'gi');
+    return text.replace(regex, '<b>$1</b>');
+  }
 }

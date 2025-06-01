@@ -4,7 +4,12 @@
       <mat-card-header>
         <mat-card-title class="card-title">Yallingup</mat-card-title>
       </mat-card-header>
-      <img mat-card-image class="card-image" src="https://media.margaretriver.com/wp-content/uploads/2021/07/MRBTA-Yallingup-007-web.jpeg?tr=w-1500,h-1000" alt="">
+      <img
+        mat-card-image
+        class="card-image"
+        src="https://media.margaretriver.com/wp-content/uploads/2021/07/MRBTA-Yallingup-007-web.jpeg?tr=w-1500,h-1000"
+        alt=""
+      />
       <mat-card-content>
         <p>
           Yallingup is a beautiful coastal town with various accommodation
@@ -22,14 +27,20 @@
       <mat-card-header>
         <mat-card-title class="card-title">Margaret River</mat-card-title>
       </mat-card-header>
-      <img mat-card-image class="card-image" src="https://media.margaretriver.com/wp-content/uploads/2022/02/Beef-Farmer-Tom-Tate-30.3.2016-1-web-Credit-Elements-Margaret-River-.jpg" alt="">
+      <img
+        mat-card-image
+        class="card-image"
+        src="https://media.margaretriver.com/wp-content/uploads/2022/02/Beef-Farmer-Tom-Tate-30.3.2016-1-web-Credit-Elements-Margaret-River-.jpg"
+        alt=""
+      />
       <mat-card-content>
         <p>
-          Margaret River town offers a wide range of accommodation options. You'll
-          find boutique hotels like Heritage Trail Lodge, comfortable motels such
-          as Edge of the Forest, and numerous self-contained apartments. The area
-          is known for its charming bed & breakfasts and forest retreats, all
-          available through direct booking or platforms like Airbnb and Stayz.
+          Margaret River town offers a wide range of accommodation options.
+          You'll find boutique hotels like Heritage Trail Lodge, comfortable
+          motels such as Edge of the Forest, and numerous self-contained
+          apartments. The area is known for its charming bed & breakfasts and
+          forest retreats, all available through direct booking or platforms
+          like Airbnb and Stayz.
         </p>
       </mat-card-content>
       <!-- <mat-card-actions align="end">
@@ -40,13 +51,18 @@
       <mat-card-header>
         <mat-card-title class="card-title">Dunsborough</mat-card-title>
       </mat-card-header>
-      <img mat-card-image class="card-image" src="https://media.margaretriver.com/wp-content/uploads/2022/02/Dunsborough-Town-scaled.jpg?tr=w-1500,h-1000" alt="">
+      <img
+        mat-card-image
+        class="card-image"
+        src="https://media.margaretriver.com/wp-content/uploads/2022/02/Dunsborough-Town-scaled.jpg?tr=w-1500,h-1000"
+        alt=""
+      />
       <mat-card-content>
         <p>
-          Dunsborough offers diverse accommodation options, from luxury resorts to
-          cozy holiday homes. The Dunsborough Beach Lodge and Bay Village Resort
-          provide comfortable stays close to town. The area also features numerous
-          private rentals through Airbnb and Stayz.
+          Dunsborough offers diverse accommodation options, from luxury resorts
+          to cozy holiday homes. The Dunsborough Beach Lodge and Bay Village
+          Resort provide comfortable stays close to town. The area also features
+          numerous private rentals through Airbnb and Stayz.
         </p>
       </mat-card-content>
       <!-- <mat-card-actions align="end">
@@ -56,27 +72,55 @@
   </div>
   <div class="stay-input-card-container">
     <mat-card appearance="raised" class="stay-input-card">
-      <mat-card-header style="padding-bottom: 5px;">
+      <mat-card-header style="padding-bottom: 5px">
         <!-- <mat-card-title-group> -->
-          <mat-card-title class="card-title">Let us know where you're staying</mat-card-title>
-          <mat-card-subtitle>
-            Help us out by letting us know where you'll be staying for the wedding
-            weekend and if you would like to be included in the bus transport.
-          </mat-card-subtitle>
+        <mat-card-title class="card-title"
+          >Let us know where you're staying</mat-card-title
+        >
+        <mat-card-subtitle>
+          Help us out by letting us know where you'll be staying for the wedding
+          weekend and if you would like to be included in the bus transport.
+        </mat-card-subtitle>
         <!-- </mat-card-title-group> -->
       </mat-card-header>
       <mat-card-content>
-        <mat-divider style="padding-bottom: 5px;"></mat-divider>
-                  <mat-form-field appearance="outline">
-                    <mat-label>Address</mat-label>
-                    <input
-                      matInput
-                      placeholder=""
-                    />
-                  </mat-form-field>
+        <mat-divider style="padding-bottom: 5px"></mat-divider>
+        <mat-form-field appearance="outline" style="width: 100%">
+          <mat-label>Address</mat-label>
+          <input
+            type="text"
+            matInput
+            [matAutocomplete]="auto"
+            [(ngModel)]="addressText"
+            (input)="onAddressInput()"
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selectSuggestion($event.option.value)"
+        >
+          <mat-option
+            *ngFor="let suggestion of suggestions"
+            [value]="suggestion"
+          >
+            <span
+              [innerHTML]="highlightMatch(suggestion.displayName, addressText)"
+            ></span>
+            <br />
+            <span
+              class="address"
+              [innerHTML]="
+                highlightMatch(suggestion.formattedAddress, addressText)
+              "
+            ></span>
+          </mat-option>
+        </mat-autocomplete>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-button>Add your Stay <mat-icon>add</mat-icon></button>
+        <button mat-button (click)="onSubmit()">
+          Add your Stay <mat-icon>add</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>
