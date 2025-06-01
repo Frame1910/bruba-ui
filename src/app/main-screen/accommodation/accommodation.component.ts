@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import { DeviceService } from '../../services/device.service';
 @Component({
   selector: 'app-accommodation',
   imports: [
@@ -27,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
   styleUrl: './accommodation.component.scss',
 })
 export class AccommodationComponent {
+  readonly deviceService = inject(DeviceService);
   @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
   address: any | null | undefined;
   addressText: string = '';
