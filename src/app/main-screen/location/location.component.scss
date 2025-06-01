@@ -16,17 +16,28 @@
   // height: 100%;
 }
 
-.location-details {
-  padding: 15px 15px 15px 15px;
-  height: 50%;
+.title {
+  font-family: 'Ms Madi';
+  font-size: 3rem;
+  font-weight: 400;
+  padding-bottom: 1rem;
 }
 
-.location-details-mobile {
+.details {
+  padding: 15px 15px 0px 15px;
+  height: calc(50% - 15px);
+  max-width: 50rem;
+  margin: 0 auto;
+
+}
+
+.details-mobile {
   padding: 0 15px 15px 15px;
   height: 50%;
+  margin: 0 auto;
 }
 
-.venue-card {
+.card {
   height: 100%;
 }
 
@@ -51,26 +62,6 @@
 .venue-address {
   font-size: 1.1rem;
   margin: 0;
-}
-
-.time-details {
-  padding: 0 15px 0 15px;
-  height: calc(50% - 15px)
-}
-
-.time-details-mobile {
-  padding: 0 15px 15px 15px;
-}
-
-.time-card {
-  height: 100%;
-}
-
-.time-title {
-  font-family: 'Ms Madi';
-  font-size: 3rem;
-  font-weight: 400;
-  padding-bottom: 1rem;
 }
 
 .time-image {
