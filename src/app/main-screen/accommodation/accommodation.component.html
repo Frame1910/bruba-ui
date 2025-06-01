@@ -19,9 +19,6 @@
           Airbnb and Stayz.
         </p>
       </mat-card-content>
-      <!-- <mat-card-actions align="end">
-        <button mat-button>View Website<mat-icon>open_in_new</mat-icon></button>
-      </mat-card-actions> -->
     </mat-card>
     <mat-card appearance="raised" class="accommodation-card">
       <mat-card-header>
@@ -43,9 +40,6 @@
           like Airbnb and Stayz.
         </p>
       </mat-card-content>
-      <!-- <mat-card-actions align="end">
-        <button mat-button>View Website<mat-icon>open_in_new</mat-icon></button>
-      </mat-card-actions> -->
     </mat-card>
     <mat-card appearance="raised" class="accommodation-card">
       <mat-card-header>
@@ -65,26 +59,31 @@
           numerous private rentals through Airbnb and Stayz.
         </p>
       </mat-card-content>
-      <!-- <mat-card-actions align="end">
-        <button mat-button>View Website<mat-icon>open_in_new</mat-icon></button>
-      </mat-card-actions> -->
     </mat-card>
   </div>
   <div class="stay-input-card-container">
     <mat-card appearance="raised" class="stay-input-card">
       <mat-card-header style="padding-bottom: 5px">
-        <!-- <mat-card-title-group> -->
         <mat-card-title class="card-title"
           >Let us know where you're staying</mat-card-title
         >
-        <mat-card-subtitle>
-          Help us out by letting us know where you'll be staying for the wedding
-          weekend and if you would like to be included in the bus transport.
-        </mat-card-subtitle>
-        <!-- </mat-card-title-group> -->
       </mat-card-header>
       <mat-card-content>
-        <mat-divider style="padding-bottom: 5px"></mat-divider>
+        <p>
+          We are organising a bus to transport guests from their accommodation
+          to the wedding venue and back. If you would like to be included in
+          the bus transport, please let us know where you will be staying.
+        </p>
+        <p>Please provide this information by the end of July</p>
+        <div class="bus-transport">
+          <span>Do you require bus transport?</span>
+          <mat-chip-listbox required>
+            <div>
+              <mat-chip-option value="True">Yes</mat-chip-option>
+              <mat-chip-option value="False">No</mat-chip-option>
+            </div>
+          </mat-chip-listbox>
+        </div>
         <mat-form-field appearance="outline" style="width: 100%">
           <mat-label>Address</mat-label>
           <input
@@ -94,6 +93,7 @@
             [(ngModel)]="addressText"
             (input)="onAddressInput()"
             autocomplete="off"
+            required
           />
         </mat-form-field>
         <mat-autocomplete
@@ -105,7 +105,9 @@
             [value]="suggestion"
           >
             <span
-              [innerHTML]="highlightMatch(suggestion.displayName, addressText)"
+              [innerHTML]="
+                highlightMatch(suggestion.displayName, addressText)
+              "
             ></span>
             <br />
             <span

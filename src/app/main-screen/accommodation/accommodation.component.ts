@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-accommodation',
   imports: [
@@ -20,6 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     CommonModule,
     MatListModule,
     MatAutocompleteModule,
+    MatChipsModule
   ],
   templateUrl: './accommodation.component.html',
   styleUrl: './accommodation.component.scss',
@@ -52,6 +54,10 @@ export class AccommodationComponent {
   }
 
   async onSubmit() {
+    if (!this.address) {
+      console.error('No address selected');
+      return;
+    }
     console.log('Submitting address:', this.address);
     console.log('Selected address:', this.address.formattedAddress);
   }
