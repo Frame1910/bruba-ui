@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { HostListener, inject, Injectable, signal } from '@angular/core';
 import { Theme } from '../../types';
 import { DOCUMENT } from '@angular/common';
 
@@ -10,6 +10,13 @@ export class ThemeService {
   readonly currentTheme = signal<Theme>('light');
 
   constructor() { }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'T') {
+      this.toggleTheme();
+    }
+  }
 
   toggleTheme() {
     const themes: Theme[] = ['light', 'dark', 'dumb'];
