@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal, ElementRef } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, ElementRef, HostListener } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +23,13 @@ import { ThemeService } from '../services/theme.service';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'T') {
+      this.themeService.toggleTheme();
+    }
+  }
 
   navItems = [{ name: 'Home', route: ['main'], icon: 'home' }];
   protected readonly isMobile = signal(true);
