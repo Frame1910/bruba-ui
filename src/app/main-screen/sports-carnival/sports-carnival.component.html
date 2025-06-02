@@ -1,9 +1,102 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Special Invite Sports Carnival</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <!-- TODO -->
-    <p>Placeholder</p>
-  </mat-card-content>
-</mat-card>
+<div class="sports-carnival-container">
+  <div class="sports-carnival-card">
+    <mat-card appearance="raised" class="info-card">
+      <mat-card-header>
+        <mat-card-title class="title"
+          >Special Invite Sports Carnival</mat-card-title
+        >
+      </mat-card-header>
+      <img
+        src="https://varsitylife.com.au/wp-content/uploads/2021/06/IMG_1989-scaled.jpg"
+        alt="Sports Carnival"
+        class="card-image"
+      />
+      <mat-card-content>
+        <p>You have been cordially invited to the sports carnival!</p>
+        <p>
+          Instead of a traditional bucks and hens night, we wanted to bring all
+          our friends together for a sports carnival! Please let us know if you
+          can make it, and your house preference, we will let you know what
+          house you will be in closer to the date.
+        </p>
+        <p>
+          Join us for team games, friendly competition, and of course, adult
+          refreshments.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="sports-carnival-details">
+    <div class="details-card-container">
+      <mat-card appearance="raised" class="details-card">
+        <mat-card-header>
+          <mat-card-title class="title">Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Date:</strong> Wednesday, 19th March 2025</p>
+          <p><strong>Time:</strong> 4:00 PM - Late</p>
+          <p><strong>Location:</strong> 23 Palladio Pass, Clarkson WA 6030</p>
+          <p><strong>Dress Code:</strong> Comfortable sportswear and shoes</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <a mat-button href="https://maps.app.goo.gl/HVhdnLyfefoKDTy66" target="_blank">
+            Open in Maps
+            <mat-icon>map</mat-icon>
+            </a>
+          <button mat-button [matMenuTriggerFor]="menu">
+            Add to Calendar
+            <mat-icon>event</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <a mat-menu-item href="sportsCarnival.ics">
+              <span>iCalendar</span>
+            </a>
+            <a mat-menu-item href="{{sportsCarnivalGoogleCalendarURL}}" target="_blank">
+              <span>Google</span>
+            </a>
+            <a mat-menu-item href="{{sportsCarnivalOutlookCalendarURL}}" target="_blank">
+              <span>Outlook</span>
+            </a>
+          </mat-menu>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="details-card-container">
+      <mat-card appearance="raised" class="details-card">
+        <mat-card-header>
+          <mat-card-title class="title">RSVP</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            Please RSVP by <strong>October 5th</strong>, to confirm your
+            attendance and house preference.
+          </p>
+          <div class="rsvp-form">
+            <mat-chip-listbox required>
+              <div class="rsvp-chip-list">
+                <mat-chip-option value="True">I'll be there!</mat-chip-option>
+                <mat-chip-option value="False"
+                  >I can't make it.</mat-chip-option
+                >
+              </div>
+            </mat-chip-listbox>
+            <div class="house-preference">
+              <mat-form-field appearance="outline">
+                <mat-label>House preference</mat-label>
+                <mat-select>
+                  <mat-option value="red">Red</mat-option>
+                  <mat-option value="blue">Blue</mat-option>
+                  <mat-option value="green">Green</mat-option>
+                  <mat-option value="yellow">Yellow</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button>RSVP <mat-icon>add</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
