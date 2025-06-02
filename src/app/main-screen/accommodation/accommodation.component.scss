@@ -1,5 +1,5 @@
 .accommodation-container {
-  height: calc(100vh - var(--mat-tab-height));
+  min-height: calc(100vh - var(--mat-tab-height));
 }
 
 .accommodation-cards {
