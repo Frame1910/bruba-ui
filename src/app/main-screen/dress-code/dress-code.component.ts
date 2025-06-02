@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DeviceService } from '../../services/device.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-dress-code',
@@ -7,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './dress-code.component.scss'
 })
 export class DressCodeComponent {
+  readonly deviceService = inject(DeviceService);
+  readonly themeService = inject(ThemeService);
 
 }
