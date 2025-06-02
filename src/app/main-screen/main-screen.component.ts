@@ -14,7 +14,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { LocationComponent } from "./location/location.component";
 import { AccommodationComponent } from "./accommodation/accommodation.component";
 import { SportsCarnivalComponent } from './sports-carnival/sports-carnival.component';
-import { DressCodeComponent } from './dress-code/dress-code.component';
 
 @Component({
   selector: 'app-main-screen',
@@ -30,8 +29,7 @@ import { DressCodeComponent } from './dress-code/dress-code.component';
     MatTabsModule,
     LocationComponent,
     AccommodationComponent,
-    SportsCarnivalComponent,
-    DressCodeComponent
+    SportsCarnivalComponent
 ],
   templateUrl: './main-screen.component.html',
   styleUrl: './main-screen.component.scss',
