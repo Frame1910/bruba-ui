@@ -35,18 +35,24 @@ export class AccommodationComponent {
   suggestions: any[] = [];
 
   async onAddressInput() {
-    const inputValue = this.addressText;
-    if (!inputValue) {
+    // Debounce logic
+    if ((this as any)._debounceTimeout) {
+      clearTimeout((this as any)._debounceTimeout);
+    }
+    (this as any)._debounceTimeout = setTimeout(async () => {
+      const inputValue = this.addressText;
+      if (!inputValue) {
       this.suggestions = [];
       return;
-    }
-    const placesLib = (await google.maps.importLibrary('places')) as any;
-    const results = await placesLib.Place.searchByText({
+      }
+      const placesLib = (await google.maps.importLibrary('places')) as any;
+      const results = await placesLib.Place.searchByText({
       textQuery: inputValue,
       fields: ['displayName', 'formattedAddress', 'location'],
       region: 'au'
-    });
-    this.suggestions = results.places;
+      });
+      this.suggestions = results.places;
+    }, 1000);
   }
 
   async selectSuggestion(suggestion: any) {
