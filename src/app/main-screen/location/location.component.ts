@@ -48,10 +48,17 @@ export class LocationComponent {
     lng: environment.swingsLatLong.lng,
   };
   zoom = 12;
+
+  // Map options for light and dark themes
   mapOptions: google.maps.MapOptions = {
     disableDefaultUI: true,
     clickableIcons: false,
-    colorScheme: this.themeService.setMapTheme(), // This currently only works if the component is rendered after the theme is set
+    colorScheme: 'LIGHT'
+  };
+  darkMapOptions: google.maps.MapOptions = {
+    disableDefaultUI: true,
+    clickableIcons: false,
+    colorScheme: 'DARK'
   };
 
   copyWeddingAddress() {

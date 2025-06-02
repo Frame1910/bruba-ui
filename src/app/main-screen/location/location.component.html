@@ -1,5 +1,18 @@
 @if (deviceService.isMobile()) {
-<div style="padding: 1rem; text-align: center">
+<div class="location-container-mobile">
+  @if (themeService.currentTheme() === 'dark' || themeService.currentTheme() ===
+  'dumb') {
+  <google-map
+    [center]="center"
+    [zoom]="zoom"
+    [options]="darkMapOptions"
+    mapId="wedding_location"
+    width="100%"
+    padding="0"
+  >
+    <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
+  </google-map>
+  } @else {
   <google-map
     [center]="center"
     [zoom]="zoom"
@@ -10,6 +23,7 @@
   >
     <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
   </google-map>
+  }
 </div>
 <div class="card-container-mobile">
   <div class="details-mobile">
@@ -22,8 +36,7 @@
         mat-card-image
         src="https://www.swings.com.au/media/banners/_bannerLarge/SwingsSoftOpen2019_KellyHarwoodPhotography-6.jpg"
         alt="Venue image"
-        class="venue-image"
-        style="max-height: 200px"
+        class="card-image-mobile"
       />
       <mat-card-content class="venue-content">
         <h2 class="venue-name">{{ weddingVenueName }}</h2>
@@ -51,8 +64,7 @@
         mat-card-image
         src="https://www.swings.com.au/media/images/_gallery/kelsie_leigh-164.jpg"
         alt="Venue image"
-        class="time-image"
-        style="max-height: 200px"
+        class="card-image-mobile"
       />
       <mat-card-content class="time-content">
         <div class="time-container">
@@ -89,6 +101,21 @@
 </div>
 } @else {
 <div class="location-container">
+  @if (themeService.currentTheme() === 'dark' || themeService.currentTheme() ===
+  'dumb') {
+  <div class="map-container">
+    <google-map
+      [center]="center"
+      [zoom]="zoom"
+      [options]="darkMapOptions"
+      mapId="wedding_location"
+      width="50vw"
+      height="100%"
+    >
+      <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
+    </google-map>
+  </div>
+  }@else {
   <div class="map-container">
     <google-map
       [center]="center"
@@ -101,6 +128,7 @@
       <map-advanced-marker #marker="mapAdvancedMarker" [position]="center" />
     </google-map>
   </div>
+  }
   <div class="card-container">
     <div class="details">
       <mat-card appearance="raised" class="card">
