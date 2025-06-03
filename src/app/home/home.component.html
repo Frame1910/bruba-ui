@@ -29,62 +29,64 @@
         <span>{{ item.name }}</span>
         <mat-icon>{{ item.icon }}</mat-icon>
       </button>
-      }
-      @switch (themeService.currentTheme()) { @case ('dark') {
+      } @switch (themeService.currentTheme()) { @case ('dark') {
       <button (click)="themeService.toggleTheme()" mat-menu-item>
         <span>Dark</span>
         <mat-icon>dark_mode</mat-icon>
       </button>
-        } @case ('light') {
+      } @case ('light') {
       <button (click)="themeService.toggleTheme()" mat-menu-item>
         <span>Light</span>
         <mat-icon>light_mode</mat-icon>
       </button>
-        } @case ('dumb') {
+      } @case ('dumb') {
       <button (click)="themeService.toggleTheme()" mat-menu-item>
         <span>Dumb</span>
         <mat-icon>emoji_objects</mat-icon>
       </button>
-        } @default () {
+      } @default () {
       <button (click)="themeService.toggleTheme()" mat-menu-item>
         <span>huh</span>
         <mat-icon>help_outline</mat-icon>
       </button>
-        }}
+      }}
     </mat-menu>
-    } @else { @for (item of navItems; track item.route) {
-    <a
-      mat-button
-      [routerLink]="item.route"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      (click)="scrollToContent()"
-    >
-      <span>{{ item.name }}</span>
-      <mat-icon>{{ item.icon }}</mat-icon>
-    </a>
-    }
-      @switch (themeService.currentTheme()) { @case ('dark') {
-      <a (click)="themeService.toggleTheme()" mat-button>
+    } @else {
+    <span class="toolbar-buttons">
+      @for (item of navItems; track item.route) {
+      <a
+        mat-raised-button
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="scrollToContent()"
+        class="toolbar-button"
+      >
+        <span>{{ item.name }}</span>
+        <mat-icon>{{ item.icon }}</mat-icon>
+      </a>
+      } @switch (themeService.currentTheme()) { @case ('dark') {
+      <a (click)="themeService.toggleTheme()" mat-raised-button>
         <span>Dark</span>
         <mat-icon>dark_mode</mat-icon>
       </a>
       } @case ('light') {
-      <a (click)="themeService.toggleTheme()" mat-button>
+      <a (click)="themeService.toggleTheme()" mat-raised-button>
         <span>Light</span>
         <mat-icon>light_mode</mat-icon>
       </a>
       } @case ('dumb') {
-      <a (click)="themeService.toggleTheme()" mat-button>
+      <a (click)="themeService.toggleTheme()" mat-raised-button>
         <span>Dumb</span>
         <mat-icon>emoji_objects</mat-icon>
       </a>
       } @default () {
-      <a (click)="themeService.toggleTheme()" mat-button>
+      <a (click)="themeService.toggleTheme()" mat-raised-button>
         <span>huh</span>
         <mat-icon>help_outline</mat-icon>
       </a>
       }}
+    </span>
     }
   </mat-toolbar>
   @if (customImage) {
