@@ -57,6 +57,7 @@ export class OnboardingComponent implements OnInit {
   inviteAcceptFormGroup: FormGroup | undefined;
   additionalInfoFormGroup: FormGroup | undefined;
   welcomeMessage: string | undefined;
+  isSecondStepReady: boolean = false;
 
   ngOnInit() {
     if (this.invite$) {
@@ -73,10 +74,12 @@ export class OnboardingComponent implements OnInit {
         }
         this.inviteAcceptFormGroup = this._formBuilder.group(group);
       });
+      this.additionalInfoFormGroup = this._formBuilder.group({});
     }
   }
 
   generateAdditionalInfoFormGroup(){
+    this.isSecondStepReady = true;
     if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value !== '' && control.value !== undefined)) {
       const acceptedUsersGroup: { [key: string]: any } = {};
       for (let user in this.inviteAcceptFormGroup!.controls) {
@@ -97,9 +100,6 @@ export class OnboardingComponent implements OnInit {
     }
   }
 
-  nullifyAdditionalInfoFormGroup(){
-    this.additionalInfoFormGroup = undefined;
-  }
 
   labelConstructor(Invite: InviteWithUsers) {
     const userNames = Invite.UserInvite.map(
