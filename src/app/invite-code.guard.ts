@@ -8,7 +8,7 @@ export const inviteCodeGuard: CanActivateFn = (route, state) => {
 
   if (!hasKey) {
     // Redirect to login or another page if key is missing
-    router.navigate(['/invite']);
+    router.navigate(['/sign-in']);
     return false;
   }
 
