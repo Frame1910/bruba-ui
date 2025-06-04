@@ -55,7 +55,7 @@ export class InviteSigninComponentComponent {
         if (invite) {
           this.invite = invite;
           this.loading = false;
-          this.router.navigate(['/invite', this.codeControl.value]);
+          this.router.navigate(['/onboarding', this.codeControl.value]);
           localStorage.setItem('inviteCode', this.codeControl.value);
         }
       });

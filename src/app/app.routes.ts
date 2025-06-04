@@ -29,7 +29,7 @@ export const appRoutes: Route[] = [
     ],
   },
   {
-    path: 'invite/:code',
+    path: 'onboarding/:code',
     component: OnboardingComponent,
   },
   {
