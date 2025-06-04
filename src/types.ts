@@ -54,6 +54,7 @@ export interface UserInvite {
   userId: string;
   inviteCode: string;
   isPlusOne: boolean;
+  status: 'ACCEPTED' | 'DECLINED' | 'PENDING';
   createdAt: string;
   updatedAt: string;
   user: User;

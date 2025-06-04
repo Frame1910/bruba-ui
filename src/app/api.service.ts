@@ -18,4 +18,14 @@ export class ApiService {
       `${this.baseUrl}/invites/${code}/invitees`
     );
   }
+
+  updateInviteStatuses(
+    statuses: { userId: string; status: string }[],
+    inviteCode: string
+  ) {
+    return this.http.patch(
+      `${this.baseUrl}/invites/${inviteCode}/update-status`,
+      statuses
+    );
+  }
 }

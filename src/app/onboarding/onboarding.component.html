@@ -58,7 +58,7 @@
             <button
               mat-button
               matStepperNext
-              (click)="acceptFlow(); generateAdditionalInfoFormGroup()"
+              (click)="inviteDeclinedCheck(); generateAdditionalInfoFormGroup()"
             >
               Next
             </button>
@@ -185,7 +185,7 @@
         <div class="button-container">
           <button mat-button matStepperPrevious>Back</button>
           <button
-            (click)="acceptFlow()"
+            (click)="inviteAccepted()"
             mat-button
             [routerLink]="['../../app/main']"
           >

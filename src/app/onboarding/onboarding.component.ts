@@ -63,6 +63,7 @@ export class OnboardingComponent implements OnInit {
     if (this.invite$) {
       this.invite$.subscribe((invite) => {
         this.invite = invite;
+        console.log(invite);
         const group: { [key: string]: any } = {};
         for (let index = 0; index < invite.UserInvite.length; index++) {
           // console.log(userInvite.user.firstName);
@@ -133,15 +134,25 @@ export class OnboardingComponent implements OnInit {
         .every((control) => control.value === 'False') &&
         this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')
     ) {
-      console.log('No users accepted the invite');
-      this.router.navigate(['/sign-in']);
-      return;
-      //TODO: Call API to update invite status to declined
-    }
+      console.log('No users accepted the invite, marking them as declined');
 
-    for (let user in this.inviteAcceptFormGroup!.controls) {
-      console.log(user);
-      console.log(this.inviteAcceptFormGroup!.get(user)?.value);
+      const userIds: string[] = [];
+      for (let user in this.inviteAcceptFormGroup!.controls) {
+        console.log(user);
+        // console.log(this.inviteAcceptFormGroup!.get(user)?.value);
+        userIds.push(user);
+      }
+      //TODO: Call API to update invite status to declined
+
+      const declinedStatuses = userIds.map((userId) => {
+        return { userId, status: 'DECLINED' };
+      });
+      this.api
+        .updateInviteStatuses(declinedStatuses, this.invite!.code)
+        .subscribe((res) => {
+          console.log('Invites declined successfully');
+          this.router.navigate(['/sign-in']);
+        });
     }
   }
 
