@@ -1,5 +1,4 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,12 +6,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Invite } from '../../types';
 import { ApiService } from '../api.service';
-import { MatTabsModule } from '@angular/material/tabs';
-import { LocationComponent } from './location/location.component';
 import { AccommodationComponent } from './accommodation/accommodation.component';
+import { LocationComponent } from './location/location.component';
 import { SportsCarnivalComponent } from './sports-carnival/sports-carnival.component';
 
 @Component({

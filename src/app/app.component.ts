@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { MatIconRegistry } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   imports: [CommonModule, RouterModule, CommonModule],

@@ -1,12 +1,20 @@
-import { Component, inject, OnDestroy, OnInit, signal, ElementRef, HostListener } from '@angular/core';
-import { MatListModule } from '@angular/material/list';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
 @Component({
   selector: 'app-home',
@@ -23,7 +31,6 @@ import { ThemeService } from '../services/theme.service';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'T') {
@@ -70,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.customBakgroundCheck(inviteCode);
   }
 
-  customBakgroundCheck(inviteCode: string | null){
+  customBakgroundCheck(inviteCode: string | null) {
     switch (inviteCode) {
       case '111111':
         this.customImage = 'custom-main/breejake.jpg';

@@ -1,18 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
+import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
+import { Component, inject } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { environment } from '../../../environments/environment';
-import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { DatePipe } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { ThemeService } from '../../services/theme.service';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
 import { DeviceService } from '../../services/device.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-location',
@@ -23,7 +21,6 @@ import { DeviceService } from '../../services/device.service';
     ClipboardModule,
     MatListModule,
     MatIconModule,
-    DatePipe,
     MatButtonModule,
     MatDividerModule,
     MatMenuModule,
@@ -53,12 +50,12 @@ export class LocationComponent {
   mapOptions: google.maps.MapOptions = {
     disableDefaultUI: true,
     clickableIcons: false,
-    colorScheme: 'LIGHT'
+    colorScheme: 'LIGHT',
   };
   darkMapOptions: google.maps.MapOptions = {
     disableDefaultUI: true,
     clickableIcons: false,
-    colorScheme: 'DARK'
+    colorScheme: 'DARK',
   };
 
   copyWeddingAddress() {

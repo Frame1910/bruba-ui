@@ -1,28 +1,28 @@
-import { User, UserInvite } from './../../types';
+import { UserInvite } from './../../types';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { InviteWithUsers } from '../../types';
 import { ApiService } from '../api.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card'
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatStepperModule } from '@angular/material/stepper';
-import {
-  FormBuilder,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-  FormGroup,
-} from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
-import { Router, RouterModule } from '@angular/router';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-onboarding',
   imports: [
@@ -40,10 +40,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatChipsModule,
     RouterModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './onboarding.component.html',
-  styleUrl: './onboarding.component.scss'
+  styleUrl: './onboarding.component.scss',
 })
 export class OnboardingComponent implements OnInit {
   private api = inject(ApiService);
@@ -78,9 +78,13 @@ export class OnboardingComponent implements OnInit {
     }
   }
 
-  generateAdditionalInfoFormGroup(){
+  generateAdditionalInfoFormGroup() {
     this.isSecondStepReady = true;
-    if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value !== '' && control.value !== undefined)) {
+    if (
+      Object.values(this.inviteAcceptFormGroup!.controls).every(
+        (control) => control.value !== '' && control.value !== undefined
+      )
+    ) {
       const acceptedUsersGroup: { [key: string]: any } = {};
       for (let user in this.inviteAcceptFormGroup!.controls) {
         if (this.inviteAcceptFormGroup!.get(user)?.value == 'True') {
@@ -96,10 +100,10 @@ export class OnboardingComponent implements OnInit {
           acceptedUsersGroup['plusOne_allergies'] = [''];
         }
       }
-      this.additionalInfoFormGroup = this._formBuilder.group(acceptedUsersGroup);
+      this.additionalInfoFormGroup =
+        this._formBuilder.group(acceptedUsersGroup);
     }
   }
-
 
   labelConstructor(Invite: InviteWithUsers) {
     const userNames = Invite.UserInvite.map(
@@ -118,10 +122,18 @@ export class OnboardingComponent implements OnInit {
   }
 
   acceptFlow() {
-    if (Object.values(this.inviteAcceptFormGroup!.controls).every(control => control.value === 'False')
-      || (Object.values(this.inviteAcceptFormGroup!.controls).filter(control => control !== this.inviteAcceptFormGroup!.get('plusOne')).every(control => control.value === 'False')
-      && this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')) {
-        console.log('No users accepted the invite');
+    if (
+      Object.values(this.inviteAcceptFormGroup!.controls).every(
+        (control) => control.value === 'False'
+      ) ||
+      (Object.values(this.inviteAcceptFormGroup!.controls)
+        .filter(
+          (control) => control !== this.inviteAcceptFormGroup!.get('plusOne')
+        )
+        .every((control) => control.value === 'False') &&
+        this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')
+    ) {
+      console.log('No users accepted the invite');
       this.router.navigate(['/sign-in']);
       return;
       //TODO: Call API to update invite status to declined

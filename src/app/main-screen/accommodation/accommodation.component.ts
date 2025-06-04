@@ -1,14 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatChipsModule } from '@angular/material/chips';
 import { DeviceService } from '../../services/device.service';
 @Component({
   selector: 'app-accommodation',
@@ -22,7 +22,7 @@ import { DeviceService } from '../../services/device.service';
     CommonModule,
     MatListModule,
     MatAutocompleteModule,
-    MatChipsModule
+    MatChipsModule,
   ],
   templateUrl: './accommodation.component.html',
   styleUrl: './accommodation.component.scss',
@@ -42,14 +42,14 @@ export class AccommodationComponent {
     (this as any)._debounceTimeout = setTimeout(async () => {
       const inputValue = this.addressText;
       if (!inputValue) {
-      this.suggestions = [];
-      return;
+        this.suggestions = [];
+        return;
       }
       const placesLib = (await google.maps.importLibrary('places')) as any;
       const results = await placesLib.Place.searchByText({
-      textQuery: inputValue,
-      fields: ['displayName', 'formattedAddress', 'location'],
-      region: 'au'
+        textQuery: inputValue,
+        fields: ['displayName', 'formattedAddress', 'location'],
+        region: 'au',
       });
       this.suggestions = results.places;
     }, 1000);
