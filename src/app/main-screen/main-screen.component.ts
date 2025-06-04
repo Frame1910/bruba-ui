@@ -11,8 +11,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Invite } from '../../types';
 import { ApiService } from '../api.service';
 import { MatTabsModule } from '@angular/material/tabs';
-import { LocationComponent } from "./location/location.component";
-import { AccommodationComponent } from "./accommodation/accommodation.component";
+import { LocationComponent } from './location/location.component';
+import { AccommodationComponent } from './accommodation/accommodation.component';
 import { SportsCarnivalComponent } from './sports-carnival/sports-carnival.component';
 
 @Component({
@@ -29,8 +29,8 @@ import { SportsCarnivalComponent } from './sports-carnival/sports-carnival.compo
     MatTabsModule,
     LocationComponent,
     AccommodationComponent,
-    SportsCarnivalComponent
-],
+    SportsCarnivalComponent,
+  ],
   templateUrl: './main-screen.component.html',
   styleUrl: './main-screen.component.scss',
 })
@@ -40,11 +40,10 @@ export class MainScreenComponent {
   invite: Invite | undefined;
 
   ngOnInit() {
-    const code = localStorage.getItem('inviteCode');
-    this.api.getInviteByCode(code!).subscribe((invite) => {
-      console.log('Got invite data!');
-      this.invite = invite;
-    });
+    // const code = localStorage.getItem('inviteCode');
+    // this.api.getInviteByCode(code!).subscribe((invite) => {
+    //   console.log('Got invite data!');
+    //   this.invite = invite;
+    // });
   }
-
 }
