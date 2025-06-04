@@ -21,7 +21,7 @@ export const appRoutes: Route[] = [
         component: InviteManagementComponentComponent,
       },
       {
-        path: 'main',
+        path: '',
         component: MainScreenComponent,
       },
     ],
