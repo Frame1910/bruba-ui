@@ -121,7 +121,7 @@ export class OnboardingComponent implements OnInit {
     return this.inviteAcceptFormGroup?.get('plusOne')?.value;
   }
 
-  acceptFlow() {
+  inviteDeclinedCheck() {
     if (
       Object.values(this.inviteAcceptFormGroup!.controls).every(
         (control) => control.value === 'False'
@@ -143,5 +143,9 @@ export class OnboardingComponent implements OnInit {
       console.log(user);
       console.log(this.inviteAcceptFormGroup!.get(user)?.value);
     }
+  }
+
+  inviteAccepted() {
+    //fill out user info and route them to main app
   }
 }
