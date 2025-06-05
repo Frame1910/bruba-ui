@@ -39,10 +39,10 @@ export class MainScreenComponent {
   invite: Invite | undefined;
 
   ngOnInit() {
-    // const code = localStorage.getItem('inviteCode');
-    // this.api.getInviteByCode(code!).subscribe((invite) => {
-    //   console.log('Got invite data!');
-    //   this.invite = invite;
-    // });
+    const code = localStorage.getItem('inviteCode');
+    this.api.getInviteByCode(code!).subscribe((invite) => {
+      console.log('Got invite data!');
+      this.invite = invite;
+    });
   }
 }
