@@ -1,7 +1,7 @@
 import { UserInvite } from './../../types';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, inject, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -23,6 +23,11 @@ import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { InviteWithUsers } from '../../types';
 import { ApiService } from '../api.service';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+} from '@angular/material/dialog';
 @Component({
   selector: 'app-onboarding',
   imports: [
@@ -41,6 +46,7 @@ import { ApiService } from '../api.service';
     RouterModule,
     MatOptionModule,
     MatSelectModule,
+    MatDialogModule,
   ],
   templateUrl: './onboarding.component.html',
   styleUrl: './onboarding.component.scss',
@@ -58,6 +64,7 @@ export class OnboardingComponent implements OnInit {
   additionalInfoFormGroup: FormGroup | undefined;
   welcomeMessage: string | undefined;
   isSecondStepReady: boolean = false;
+  private dialog = inject(MatDialog);
 
   ngOnInit() {
     if (this.invite$) {
@@ -76,8 +83,8 @@ export class OnboardingComponent implements OnInit {
           }
           this.inviteAcceptFormGroup = this._formBuilder.group(group);
         }
-        });
-        this.additionalInfoFormGroup = this._formBuilder.group({});
+      });
+      this.additionalInfoFormGroup = this._formBuilder.group({});
     }
   }
 
@@ -86,7 +93,7 @@ export class OnboardingComponent implements OnInit {
       console.log('user acceptance detected');
       this.router.navigate(['/app']);
       return false;
-    } else if (invite.UserInvite.some((user) => user.status === 'PENDING')){
+    } else if (invite.UserInvite.some((user) => user.status === 'PENDING')) {
       console.log('Onboarding valid');
       return true;
     } else {
@@ -139,8 +146,8 @@ export class OnboardingComponent implements OnInit {
     return this.inviteAcceptFormGroup?.get('plusOne')?.value;
   }
 
-  // TODO: handle plus ones
-  inviteDeclinedCheck() {
+  //check if all users declined as well as if the user declined but said yes for a plus one
+  handleNext(stepper: any) {
     if (
       Object.values(this.inviteAcceptFormGroup!.controls).every(
         (control) => control.value === 'False'
@@ -152,24 +159,21 @@ export class OnboardingComponent implements OnInit {
         .every((control) => control.value === 'False') &&
         this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')
     ) {
-      console.log('No users accepted the invite, marking them as declined');
-
-      const userIds: string[] = [];
-      for (let user in this.inviteAcceptFormGroup!.controls) {
-        console.log(user);
-        userIds.push(user);
-      }
-
-      const declinedStatuses = userIds.map((userId) => {
-        return { userId, status: 'DECLINED' };
-      });
-      this.api
-        .updateInviteStatuses(declinedStatuses, this.invite!.code)
-        .subscribe((res) => {
-          console.log('Invites declined successfully');
-          this.router.navigate(['/sign-in']);
-        });
+      this.confirmDialog();
+      return;
     }
+    this.generateAdditionalInfoFormGroup();
+    stepper.next();
+  }
+
+  // TODO: handle plus ones
+  confirmDialog() {
+    this.dialog.open(DeclineDialogComponent, {
+      data: {
+        inviteAcceptFormGroup: this.inviteAcceptFormGroup,
+        invite: this.invite,
+      },
+    });
   }
 
   // TODO: handle plus ones
@@ -179,18 +183,67 @@ export class OnboardingComponent implements OnInit {
       console.log(this.inviteAcceptFormGroup!.get(user)?.value);
       if (this.inviteAcceptFormGroup!.get(user)?.value === 'True') {
         console.log(user);
-        userIds.push({userId: user, status: 'ACCEPTED'});
+        userIds.push({ userId: user, status: 'ACCEPTED' });
         // prepare additional details payload for api
       } else {
-        userIds.push({userId: user, status: 'DECLINED'});
+        userIds.push({ userId: user, status: 'DECLINED' });
       }
     }
-    console.log(userIds)
+    console.log(userIds);
     this.api
       .updateInviteStatuses(userIds, this.invite!.code)
       .subscribe((res) => {
         console.log('Invites accepted successfully');
         this.router.navigate(['/app']);
+      });
+  }
+}
+
+@Component({
+  selector: 'decline-dialog',
+  template: `
+    <!-- <h2 mat-dialog-title>We're sorry to see you go!</h2> -->
+    <mat-dialog-content>
+      <img
+        src="https://static.wikia.nocookie.net/a17a4745-1891-41e5-908b-ff2b6defa889/scale-to-width/755"
+      />
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close (click)="declineInvite()">
+        Yeah
+      </button>
+    </mat-dialog-actions>
+  `,
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule],
+})
+export class DeclineDialogComponent {
+  private api = inject(ApiService);
+  private router = inject(Router);
+  inviteAcceptFormGroup: FormGroup | undefined;
+  invite: InviteWithUsers | undefined;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+    this.inviteAcceptFormGroup = data.inviteAcceptFormGroup;
+    this.invite = data.invite;
+  }
+
+  declineInvite() {
+    console.log('No users accepted the invite, marking them as declined');
+    const userIds: string[] = [];
+    for (let user in this.inviteAcceptFormGroup!.controls) {
+      console.log(user);
+      userIds.push(user);
+    }
+
+    const declinedStatuses = userIds.map((userId) => {
+      return { userId, status: 'DECLINED' };
+    });
+    this.api
+      .updateInviteStatuses(declinedStatuses, this.invite!.code)
+      .subscribe((res) => {
+        console.log('Invites declined successfully');
+        this.router.navigate(['/sign-in']);
       });
   }
 }
