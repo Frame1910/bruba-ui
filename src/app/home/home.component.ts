@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  navItems = [{ name: 'Home', route: ['main'], icon: 'home' }];
+  navItems = [{ name: 'Home', route: ['..'], icon: 'home' }];
   protected readonly isMobile = signal(true);
   readonly themeService = inject(ThemeService);
   randomSource: number | undefined;
