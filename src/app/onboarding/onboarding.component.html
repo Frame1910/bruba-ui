@@ -41,7 +41,7 @@
           <div class="card-container">
             <mat-chip-listbox
               class="mat-mdc-chip-set"
-              formControlName="plusOne"
+              formControlName="{{ plusOneId }}"
               required
             >
               <div class="card-content">
@@ -110,9 +110,8 @@
           <div class="card-container">
             <h2>
               {{
-                (additionalInfoFormGroup!.get("plusOne_name")?.value ||
-                  "Plus One") + " "
-              }}
+                (additionalInfoFormGroup!.get("{{ plusOneId
+              }}_name")?.value || "Plus One") + " " }}
             </h2>
             <div class="input-container">
               <div>
@@ -120,7 +119,7 @@
                   <mat-label>Name</mat-label>
                   <input
                     matInput
-                    formControlName="plusOne_name"
+                    formControlName="{{ plusOneId }}_name"
                     placeholder=""
                     required
                   />
@@ -129,7 +128,7 @@
                   <mat-label>Surname</mat-label>
                   <input
                     matInput
-                    formControlName="plusOne_surname"
+                    formControlName="{{ plusOneId }}_surname"
                     placeholder=""
                     required
                   />
@@ -139,14 +138,18 @@
                 <mat-label>Email</mat-label>
                 <input
                   matInput
-                  formControlName="plusOne_email"
+                  formControlName="{{ plusOneId }}_email"
                   placeholder=""
                   required
                 />
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Dietaries?</mat-label>
-                <mat-select formControlName="plusOne_dietary" multiple required>
+                <mat-select
+                  formControlName="{{ plusOneId }}_dietary"
+                  multiple
+                  required
+                >
                   <mat-option value="None">None</mat-option>
                   <mat-option value="Vegetarian">Vegetarian</mat-option>
                   <mat-option value="Vegan">Vegan</mat-option>
@@ -159,7 +162,7 @@
                 <mat-label>Allergies?</mat-label>
                 <input
                   matInput
-                  formControlName="plusOne_allergies"
+                  formControlName="{{ plusOneId }}_allergies"
                   placeholder=""
                 />
               </mat-form-field>
@@ -168,7 +171,9 @@
           }
           <div class="button-container">
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext>
+              Next
+            </button>
           </div>
         </form>
         }

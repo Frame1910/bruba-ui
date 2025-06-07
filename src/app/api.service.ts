@@ -1,3 +1,4 @@
+import { User } from './../types';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invite, InviteWithUsers } from '../types';
@@ -26,6 +27,20 @@ export class ApiService {
     return this.http.patch(
       `${this.baseUrl}/invites/${inviteCode}/update-status`,
       statuses
+    );
+  }
+
+  createUser(user: User) {
+    return this.http.post(`${this.baseUrl}/users/create`, user);
+  }
+
+  addPlusOne(
+    plusOne: { userId: string; isPlusOne: boolean },
+    inviteCode: string
+  ) {
+    return this.http.post(
+      `${this.baseUrl}/user-invites/${inviteCode}/plus-one`,
+      plusOne
     );
   }
 }

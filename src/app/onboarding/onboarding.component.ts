@@ -1,4 +1,4 @@
-import { UserInvite } from './../../types';
+import { User, UserInvite } from './../../types';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { CommonModule } from '@angular/common';
 import { Component, Inject, inject, Input, OnInit } from '@angular/core';
@@ -20,7 +20,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { Router, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { InviteWithUsers } from '../../types';
 import { ApiService } from '../api.service';
 import {
@@ -65,6 +65,7 @@ export class OnboardingComponent implements OnInit {
   welcomeMessage: string | undefined;
   isSecondStepReady: boolean = false;
   private dialog = inject(MatDialog);
+  plusOneId: string | undefined;
 
   ngOnInit() {
     if (this.invite$) {
@@ -79,7 +80,10 @@ export class OnboardingComponent implements OnInit {
             group[`${userInvite.user.id}`] = ['', Validators.required];
           }
           if (invite.allowPlusOne) {
-            group['plusOne'] = ['', Validators.required];
+            //Create ID for plus one
+            this.plusOneId =
+              'plusOne-' + Math.random().toString(36).substring(2, 15);
+            group[`${this.plusOneId}`] = ['', Validators.required];
           }
           this.inviteAcceptFormGroup = this._formBuilder.group(group);
         }
@@ -117,12 +121,23 @@ export class OnboardingComponent implements OnInit {
           acceptedUsersGroup[`${user}_dietary`] = [''];
           acceptedUsersGroup[`${user}_allergies`] = [''];
         }
-        if (this.inviteAcceptFormGroup!.get('plusOne')?.value == 'True') {
-          acceptedUsersGroup['plusOne_name'] = ['', Validators.required];
-          acceptedUsersGroup['plusOne_surname'] = ['', Validators.required];
-          acceptedUsersGroup['plusOne_email'] = ['', Validators.required];
-          acceptedUsersGroup['plusOne_dietary'] = [''];
-          acceptedUsersGroup['plusOne_allergies'] = [''];
+        if (
+          this.inviteAcceptFormGroup!.get(`${this.plusOneId}`)?.value == 'True'
+        ) {
+          acceptedUsersGroup[`${this.plusOneId}_name`] = [
+            '',
+            Validators.required,
+          ];
+          acceptedUsersGroup[`${this.plusOneId}_surname`] = [
+            '',
+            Validators.required,
+          ];
+          acceptedUsersGroup[`${this.plusOneId}_email`] = [
+            '',
+            Validators.required,
+          ];
+          acceptedUsersGroup[`${this.plusOneId}_dietary`] = [''];
+          acceptedUsersGroup[`${this.plusOneId}_allergies`] = [''];
         }
       }
       this.additionalInfoFormGroup =
@@ -143,7 +158,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   checkPlusOneAcceptance() {
-    return this.inviteAcceptFormGroup?.get('plusOne')?.value;
+    return this.inviteAcceptFormGroup?.get(`${this.plusOneId}`)?.value;
   }
 
   //check if all users declined as well as if the user declined but said yes for a plus one
@@ -154,10 +169,10 @@ export class OnboardingComponent implements OnInit {
       ) ||
       (Object.values(this.inviteAcceptFormGroup!.controls)
         .filter(
-          (control) => control !== this.inviteAcceptFormGroup!.get('plusOne')
+          (control) => control !== this.inviteAcceptFormGroup!.get(`${this.plusOneId}`)
         )
         .every((control) => control.value === 'False') &&
-        this.inviteAcceptFormGroup!.get('plusOne')?.value === 'True')
+        this.inviteAcceptFormGroup!.get(`${this.plusOneId}`)?.value === 'True')
     ) {
       this.confirmDialog();
       return;
@@ -166,7 +181,6 @@ export class OnboardingComponent implements OnInit {
     stepper.next();
   }
 
-  // TODO: handle plus ones
   confirmDialog() {
     this.dialog.open(DeclineDialogComponent, {
       data: {
@@ -176,26 +190,60 @@ export class OnboardingComponent implements OnInit {
     });
   }
 
-  // TODO: handle plus ones
-  inviteAccepted() {
+  async inviteAccepted() {
     const userIds: Array<{ userId: string; status: string }> = [];
     for (let user in this.inviteAcceptFormGroup!.controls) {
       console.log(this.inviteAcceptFormGroup!.get(user)?.value);
-      if (this.inviteAcceptFormGroup!.get(user)?.value === 'True') {
+      if (
+        this.inviteAcceptFormGroup!.get(user)?.value === 'True' &&
+        !user.includes('plusOne')
+      ) {
         console.log(user);
         userIds.push({ userId: user, status: 'ACCEPTED' });
         // prepare additional details payload for api
+      } else if (
+        this.inviteAcceptFormGroup!.get(user)?.value === 'True' &&
+        user.includes('plusOne')
+      ) {
+        console.log('theres a plus one!');
+        console.log(this.additionalInfoFormGroup!.get(user));
+        const newUser: User = {
+          id: user,
+          firstName: this.additionalInfoFormGroup?.value[`${user}_name`],
+          lastName: this.additionalInfoFormGroup?.value[`${user}_surname`],
+          mobile: '',
+          email: this.additionalInfoFormGroup?.value[`${user}_email`],
+          status: 'ACTIVE',
+          relation: 'FRIEND',
+          dietary: [],
+          createdAt: '',
+          updatedAt: '',
+        };
+        await lastValueFrom(this.api.createUser(newUser));
+        console.log('new user created');
+        await lastValueFrom(
+          this.api.addPlusOne(
+            { userId: user, isPlusOne: true },
+            this.invite!.code
+          )
+        );
+        console.log('plus one added to invite');
+        userIds.push({ userId: user, status: 'ACCEPTED' });
+        console.log(userIds);
+        console.log('plus one set to accepted');
       } else {
-        userIds.push({ userId: user, status: 'DECLINED' });
+        if (
+          this.inviteAcceptFormGroup!.get(user)?.value === 'False' &&
+          !user.includes('plusOne')
+        ) {
+          userIds.push({ userId: user, status: 'DECLINED' });
+        }
       }
     }
     console.log(userIds);
-    this.api
-      .updateInviteStatuses(userIds, this.invite!.code)
-      .subscribe((res) => {
-        console.log('Invites accepted successfully');
-        this.router.navigate(['/app']);
-      });
+    await lastValueFrom(
+      this.api.updateInviteStatuses(userIds, this.invite!.code)
+    );
   }
 }
 
@@ -232,8 +280,13 @@ export class DeclineDialogComponent {
     console.log('No users accepted the invite, marking them as declined');
     const userIds: string[] = [];
     for (let user in this.inviteAcceptFormGroup!.controls) {
-      console.log(user);
-      userIds.push(user);
+      if (
+        this.inviteAcceptFormGroup!.get(user)?.value === 'False' &&
+        !user.includes('plusOne')
+      ) {
+        console.log(user);
+        userIds.push(user);
+      }
     }
 
     const declinedStatuses = userIds.map((userId) => {
