@@ -150,105 +150,107 @@
     </google-map>
   </div>
   }
-  <div class="card-container">
-    <div class="details">
-      <mat-card appearance="raised" class="card">
-        <mat-card-header>
-          <mat-card-title class="title">Venue</mat-card-title>
-          <mat-divider></mat-divider>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="https://www.swings.com.au/media/banners/_bannerLarge/SwingsSoftOpen2019_KellyHarwoodPhotography-6.jpg"
-          alt="Venue image"
-          class="venue-image"
-        />
-        <mat-card-content class="venue-content">
-          <h2 class="venue-name">{{ weddingVenueName }}</h2>
-          <p class="venue-address">2807 Caves Road,</p>
-          <p class="venue-address">Yallingup, WA</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button mat-button (click)="copyWeddingAddress()">
-            Copy Address
-            <mat-icon>content_copy</mat-icon>
-          </button>
-          <a mat-button href="https://maps.app.goo.gl/aPU52pQzKv71pgky7">
-            Open in Maps
-            <mat-icon>map</mat-icon>
-          </a>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-    <div class="details">
-      <mat-card appearance="raised" class="card">
-        <mat-card-header>
-          <mat-card-title class="title">On The Day</mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="https://www.swings.com.au/media/images/_gallery/kelsie_leigh-164.jpg"
-          alt="Venue image"
-          class="time-image"
-        />
-        <mat-card-content class="time-content">
-          <div class="time-container">
-            <div class="time-section">
-              <h2 class="time-name">Ceremony</h2>
-              <p class="time">3:30PM</p>
+  <div class="cards-container">
+    <div class="card-container-top">
+      <div class="details">
+        <mat-card appearance="raised" class="card">
+          <mat-card-header>
+            <mat-card-title class="title">Venue</mat-card-title>
+            <mat-divider></mat-divider>
+          </mat-card-header>
+          <img
+            mat-card-image
+            src="https://www.swings.com.au/media/banners/_bannerLarge/SwingsSoftOpen2019_KellyHarwoodPhotography-6.jpg"
+            alt="Venue image"
+            class="venue-image"
+          />
+          <mat-card-content class="venue-content">
+            <h2 class="venue-name">{{ weddingVenueName }}</h2>
+            <p class="venue-address">2807 Caves Road,</p>
+            <p class="venue-address">Yallingup, WA</p>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button (click)="copyWeddingAddress()">
+              Copy Address
+              <mat-icon>content_copy</mat-icon>
+            </button>
+            <a mat-button href="https://maps.app.goo.gl/aPU52pQzKv71pgky7">
+              Open in Maps
+              <mat-icon>map</mat-icon>
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <div class="details">
+        <mat-card appearance="raised" class="card">
+          <mat-card-header>
+            <mat-card-title class="title">On The Day</mat-card-title>
+          </mat-card-header>
+          <img
+            mat-card-image
+            src="https://www.swings.com.au/media/images/_gallery/kelsie_leigh-164.jpg"
+            alt="Venue image"
+            class="time-image"
+          />
+          <mat-card-content class="time-content">
+            <div class="time-container">
+              <div class="time-section">
+                <h2 class="time-name">Ceremony</h2>
+                <p class="time">3:30PM</p>
+              </div>
+              <mat-divider [vertical]="true"></mat-divider>
+              <div class="time-section">
+                <h2 class="time-name">Reception</h2>
+                <p class="time">4:30PM - Late</p>
+              </div>
             </div>
-            <mat-divider [vertical]="true"></mat-divider>
-            <div class="time-section">
-              <h2 class="time-name">Reception</h2>
-              <p class="time">4:30PM - Late</p>
-            </div>
-          </div>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button mat-button [matMenuTriggerFor]="menu">
-            Add to Calendar
-            <mat-icon>event</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <a mat-menu-item href="wedding.ics">
-              <span>iCalendar</span>
-            </a>
-            <a mat-menu-item href="{{ googleCalendarURL }}">
-              <span>Google</span>
-            </a>
-            <a mat-menu-item href="{{ outlookCalendarURL }}">
-              <span>Outlook</span>
-            </a>
-          </mat-menu>
-        </mat-card-actions>
-      </mat-card>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button [matMenuTriggerFor]="menu">
+              Add to Calendar
+              <mat-icon>event</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <a mat-menu-item href="wedding.ics">
+                <span>iCalendar</span>
+              </a>
+              <a mat-menu-item href="{{ googleCalendarURL }}">
+                <span>Google</span>
+              </a>
+              <a mat-menu-item href="{{ outlookCalendarURL }}">
+                <span>Outlook</span>
+              </a>
+            </mat-menu>
+          </mat-card-actions>
+        </mat-card>
+      </div>
     </div>
-  </div>
-  <div class="card-container-bottom">
-    <div class="details-bottom">
-      <mat-card appearance="raised" class="card">
-        <mat-card-header>
-          <mat-card-title class="title">Dress Code</mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="colour-palette.png"
-          alt="Venue image"
-          class="time-image"
-        />
-        <mat-card-content class="time-content">
-          <p>
-            Please join us in formal attire. We kindly ask guests to avoid
-            bright colours and to keep white to a minimum. The weather in
-            Yallingup around November is usually mild and pleasant, but we
-            recommend bringing a light jacket for the evening.
-          </p>
-          <p>
-            Our amazing photographer will be with us for the whole night
-            capturing all the amazing moments we will share together.
-          </p>
-        </mat-card-content>
-      </mat-card>
+    <div class="card-container-bottom">
+      <div class="details-bottom">
+        <mat-card appearance="raised" class="card">
+          <mat-card-header>
+            <mat-card-title class="title">Dress Code</mat-card-title>
+          </mat-card-header>
+          <img
+            mat-card-image
+            src="colour-palette.png"
+            alt="Venue image"
+            class="time-image"
+          />
+          <mat-card-content class="time-content">
+            <p>
+              Please join us in formal attire. We kindly ask guests to avoid
+              bright colours and to keep white to a minimum. The weather in
+              Yallingup around November is usually mild and pleasant, but we
+              recommend bringing a light jacket for the evening.
+            </p>
+            <p>
+              Our amazing photographer will be with us for the whole night
+              capturing all the amazing moments we will share together.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>

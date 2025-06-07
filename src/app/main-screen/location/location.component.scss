@@ -12,8 +12,12 @@
   background: gray;
 }
 
-.card-container {
+.cards-container {
+  height: 100%;
   width: 50%;
+}
+
+.card-container-top {
   display: flex;
   height: 50%;
   margin: 0 auto;
@@ -21,7 +25,6 @@
 }
 
 .card-container-bottom {
-  width: 50%;
   display: flex;
   height: 50%;
   margin: 0 auto;
