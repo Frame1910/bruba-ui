@@ -212,7 +212,14 @@ export class OnboardingComponent implements OnInit {
       ) {
         console.log(user);
         userIds.push({ userId: user, status: 'ACCEPTED' });
-        // prepare additional details payload for api
+        const userData = {
+          id: user,
+          mobile: '',
+          email: this.additionalInfoFormGroup?.value[`${user}_email`],
+          dietary: this.additionalInfoFormGroup?.value[`${user}_dietary`],
+          allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
+        };
+        await lastValueFrom(this.api.updateUser(user, userData))
       } else if (
         this.inviteAcceptFormGroup!.get(user)?.value === 'True' &&
         user.includes('plusOne')

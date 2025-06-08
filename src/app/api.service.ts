@@ -7,7 +7,7 @@ import { Invite, InviteWithUsers } from '../types';
   providedIn: 'root',
 })
 export class ApiService {
-  baseUrl = 'http://localhost:3000/api';
+  baseUrl = 'http://192.168.68.68:3000/api';
   constructor(private http: HttpClient) {}
 
   getInviteByCode(code: string) {
@@ -42,5 +42,9 @@ export class ApiService {
       `${this.baseUrl}/user-invites/${inviteCode}/plus-one`,
       plusOne
     );
+  }
+
+  updateUser(userId: string, userInfo: User) {
+    return this.http.patch(`${this.baseUrl}/users/${userId}`, userInfo);
   }
 }

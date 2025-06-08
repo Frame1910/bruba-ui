@@ -21,8 +21,8 @@ export interface Invite {
 
 export interface User {
   id?: string | undefined;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   mobile: string;
   email: string;
   // status: string;
