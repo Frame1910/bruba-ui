@@ -214,7 +214,7 @@ export class OnboardingComponent implements OnInit {
         userIds.push({ userId: user, status: 'ACCEPTED' });
         const userData = {
           id: user,
-          mobile: '',
+          // mobile?
           email: this.additionalInfoFormGroup?.value[`${user}_email`],
           dietary: this.additionalInfoFormGroup?.value[`${user}_dietary`],
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
@@ -230,7 +230,7 @@ export class OnboardingComponent implements OnInit {
           id: user,
           firstName: this.additionalInfoFormGroup?.value[`${user}_name`],
           lastName: this.additionalInfoFormGroup?.value[`${user}_surname`],
-          mobile: '',
+          //mobile?
           email: this.additionalInfoFormGroup?.value[`${user}_email`],
           dietary: this.additionalInfoFormGroup?.value[`${user}_dietary`],
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],

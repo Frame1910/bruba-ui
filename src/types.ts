@@ -23,7 +23,7 @@ export interface User {
   id?: string | undefined;
   firstName?: string;
   lastName?: string;
-  mobile: string;
+  mobile?: string;
   email: string;
   // status: string;
   // relation: string;
