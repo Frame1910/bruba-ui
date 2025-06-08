@@ -253,6 +253,7 @@ export class OnboardingComponent implements OnInit {
     await lastValueFrom(
       this.api.updateInviteStatuses(userIds, this.invite!.code)
     );
+    this.router.navigate(['/app']);
   }
 }
 
