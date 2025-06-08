@@ -1,4 +1,4 @@
-import { User, UserInvite } from './../../types';
+import { DietaryRestriction, User, UserInvite } from './../../types';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { CommonModule } from '@angular/common';
 import { Component, Inject, inject, Input, OnInit } from '@angular/core';
@@ -165,7 +165,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   checkAcceptance(user: UserInvite) {
-    return this.inviteAcceptFormGroup?.get(user.user.id)?.value;
+    return user.user.id ? this.inviteAcceptFormGroup?.get(user.user.id)?.value : undefined;
   }
 
   checkPlusOneAcceptance() {
@@ -180,7 +180,8 @@ export class OnboardingComponent implements OnInit {
       ) ||
       (Object.values(this.inviteAcceptFormGroup!.controls)
         .filter(
-          (control) => control !== this.inviteAcceptFormGroup!.get(`${this.plusOneId}`)
+          (control) =>
+            control !== this.inviteAcceptFormGroup!.get(`${this.plusOneId}`)
         )
         .every((control) => control.value === 'False') &&
         this.inviteAcceptFormGroup!.get(`${this.plusOneId}`)?.value === 'True')
@@ -224,11 +225,8 @@ export class OnboardingComponent implements OnInit {
           lastName: this.additionalInfoFormGroup?.value[`${user}_surname`],
           mobile: '',
           email: this.additionalInfoFormGroup?.value[`${user}_email`],
-          status: 'ACTIVE',
-          relation: 'FRIEND',
-          dietary: [],
-          createdAt: '',
-          updatedAt: '',
+          dietary: this.additionalInfoFormGroup?.value[`${user}_dietary`],
+          allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
         };
         await lastValueFrom(this.api.createUser(newUser));
         console.log('new user created');

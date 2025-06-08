@@ -1,12 +1,12 @@
 export enum DietaryRestriction {
-  VEGETARIAN,
-  VEGAN,
-  GLUTEN_FREE,
-  DAIRY_FREE,
-  NUT_FREE,
-  SHELLFISH_FREE,
-  OTHER,
-  NONE,
+VEGETARIAN,
+VEGAN,
+PESCATARIAN,
+GLUTEN_FREE,
+DAIRY_FREE,
+KOSHER,
+HALAL,
+NONE
 }
 
 export interface Invite {
@@ -20,24 +20,25 @@ export interface Invite {
 }
 
 export interface User {
-  id: string;
+  id?: string | undefined;
   firstName: string;
   lastName: string;
   mobile: string;
   email: string;
-  status: string;
-  relation: string;
+  // status: string;
+  // relation: string;
   dietary: DietaryRestriction[];
-  createdAt: string;
-  updatedAt: string;
+  allergies: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface UserInvite {
   userId: string;
   inviteCode: string;
   isPlusOne: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface InviteWithUsers {
@@ -55,8 +56,8 @@ export interface UserInvite {
   inviteCode: string;
   isPlusOne: boolean;
   status: 'ACCEPTED' | 'DECLINED' | 'PENDING';
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   user: User;
 }
 
