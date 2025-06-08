@@ -7,7 +7,7 @@ import { Invite, InviteWithUsers } from '../types';
   providedIn: 'root',
 })
 export class ApiService {
-  baseUrl = 'http://192.168.68.68:3000/api';
+  baseUrl = 'http://localhost:3000/api';
   constructor(private http: HttpClient) {}
 
   getInviteByCode(code: string) {
