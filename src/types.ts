@@ -1,12 +1,12 @@
 export enum DietaryRestriction {
-VEGETARIAN,
-VEGAN,
-PESCATARIAN,
-GLUTEN_FREE,
-DAIRY_FREE,
-KOSHER,
-HALAL,
-NONE
+  VEGETARIAN,
+  VEGAN,
+  PESCATARIAN,
+  GLUTEN_FREE,
+  DAIRY_FREE,
+  KOSHER,
+  HALAL,
+  NONE,
 }
 
 export interface Invite {
@@ -32,15 +32,6 @@ export interface User {
   createdAt?: string;
   updatedAt?: string;
 }
-
-export interface UserInvite {
-  userId: string;
-  inviteCode: string;
-  isPlusOne: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
 export interface InviteWithUsers {
   code: string;
   allowPlusOne: boolean;
@@ -56,6 +47,7 @@ export interface UserInvite {
   userId: string;
   inviteCode: string;
   isPlusOne: boolean;
+  scstatus: 'ACCEPTED' | 'DECLINED' | 'PENDING';
   status: 'ACCEPTED' | 'DECLINED' | 'PENDING';
   createdAt?: string;
   updatedAt?: string;

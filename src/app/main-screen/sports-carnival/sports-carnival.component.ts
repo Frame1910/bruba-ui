@@ -8,7 +8,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { environment } from '../../../environments/environment';
 import { MatDividerModule } from '@angular/material/divider';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ApiService } from '../../api.service';
 
 @Component({
@@ -24,7 +29,7 @@ import { ApiService } from '../../api.service';
     ReactiveFormsModule,
   ],
   templateUrl: './sports-carnival.component.html',
-  styleUrl: './sports-carnival.component.scss'
+  styleUrl: './sports-carnival.component.scss',
 })
 export class SportsCarnivalComponent {
   @Input() inviteWithUsers: InviteWithUsers | undefined;
@@ -33,37 +38,46 @@ export class SportsCarnivalComponent {
 
   sportsCarnivalForm: FormGroup | undefined;
 
-  sportsCarnivalGoogleCalendarURL: string = environment.sportsCarnivalGoogleCalendarURL;
-  sportsCarnivalOutlookCalendarURL: string = environment.sportsCarnivalOutlookCalendarURL;
+  sportsCarnivalGoogleCalendarURL: string =
+    environment.sportsCarnivalGoogleCalendarURL;
+  sportsCarnivalOutlookCalendarURL: string =
+    environment.sportsCarnivalOutlookCalendarURL;
 
-  ngOnInit(){
-    if(this.inviteWithUsers){
+  ngOnInit() {
+    if (this.inviteWithUsers) {
       const group: { [key: string]: any } = {};
-      for (const user of this.inviteWithUsers.UserInvite){
+      for (const user of this.inviteWithUsers.UserInvite) {
         // TODO: Should we allow users that declined the RSVP for the wedding come to the sports carnival?
-        group[`${user.userId}`] = ['', Validators.required];
+        let chipStatus = 'PENDING';
+        if (user.scstatus === 'ACCEPTED') {
+          chipStatus = 'true';
+        } else if (user.scstatus === 'DECLINED') {
+          chipStatus = 'false';
+        }
+        group[`${user.userId}`] = [chipStatus, Validators.required];
       }
       this.sportsCarnivalForm = this._formBuilder.group(group);
-      console.log(this.sportsCarnivalRSVP)
+      console.log(this.sportsCarnivalRSVP);
     }
   }
 
-  sportsCarnivalRSVP(){
-    const userIds: Array <{ userId: string; scstatus: string}> = [];
+  sportsCarnivalRSVP() {
+    const userIds: Array<{ userId: string; scstatus: string }> = [];
     for (let user in this.sportsCarnivalForm!.controls) {
-      if (this.sportsCarnivalForm!.get(user)?.value === 'true'){
-        console.log('user accepted')
-        console.log(user)
-        userIds.push({userId: user, scstatus: 'ACCEPTED'})
-      }
-      else {
-        console.log('user declined')
-        console.log(user)
-        userIds.push({userId: user, scstatus: 'DECLINED'})
+      if (this.sportsCarnivalForm!.get(user)?.value === 'true') {
+        console.log('user accepted');
+        console.log(user);
+        userIds.push({ userId: user, scstatus: 'ACCEPTED' });
+      } else {
+        console.log('user declined');
+        console.log(user);
+        userIds.push({ userId: user, scstatus: 'DECLINED' });
       }
     }
-    this.api.updateSportsCarnivalStatuses(userIds, this.inviteWithUsers!.code).subscribe(() => {
-      console.log('request complete')
-    })
+    this.api
+      .updateSportsCarnivalStatuses(userIds, this.inviteWithUsers!.code)
+      .subscribe(() => {
+        console.log('request complete');
+      });
   }
 }
