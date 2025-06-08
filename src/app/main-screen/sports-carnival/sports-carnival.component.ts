@@ -15,6 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ApiService } from '../../api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sports-carnival',
@@ -35,6 +36,7 @@ export class SportsCarnivalComponent {
   @Input() inviteWithUsers: InviteWithUsers | undefined;
   private api = inject(ApiService);
   private _formBuilder = inject(FormBuilder);
+  private _snackbar = inject(MatSnackBar);
 
   sportsCarnivalForm: FormGroup | undefined;
 
@@ -78,6 +80,13 @@ export class SportsCarnivalComponent {
       .updateSportsCarnivalStatuses(userIds, this.inviteWithUsers!.code)
       .subscribe(() => {
         console.log('request complete');
+        this._snackbar.open(
+          'Sports Carnival RSVP updated successfully!',
+          'OK',
+          {
+            duration: 3000,
+          }
+        );
       });
   }
 }
