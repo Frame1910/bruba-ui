@@ -84,12 +84,9 @@
                   multiple
                   required
                 >
-                  <mat-option value="None">None</mat-option>
-                  <mat-option value="Vegetarian">Vegetarian</mat-option>
-                  <mat-option value="Vegan">Vegan</mat-option>
-                  <mat-option value="Gluten-Free">Gluten-Free</mat-option>
-                  <mat-option value="Kosher">Kosher</mat-option>
-                  <mat-option value="Halal">Halal</mat-option>
+                @for (option of this.dietaryOptions; track option) {
+                  <mat-option [value]="option.value">{{option.viewValue}}</mat-option>
+                }
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">
@@ -150,12 +147,9 @@
                   multiple
                   required
                 >
-                  <mat-option value="None">None</mat-option>
-                  <mat-option value="Vegetarian">Vegetarian</mat-option>
-                  <mat-option value="Vegan">Vegan</mat-option>
-                  <mat-option value="Gluten-Free">Gluten-Free</mat-option>
-                  <mat-option value="Kosher">Kosher</mat-option>
-                  <mat-option value="Halal">Halal</mat-option>
+                @for (option of this.dietaryOptions; track option) {
+                  <mat-option [value]="option.value">{{option.viewValue}}</mat-option>
+                }
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">

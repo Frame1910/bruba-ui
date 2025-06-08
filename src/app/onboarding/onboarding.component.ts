@@ -67,6 +67,17 @@ export class OnboardingComponent implements OnInit {
   private dialog = inject(MatDialog);
   plusOneId: string | undefined;
 
+  dietaryOptions: any[] = [
+    {value: 'NONE', viewValue: 'None'},
+    {value: 'VEGETARIAN', viewValue: 'Vegetarian'},
+    {value: 'VEGAN', viewValue: 'Vegan'},
+    {value: 'PESCATARIAN', viewValue: 'Pescatarian'},
+    {value: 'GLUTEN_FREE', viewValue: 'Gluten Free'},
+    {value: 'DAIRY_FREE', viewValue: 'Dairy Free'},
+    {value: 'KOSHER', viewValue: 'Kosher'},
+    {value: 'HALAL', viewValue: 'Halal'},
+  ]
+
   ngOnInit() {
     if (this.invite$) {
       this.invite$.subscribe((invite) => {
