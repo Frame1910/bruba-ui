@@ -55,7 +55,7 @@
           </div>
           }
           <div class="button-container">
-            <button mat-button (click)="handleNext(stepper)">Next</button>
+            <button mat-button (click)="handleNext(stepper)" [disabled]="inviteAcceptFormGroup.invalid">Next</button>
           </div>
         </form>
       </mat-step>
@@ -165,7 +165,7 @@
           }
           <div class="button-container">
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>
+            <button mat-button matStepperNext [disabled]="additionalInfoFormGroup?.invalid">
               Next
             </button>
           </div>
