@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Invite } from '../../types';
+import { InviteWithUsers } from '../../types';
 import { ApiService } from '../api.service';
 import { AccommodationComponent } from './accommodation/accommodation.component';
 import { LocationComponent } from './location/location.component';
@@ -35,14 +35,14 @@ import { SportsCarnivalComponent } from './sports-carnival/sports-carnival.compo
 })
 export class MainScreenComponent {
   private api = inject(ApiService);
-
-  invite: Invite | undefined;
+  invite: InviteWithUsers | undefined;
 
   ngOnInit() {
     const code = localStorage.getItem('inviteCode');
-    this.api.getInviteByCode(code!).subscribe((invite) => {
+    this.api.getInvitees(code!).subscribe((invite) => {
       console.log('Got invite data!');
       this.invite = invite;
+      console.log(this.invite)
     });
   }
 }

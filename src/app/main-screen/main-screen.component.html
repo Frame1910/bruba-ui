@@ -9,7 +9,7 @@
 
   @if (invite?.sportsCarnival) {
   <mat-tab label="Sports Carnival">
-    <app-sports-carnival></app-sports-carnival>
+    <app-sports-carnival [inviteWithUsers]="invite"></app-sports-carnival>
   </mat-tab>
   }
 </mat-tab-group>

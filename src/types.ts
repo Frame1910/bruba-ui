@@ -48,6 +48,7 @@ export interface InviteWithUsers {
   lastSeenAt: string;
   createdAt: string;
   updatedAt: string;
+  sportsCarnival: boolean;
   UserInvite: UserInvite[];
 }
 

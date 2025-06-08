@@ -39,10 +39,14 @@
           <p><strong>Dress Code:</strong> Comfortable sportswear and shoes</p>
         </mat-card-content>
         <mat-card-actions align="end">
-            <a mat-button href="https://maps.app.goo.gl/HVhdnLyfefoKDTy66" target="_blank">
+          <a
+            mat-button
+            href="https://maps.app.goo.gl/HVhdnLyfefoKDTy66"
+            target="_blank"
+          >
             Open in Maps
             <mat-icon>map</mat-icon>
-            </a>
+          </a>
           <button mat-button [matMenuTriggerFor]="menu">
             Add to Calendar
             <mat-icon>event</mat-icon>
@@ -51,10 +55,18 @@
             <a mat-menu-item href="sportsCarnival.ics">
               <span>iCalendar</span>
             </a>
-            <a mat-menu-item href="{{sportsCarnivalGoogleCalendarURL}}" target="_blank">
+            <a
+              mat-menu-item
+              href="{{ sportsCarnivalGoogleCalendarURL }}"
+              target="_blank"
+            >
               <span>Google</span>
             </a>
-            <a mat-menu-item href="{{sportsCarnivalOutlookCalendarURL}}" target="_blank">
+            <a
+              mat-menu-item
+              href="{{ sportsCarnivalOutlookCalendarURL }}"
+              target="_blank"
+            >
               <span>Outlook</span>
             </a>
           </mat-menu>
@@ -71,16 +83,21 @@
             Please RSVP by <strong>October 5th</strong>, to confirm your
             attendance and house preference.
           </p>
+          @for (invite of this.inviteWithUsers?.UserInvite; track invite){
           <div class="rsvp-form">
+            <span>{{ invite.user.firstName }}</span>
             <mat-chip-listbox required>
               <div class="rsvp-chip-list">
-                <mat-chip-option value="True">I'll be there!</mat-chip-option>
-                <mat-chip-option value="False"
+                <mat-chip-option value="true">I'll be there!</mat-chip-option>
+                <mat-chip-option value="false"
                   >I can't make it.</mat-chip-option
                 >
               </div>
             </mat-chip-listbox>
           </div>
+          @if (!$last) {
+          <mat-divider style="padding: 5px"></mat-divider>
+          } }
         </mat-card-content>
         <mat-card-actions align="end">
           <button mat-button>RSVP <mat-icon>add</mat-icon></button>
