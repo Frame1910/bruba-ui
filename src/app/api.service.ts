@@ -30,6 +30,16 @@ export class ApiService {
     );
   }
 
+  updateSportsCarnivalStatuses(
+    statuses: { userId: string; scstatus: string }[],
+    inviteCode: string
+  ) {
+    return this.http.patch(
+      `${this.baseUrl}/invites/${inviteCode}/update-sports-carnival-status`,
+      statuses
+    );
+  }
+
   createUser(user: User) {
     return this.http.post(`${this.baseUrl}/users/create`, user);
   }

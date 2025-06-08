@@ -78,6 +78,7 @@
         <mat-card-header>
           <mat-card-title class="title">RSVP</mat-card-title>
         </mat-card-header>
+        <form [formGroup] = "sportsCarnivalForm!">
         <mat-card-content>
           <p>
             Please RSVP by <strong>October 5th</strong>, to confirm your
@@ -86,7 +87,9 @@
           @for (invite of this.inviteWithUsers?.UserInvite; track invite){
           <div class="rsvp-form">
             <span>{{ invite.user.firstName }}</span>
-            <mat-chip-listbox required>
+            <mat-chip-listbox
+            formControlName="{{ invite.user.id }}"
+            required>
               <div class="rsvp-chip-list">
                 <mat-chip-option value="true">I'll be there!</mat-chip-option>
                 <mat-chip-option value="false"
@@ -100,8 +103,9 @@
           } }
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button>RSVP <mat-icon>add</mat-icon></button>
+          <button mat-button (click)="sportsCarnivalRSVP()" [disabled]="sportsCarnivalForm?.invalid">RSVP <mat-icon>add</mat-icon></button>
         </mat-card-actions>
+      </form>
       </mat-card>
     </div>
   </div>
