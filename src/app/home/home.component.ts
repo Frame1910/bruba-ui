@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   randomSource: number | undefined;
   customImageFlag: boolean = false;
   customImage: string | undefined;
+  customImageStyling: string | undefined;
   weddingName: string = 'Wedding of Jakub & Brooke';
 
   private readonly _mobileQuery: MediaQueryList;
@@ -79,8 +80,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   customBakgroundCheck(inviteCode: string | null) {
     switch (inviteCode) {
-      case '111111':
+      case '172449':
         this.customImage = 'custom-main/breejake.jpg';
+        this.customImageStyling = 'object-position: 4%';
         break;
     }
   }
