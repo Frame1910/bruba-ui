@@ -57,4 +57,8 @@ export class ApiService {
   updateUser(userId: string, userInfo: User) {
     return this.http.patch(`${this.baseUrl}/users/${userId}`, userInfo);
   }
+
+  updateInvite(inviteId: string, inviteData: Invite){
+    return this.http.patch(`${this.baseUrl}/invites/${inviteId}/update-invite`, inviteData)
+  }
 }
