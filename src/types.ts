@@ -10,13 +10,15 @@ export enum DietaryRestriction {
 }
 
 export interface Invite {
-  code: string;
-  allowPlusOne: boolean;
-  sportsCarnival: boolean;
-  firstSeenAt: string;
-  lastSeenAt: string;
-  createdAt: string;
-  updatedAt: string;
+  code?: string;
+  allowPlusOne?: boolean;
+  sportsCarnival?: boolean;
+  bustransport?: 'ACCEPTED' | 'DECLINED' | 'PENDING';
+  address?: string;
+  firstSeenAt?: string;
+  lastSeenAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface User {
