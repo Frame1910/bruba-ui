@@ -41,6 +41,8 @@ export interface InviteWithUsers {
   lastSeenAt: string;
   createdAt: string;
   updatedAt: string;
+  bustransport?: 'ACCEPTED' | 'DECLINED' | 'PENDING';
+  address?: string;
   sportsCarnival: boolean;
   UserInvite: UserInvite[];
 }

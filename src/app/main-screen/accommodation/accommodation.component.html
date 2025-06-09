@@ -89,8 +89,12 @@
         <div class="bus-transport">
           <mat-chip-listbox required>
             <div>
-              <mat-chip-option value="True">I would like bus transport!</mat-chip-option>
-              <mat-chip-option value="False">I can get around myself.</mat-chip-option>
+              <mat-chip-option value="True"
+                >I would like bus transport!</mat-chip-option
+              >
+              <mat-chip-option value="False"
+                >I can get around myself.</mat-chip-option
+              >
             </div>
           </mat-chip-listbox>
         </div>
@@ -218,53 +222,68 @@
           to the wedding venue and back. If you would like to be included in the
           bus transport, please let us know where you will be staying. We will
           try our best to provide you transport, and will let you know if we are
-          not able to accommodate as soon as we have more information. Please let
-          us know by the
+          not able to accommodate as soon as we have more information. Please
+          let us know by the
           <strong>end of July.</strong>
         </p>
-        <div class="bus-transport">
-          <mat-chip-listbox required>
-            <div>
-              <mat-chip-option value="True">I would like bus transport!</mat-chip-option>
-              <mat-chip-option value="False">I can get around myself.</mat-chip-option>
-            </div>
-          </mat-chip-listbox>
-        </div>
-        <mat-form-field appearance="outline" style="width: 100%">
-          <mat-label>Where are you staying?</mat-label>
-          <input
-            type="text"
-            matInput
-            [matAutocomplete]="auto"
-            [(ngModel)]="addressText"
-            (input)="onAddressInput()"
-            autocomplete="off"
-            required
-          />
-        </mat-form-field>
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="selectSuggestion($event.option.value)"
-        >
-          <mat-option
-            *ngFor="let suggestion of suggestions"
-            [value]="suggestion"
+        @if (this.stayForm){
+        <form [formGroup]="stayForm!">
+          <div class="bus-transport">
+            <mat-chip-listbox formControlName="needsTransport">
+              <div>
+                <mat-chip-option value="true"
+                  >I would like bus transport!</mat-chip-option
+                >
+                <mat-chip-option value="false"
+                  >I can get around myself.</mat-chip-option
+                >
+              </div>
+            </mat-chip-listbox>
+          </div>
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Where are you staying?</mat-label>
+            <input
+              type="text"
+              matInput
+              [matAutocomplete]="auto"
+              formControlName="address"
+              [(ngModel)]="addressText"
+              (input)="onAddressInput()"
+              autocomplete="off"
+              required
+            />
+          </mat-form-field>
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selectSuggestion($event.option.value)"
           >
-            <span
-              [innerHTML]="highlightMatch(suggestion.displayName, addressText)"
-            ></span>
-            <br />
-            <span
-              class="address"
-              [innerHTML]="
-                highlightMatch(suggestion.formattedAddress, addressText)
-              "
-            ></span>
-          </mat-option>
-        </mat-autocomplete>
+            <mat-option
+              *ngFor="let suggestion of suggestions"
+              [value]="suggestion"
+            >
+              <span
+                [innerHTML]="
+                  highlightMatch(suggestion.displayName, addressText)
+                "
+              ></span>
+              <br />
+              <span
+                class="address"
+                [innerHTML]="
+                  highlightMatch(suggestion.formattedAddress, addressText)
+                "
+              ></span>
+            </mat-option>
+          </mat-autocomplete>
+        </form>
+        }
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-button (click)="submitAddress()">
+        <button
+          mat-button
+          [disabled]="!this.stayForm?.dirty || this.stayForm?.invalid"
+          (click)="submitAddress()"
+        >
           Add your Stay <mat-icon>add</mat-icon>
         </button>
       </mat-card-actions>
