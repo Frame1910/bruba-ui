@@ -87,6 +87,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       case '778468':
         this.customImage = 'custom-main/arvin.jpeg'
         this.customImageStyling = 'object-position: 45% 10%';
+        break;
+      case '461467':
+        this.customImage = 'custom-main/kacpershayla.jpeg'
+        this.customImageStyling = 'object-position: 45% 70%'
+        break;
     }
   }
 
