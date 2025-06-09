@@ -10,6 +10,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { DeviceService } from '../../services/device.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApiService } from '../../api.service';
+import { Invite } from '../../../types';
 @Component({
   selector: 'app-accommodation',
   imports: [
@@ -29,6 +32,9 @@ import { DeviceService } from '../../services/device.service';
 })
 export class AccommodationComponent {
   readonly deviceService = inject(DeviceService);
+  private _snackbar = inject(MatSnackBar);
+  private api = inject(ApiService);
+
   @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
   address: any | null | undefined;
   addressText: string = '';
@@ -79,5 +85,25 @@ export class AccommodationComponent {
       .join('.*?');
     const regex = new RegExp(`(${pattern})`, 'gi');
     return text.replace(regex, '<b>$1</b>');
+  }
+
+  submitAddress(){
+    const invite = localStorage.getItem('inviteCode')
+    const mockData : Invite = {
+      bustransport: 'ACCEPTED',
+      address: 'pee road'
+    }
+  this.api
+      .updateInvite(invite!, mockData)
+      .subscribe(() => {
+        console.log('request complete');
+        this._snackbar.open(
+          'Stay info updated successfully!',
+          'OK',
+          {
+            duration: 3000,
+          }
+        );
+      });
   }
 }
