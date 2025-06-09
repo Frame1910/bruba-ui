@@ -216,6 +216,7 @@
           >Let us know where you're staying</mat-card-title
         >
       </mat-card-header>
+      <form [formGroup]="stayForm!">
       <mat-card-content>
         <p>
           We are organising a bus to transport guests from their accommodation
@@ -226,8 +227,6 @@
           let us know by the
           <strong>end of July.</strong>
         </p>
-        @if (this.stayForm){
-        <form [formGroup]="stayForm!">
           <div class="bus-transport">
             <mat-chip-listbox formControlName="needsTransport">
               <div>
@@ -275,18 +274,17 @@
               ></span>
             </mat-option>
           </mat-autocomplete>
-        </form>
-        }
-      </mat-card-content>
-      <mat-card-actions align="end">
-        <button
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button
           mat-button
           [disabled]="!this.stayForm?.dirty || this.stayForm?.invalid"
           (click)="submitAddress()"
-        >
+          >
           Add your Stay <mat-icon>add</mat-icon>
         </button>
       </mat-card-actions>
+    </form>
     </mat-card>
   </div>
 </div>
