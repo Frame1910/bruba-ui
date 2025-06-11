@@ -89,10 +89,10 @@
         <div class="bus-transport">
           <mat-chip-listbox required>
             <div>
-              <mat-chip-option value="True"
+              <mat-chip-option [value]="true"
                 >I would like bus transport!</mat-chip-option
               >
-              <mat-chip-option value="False"
+              <mat-chip-option [value]="false"
                 >I can get around myself.</mat-chip-option
               >
             </div>
@@ -103,8 +103,8 @@
           <input
             type="text"
             matInput
+            formControlName="addressControl"
             [matAutocomplete]="auto"
-            [(ngModel)]="addressText"
             (input)="onAddressInput()"
             autocomplete="off"
             required
@@ -119,13 +119,21 @@
             [value]="suggestion"
           >
             <span
-              [innerHTML]="highlightMatch(suggestion.displayName, addressText)"
+              [innerHTML]="
+                highlightMatch(
+                  suggestion.displayName,
+                  this.stayForm.get('addressControl')?.value ?? ''
+                )
+              "
             ></span>
             <br />
             <span
               class="address"
               [innerHTML]="
-                highlightMatch(suggestion.formattedAddress, addressText)
+                highlightMatch(
+                  suggestion.formattedAddress,
+                  this.stayForm.get('addressControl')?.value ?? ''
+                )
               "
             ></span>
           </mat-option>
@@ -217,23 +225,23 @@
         >
       </mat-card-header>
       <form [formGroup]="stayForm!">
-      <mat-card-content>
-        <p>
-          We are organising a bus to transport guests from their accommodation
-          to the wedding venue and back. If you would like to be included in the
-          bus transport, please let us know where you will be staying. We will
-          try our best to provide you transport, and will let you know if we are
-          not able to accommodate as soon as we have more information. Please
-          let us know by the
-          <strong>end of July.</strong>
-        </p>
+        <mat-card-content>
+          <p>
+            We are organising a bus to transport guests from their accommodation
+            to the wedding venue and back. If you would like to be included in
+            the bus transport, please let us know where you will be staying. We
+            will try our best to provide you transport, and will let you know if
+            we are not able to accommodate as soon as we have more information.
+            Please let us know by the
+            <strong>end of July.</strong>
+          </p>
           <div class="bus-transport">
-            <mat-chip-listbox formControlName="needsTransport">
+            <mat-chip-listbox formControlName="needsTransportControl">
               <div>
-                <mat-chip-option value="true"
+                <mat-chip-option [value]="true"
                   >I would like bus transport!</mat-chip-option
                 >
-                <mat-chip-option value="false"
+                <mat-chip-option [value]="false"
                   >I can get around myself.</mat-chip-option
                 >
               </div>
@@ -245,8 +253,7 @@
               type="text"
               matInput
               [matAutocomplete]="auto"
-              formControlName="address"
-              [(ngModel)]="addressText"
+              formControlName="addressControl"
               (input)="onAddressInput()"
               autocomplete="off"
               required
@@ -262,14 +269,20 @@
             >
               <span
                 [innerHTML]="
-                  highlightMatch(suggestion.displayName, addressText)
+                  highlightMatch(
+                    suggestion.displayName,
+                    this.stayForm.get('addressControl')?.value ?? ''
+                  )
                 "
               ></span>
               <br />
               <span
                 class="address"
                 [innerHTML]="
-                  highlightMatch(suggestion.formattedAddress, addressText)
+                  highlightMatch(
+                    suggestion.formattedAddress,
+                    this.stayForm.get('addressControl')?.value ?? ''
+                  )
                 "
               ></span>
             </mat-option>
@@ -277,14 +290,14 @@
         </mat-card-content>
         <mat-card-actions align="end">
           <button
-          mat-button
-          [disabled]="!this.stayForm?.dirty || this.stayForm?.invalid"
-          (click)="submitAddress()"
+            mat-button
+            [disabled]="!this.stayForm.dirty || this.stayForm.invalid"
+            (click)="submitAddress()"
           >
-          Add your Stay <mat-icon>add</mat-icon>
-        </button>
-      </mat-card-actions>
-    </form>
+            Add your Stay <mat-icon>add</mat-icon>
+          </button>
+        </mat-card-actions>
+      </form>
     </mat-card>
   </div>
 </div>

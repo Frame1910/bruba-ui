@@ -42,31 +42,38 @@ export class AccommodationComponent {
   @Input() inviteWithUsers: InviteWithUsers | undefined;
   readonly deviceService = inject(DeviceService);
   private _snackbar = inject(MatSnackBar);
-  private _formBuilder = inject(FormBuilder);
   private api = inject(ApiService);
 
   @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
-  address: any | null | undefined;
-  addressText: string = '';
+
+  stayForm = new FormGroup({
+    addressControl: new FormControl<string | null>(null, Validators.required),
+    needsTransportControl: new FormControl<boolean>(false, Validators.required),
+  });
   suggestions: any[] = [];
-  stayForm: FormGroup | undefined;
 
   ngOnInit() {
-    if (this.inviteWithUsers) {
-      console.log(this.inviteWithUsers);
-      console.log(this.inviteWithUsers.address)
-      const group: { [key: string]: any } = {};
-      let chipStatus = 'PENDING';
-      if (this.inviteWithUsers?.bustransport === 'ACCEPTED') {
-        chipStatus = 'true';
-      } else if (this.inviteWithUsers?.bustransport === 'DECLINED') {
-        chipStatus = 'false';
+    this.stayForm.controls.needsTransportControl.valueChanges.subscribe(
+      (value) => {
+        if (value === false) {
+          this.stayForm.controls.addressControl.setValue(null);
+          this.stayForm.controls.addressControl.disable();
+        } else {
+          this.stayForm.controls.addressControl.enable();
+        }
       }
-      group['needsTransport'] = [chipStatus, Validators.required];
-      group['address'] = [this.inviteWithUsers?.address, Validators.required];
-      this.stayForm = this._formBuilder.group(group);
-      console.log(this.stayForm)
-      this.addressText = this.inviteWithUsers!.address ?? ''
+    );
+    if (this.inviteWithUsers) {
+      let transport: boolean | null = null;
+      if (this.inviteWithUsers?.bustransport === 'ACCEPTED') {
+        transport = true;
+      } else if (this.inviteWithUsers?.bustransport === 'DECLINED') {
+        transport = false;
+      }
+      this.stayForm.setValue({
+        addressControl: this.inviteWithUsers?.address || null,
+        needsTransportControl: transport,
+      });
     }
   }
 
@@ -76,7 +83,7 @@ export class AccommodationComponent {
       clearTimeout((this as any)._debounceTimeout);
     }
     (this as any)._debounceTimeout = setTimeout(async () => {
-      const inputValue = this.addressText;
+      const inputValue = this.stayForm.value.addressControl;
       if (!inputValue) {
         this.suggestions = [];
         return;
@@ -92,18 +99,18 @@ export class AccommodationComponent {
   }
 
   async selectSuggestion(suggestion: any) {
-    this.address = suggestion;
-    this.addressText = suggestion.formattedAddress;
+    this.stayForm.patchValue({
+      addressControl: suggestion.displayName,
+    });
     this.suggestions = [];
   }
 
   async onSubmit() {
-    if (!this.address) {
+    if (this.stayForm.invalid) {
       console.error('No address selected');
       return;
     }
-    console.log('Submitting address:', this.address);
-    console.log('Selected address:', this.address.formattedAddress);
+    console.log('Submitting address:', this.stayForm.value.addressControl);
   }
 
   highlightMatch(text: string, query: string): string {
@@ -118,10 +125,30 @@ export class AccommodationComponent {
   }
 
   submitAddress() {
-    const formValues = this.stayForm?.value;
+    let address;
+    let needsTransport: 'ACCEPTED' | 'DECLINED' | 'PENDING' | undefined;
+    if (
+      this.stayForm.value.addressControl &&
+      this.stayForm.value.needsTransportControl
+    ) {
+      address = this.stayForm.value.addressControl;
+    }
+
+    switch (this.stayForm.value.needsTransportControl) {
+      case true:
+        needsTransport = 'ACCEPTED';
+        break;
+      case false:
+        needsTransport = 'DECLINED';
+        break;
+      default:
+        needsTransport = 'PENDING';
+    }
+    console.log('Submitting address:', address);
+    console.log('Submitting transport needs:', needsTransport);
     const mockData: Invite = {
-      bustransport: formValues.needsTransport === 'true' ? 'ACCEPTED' : formValues.needsTransport === 'false' ? 'DECLINED' : 'PENDING',
-      address: formValues.address,
+      bustransport: needsTransport,
+      address: address,
     };
     this.api
       .updateInvite(this.inviteWithUsers?.code!, mockData)
