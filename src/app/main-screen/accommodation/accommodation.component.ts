@@ -100,7 +100,7 @@ export class AccommodationComponent {
 
   async selectSuggestion(suggestion: any) {
     this.stayForm.patchValue({
-      addressControl: suggestion.displayName,
+      addressControl: suggestion,
     });
     this.suggestions = [];
   }

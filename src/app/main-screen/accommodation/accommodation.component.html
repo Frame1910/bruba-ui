@@ -265,7 +265,7 @@
           >
             <mat-option
               *ngFor="let suggestion of suggestions"
-              [value]="suggestion"
+              [value]="suggestion.formattedAddress"
             >
               <span
                 [innerHTML]="
