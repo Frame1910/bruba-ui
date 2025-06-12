@@ -81,17 +81,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   customBakgroundCheck(inviteCode: string | null) {
     switch (inviteCode) {
       case '172449':
-        this.customImage = 'custom-main/breejake.jpg';
+        this.customImage = 'custom-main/breejake.jpg';          //Bree & Jake
         this.customImageStyling = 'object-position: 4%';
         break;
       case '778468':
-        this.customImage = 'custom-main/arvin.jpeg'
+        this.customImage = 'custom-main/arvin.jpeg'             //Arvin
         this.customImageStyling = 'object-position: 45% 10%';
         break;
       case '461467':
-        this.customImage = 'custom-main/kacpershayla.jpeg'
+        this.customImage = 'custom-main/kacpershayla.jpeg'      //Kacper & Shayla
         this.customImageStyling = 'object-position: 45% 70%'
         break;
+      case '998733':
+        this.customImage = 'custom-main/dimmy.jpeg'             //Dimmy
+        this.customImageStyling = 'object-position: 90% 50%'
     }
   }
 
