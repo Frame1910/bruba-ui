@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.randomSource = Math.floor(Math.random() * 8) + 1; // chooses random imgage
+    this.randomSource = Math.floor(Math.random() * 9) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
     // if (inviteCode) {
     //   this.navItems.push({
@@ -81,20 +81,47 @@ export class HomeComponent implements OnInit, OnDestroy {
   customBakgroundCheck(inviteCode: string | null) {
     switch (inviteCode) {
       case '172449':
-        this.customImage = 'custom-main/breejake.jpg';          //Bree & Jake
+        this.customImage = 'custom-main/breejake.jpg';
         this.customImageStyling = 'object-position: 4%';
         break;
       case '778468':
-        this.customImage = 'custom-main/arvin.jpeg'             //Arvin
+        this.customImage = 'custom-main/arvin.jpeg';
         this.customImageStyling = 'object-position: 45% 10%';
         break;
       case '461467':
-        this.customImage = 'custom-main/kacpershayla.jpeg'      //Kacper & Shayla
-        this.customImageStyling = 'object-position: 45% 70%'
+        // this.customImage = 'custom-main/kacpershayla.jpeg';
+        // this.customImageStyling = 'object-position: 45% 70%';
+        this.customImage = 'custom-main/kacpershayla-2.jpg';
+        this.customImageStyling = 'object-position: 36% 70%';
         break;
       case '998733':
-        this.customImage = 'custom-main/dimmy.jpeg'             //Dimmy
-        this.customImageStyling = 'object-position: 90% 50%'
+        this.customImage = 'custom-main/dimmy.jpeg';
+        this.customImageStyling = 'object-position: 90% 50%';
+        break;
+      case '759617':
+        this.customImage = 'custom-main/ted.jpg';
+        this.customImageStyling = 'object-position: 65% 40%';
+        break;
+      case '473811':
+        this.customImage = 'custom-main/jaydenanabelle.jpg';
+        this.customImageStyling = 'object-position: 40% 60%';
+        break;
+      case '575022':
+        this.customImage = 'custom-main/dorislukasz.jpg';
+        this.customImageStyling = 'object-position: 55% 60%';
+        break;
+      case '717477':
+        this.customImage = 'custom-main/marks.jpg';
+        this.customImageStyling = 'object-position: 67% 70%';
+        break;
+      case '505004':
+        this.customImage = 'custom-main/antoniewicz-2.jpg'; //Julia
+        this.customImageStyling = 'object-position: 50% 50%';
+        break;
+      case '894131':
+        this.customImage = 'custom-main/antoniewicz.jpeg'; //Parents
+        this.customImageStyling = 'object-position: 50% 75%';
+        break;
     }
   }
 

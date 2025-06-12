@@ -35,8 +35,12 @@ export class InviteSigninComponentComponent {
   codeControl = new FormControl<string>('', { nonNullable: true });
   loading: boolean = false;
   invite: Invite | null = null;
+  image: string = 'sign-in/birds.jpg'
 
-  ngOnInit() {}
+  ngOnInit() {
+    const images = ['sign-in/birds.jpg', 'sign-in/dogs.jpg'];
+    this.image = images[Math.floor(Math.random() * images.length)];
+  }
 
   routeToInvite() {
     this.loading = true;
