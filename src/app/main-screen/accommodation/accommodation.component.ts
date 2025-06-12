@@ -95,7 +95,7 @@ export class AccommodationComponent {
         region: 'au',
       });
       this.suggestions = results.places;
-    }, 1000);
+    }, 400);
   }
 
   async selectSuggestion(suggestion: any) {
