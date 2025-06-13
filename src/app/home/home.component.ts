@@ -76,17 +76,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       image: 'custom-main/marks.jpg',
       style: 'object-position: 67% 70%',
     },
-    '894131': {
+    '894131': { //Parents
       image: 'custom-main/antoniewicz.jpeg',
       style: 'object-position: 50% 75%',
     },
-    '505004': {
+    '505004': { //Julia
       image: 'custom-main/antoniewicz-2.jpg',
       style: 'object-position: 50% 50%',
     },
     '575022': {
-      image: 'custom-main/antoniewicz-3.jpg',
-      style: 'object-position: 62% 60%',
+      image: 'custom-main/dorotalukasz.jpg',
+      style: 'object-position: 70% 60%',
     },
   };
 
