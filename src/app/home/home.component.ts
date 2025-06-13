@@ -48,16 +48,46 @@ export class HomeComponent implements OnInit, OnDestroy {
   weddingName: string = 'Wedding of Jakub & Brooke';
 
   CUSTOM_IMAGES: Record<string, { image: string; style: string }> = {
-  '172449': { image: 'custom-main/breejake.jpg', style: 'object-position: 4%' },
-  '778468': { image: 'custom-main/arvin.jpeg', style: 'object-position: 45% 10%' },
-  '461467': { image: 'custom-main/kacpershayla-2.jpg', style: 'object-position: 36% 70%' },
-  '998733': { image: 'custom-main/dimmy.jpeg', style: 'object-position: 90% 50%' },
-  '759617': { image: 'custom-main/ted.jpg', style: 'object-position: 65% 40%' },
-  '473811': { image: 'custom-main/jaydenanabelle.jpg', style: 'object-position: 40% 60%' },
-  '717477': { image: 'custom-main/marks.jpg', style: 'object-position: 67% 70%' },
-  '894131': { image: 'custom-main/antoniewicz.jpeg', style: 'object-position: 50% 75%' },
-  '505004': { image: 'custom-main/antoniewicz-2.jpg', style: 'object-position: 50% 50%' },
-  '575022': { image: 'custom-main/antoniewicz-3.jpg', style: 'object-position: 62% 60%' },
+    '172449': {
+      image: 'custom-main/breejake.jpg',
+      style: 'object-position: 4%',
+    },
+    '778468': {
+      image: 'custom-main/arvin.jpeg',
+      style: 'object-position: 45% 10%',
+    },
+    '461467': {
+      image: 'custom-main/kacpershayla-2.jpg',
+      style: 'object-position: 36% 70%',
+    },
+    '998733': {
+      image: 'custom-main/dimmy.jpeg',
+      style: 'object-position: 90% 50%',
+    },
+    '759617': {
+      image: 'custom-main/ted.jpg',
+      style: 'object-position: 65% 40%',
+    },
+    '473811': {
+      image: 'custom-main/jaydenanabelle.jpg',
+      style: 'object-position: 40% 60%',
+    },
+    '717477': {
+      image: 'custom-main/marks.jpg',
+      style: 'object-position: 67% 70%',
+    },
+    '894131': {
+      image: 'custom-main/antoniewicz.jpeg',
+      style: 'object-position: 50% 75%',
+    },
+    '505004': {
+      image: 'custom-main/antoniewicz-2.jpg',
+      style: 'object-position: 50% 50%',
+    },
+    '575022': {
+      image: 'custom-main/antoniewicz-3.jpg',
+      style: 'object-position: 62% 60%',
+    },
   };
 
   private readonly _mobileQuery: MediaQueryList;
