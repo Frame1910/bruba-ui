@@ -113,7 +113,7 @@ export class OnboardingComponent implements OnInit {
       return true;
     } else {
       console.log('invite was previously denied');
-      this.router.navigate(['/sign-in']);
+      this.router.navigate(['/declined']);
       return false;
     }
   }
