@@ -55,7 +55,13 @@
           </div>
           }
           <div class="button-container">
-            <button mat-button (click)="handleNext(stepper)" [disabled]="inviteAcceptFormGroup.invalid">Next</button>
+            <button
+              mat-button
+              (click)="handleNext(stepper)"
+              [disabled]="inviteAcceptFormGroup.invalid"
+            >
+              Next
+            </button>
           </div>
         </form>
       </mat-step>
@@ -84,9 +90,11 @@
                   multiple
                   required
                 >
-                @for (option of this.dietaryOptions; track option) {
-                  <mat-option [value]="option.value">{{option.viewValue}}</mat-option>
-                }
+                  @for (option of this.dietaryOptions; track option) {
+                  <mat-option [value]="option.value">{{
+                    option.viewValue
+                  }}</mat-option>
+                  }
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">
@@ -108,6 +116,7 @@
             <h2>
               {{
                 (additionalInfoFormGroup!.get("{{ plusOneId
+
               }}_name")?.value || "Plus One") + " " }}
             </h2>
             <div class="input-container">
@@ -147,9 +156,11 @@
                   multiple
                   required
                 >
-                @for (option of this.dietaryOptions; track option) {
-                  <mat-option [value]="option.value">{{option.viewValue}}</mat-option>
-                }
+                  @for (option of this.dietaryOptions; track option) {
+                  <mat-option [value]="option.value">{{
+                    option.viewValue
+                  }}</mat-option>
+                  }
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="input-field" appearance="outline">
@@ -165,7 +176,11 @@
           }
           <div class="button-container">
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext [disabled]="additionalInfoFormGroup?.invalid">
+            <button
+              mat-button
+              matStepperNext
+              [disabled]="additionalInfoFormGroup?.invalid"
+            >
               Next
             </button>
           </div>
@@ -177,17 +192,12 @@
         <p>TODO: Present user information</p>
         <div class="button-container">
           <button mat-button matStepperPrevious>Back</button>
-          <button
-            (click)="inviteAccepted()"
-            mat-button
-          >
-            Let's Go!
-          </button>
+          <button (click)="inviteAccepted()" mat-button>Let's Go!</button>
         </div>
       </mat-step>
     </mat-vertical-stepper>
   </mat-card>
 </main>
 } @else {
-<p>Nothing here</p>
+<p>Something went wrong</p>
 }

@@ -68,15 +68,15 @@ export class OnboardingComponent implements OnInit {
   plusOneId: string | undefined;
 
   dietaryOptions: any[] = [
-    {value: 'NONE', viewValue: 'None'},
-    {value: 'VEGETARIAN', viewValue: 'Vegetarian'},
-    {value: 'VEGAN', viewValue: 'Vegan'},
-    {value: 'PESCATARIAN', viewValue: 'Pescatarian'},
-    {value: 'GLUTEN_FREE', viewValue: 'Gluten Free'},
-    {value: 'DAIRY_FREE', viewValue: 'Dairy Free'},
-    {value: 'KOSHER', viewValue: 'Kosher'},
-    {value: 'HALAL', viewValue: 'Halal'},
-  ]
+    { value: 'NONE', viewValue: 'None' },
+    { value: 'VEGETARIAN', viewValue: 'Vegetarian' },
+    { value: 'VEGAN', viewValue: 'Vegan' },
+    { value: 'PESCATARIAN', viewValue: 'Pescatarian' },
+    { value: 'GLUTEN_FREE', viewValue: 'Gluten Free' },
+    { value: 'DAIRY_FREE', viewValue: 'Dairy Free' },
+    { value: 'KOSHER', viewValue: 'Kosher' },
+    { value: 'HALAL', viewValue: 'Halal' },
+  ];
 
   ngOnInit() {
     if (this.invite$) {
@@ -165,7 +165,9 @@ export class OnboardingComponent implements OnInit {
   }
 
   checkAcceptance(user: UserInvite) {
-    return user.user.id ? this.inviteAcceptFormGroup?.get(user.user.id)?.value : undefined;
+    return user.user.id
+      ? this.inviteAcceptFormGroup?.get(user.user.id)?.value
+      : undefined;
   }
 
   checkPlusOneAcceptance() {
@@ -219,7 +221,7 @@ export class OnboardingComponent implements OnInit {
           dietary: this.additionalInfoFormGroup?.value[`${user}_dietary`],
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
         };
-        await lastValueFrom(this.api.updateUser(user, userData))
+        await lastValueFrom(this.api.updateUser(user, userData));
       } else if (
         this.inviteAcceptFormGroup!.get(user)?.value === 'True' &&
         user.includes('plusOne')
@@ -267,16 +269,12 @@ export class OnboardingComponent implements OnInit {
 @Component({
   selector: 'decline-dialog',
   template: `
-    <!-- <h2 mat-dialog-title>We're sorry to see you go!</h2> -->
     <mat-dialog-content>
-      <img
-        src="https://static.wikia.nocookie.net/a17a4745-1891-41e5-908b-ff2b6defa889/scale-to-width/755"
-      />
+      <p>Are you sure you want to decline the invitation?</p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close (click)="declineInvite()">
-        Yeah
-      </button>
+      <button mat-button mat-dialog-close (click)="declineInvite()">Yes</button>
+      <button mat-button (click)="closeDialog()">No</button>
     </mat-dialog-actions>
   `,
   standalone: true,
@@ -285,6 +283,7 @@ export class OnboardingComponent implements OnInit {
 export class DeclineDialogComponent {
   private api = inject(ApiService);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
   inviteAcceptFormGroup: FormGroup | undefined;
   invite: InviteWithUsers | undefined;
 
@@ -315,5 +314,9 @@ export class DeclineDialogComponent {
         console.log('Invites declined successfully');
         this.router.navigate(['/sign-in']);
       });
+  }
+
+  closeDialog() {
+    this.dialog.closeAll();
   }
 }
