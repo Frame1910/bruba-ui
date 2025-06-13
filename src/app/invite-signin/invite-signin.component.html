@@ -19,12 +19,12 @@
     <mat-card-content style="margin-top: 15px">
       <mat-form-field appearance="outline">
         <mat-label>Invite Code</mat-label>
-        <input style="text-align:center;" matInput [formControl]="codeControl" (keyup.enter)="routeToInvite()" />
+        <input style="text-align:center;" matInput type="tel" [formControl]="codeControl" (keyup.enter)="routeToInvite()" />
         <mat-error>Invalid Code</mat-error>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-flat-button (click)="routeToInvite()">Submit</button>
+      <button mat-flat-button [disabled]="codeControl.invalid" (click)="routeToInvite()">Submit</button>
     </mat-card-actions>
     <mat-card-footer>
       <p style="text-align: center; color: #666; opacity: 0.7;">

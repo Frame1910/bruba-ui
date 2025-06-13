@@ -32,7 +32,16 @@ export class InviteSigninComponentComponent {
   private router = inject(Router);
   private api = inject(ApiService);
 
-  codeControl = new FormControl<string>('', { nonNullable: true });
+  codeControl = new FormControl<string>('', {
+    nonNullable: true,
+    validators: [
+      control => {
+        const value = control.value ?? '';
+        const isValid = /^\d{6}$/.test(value);
+        return isValid ? null : { sixDigitNumber: true };
+      }
+    ]
+  });
   loading: boolean = false;
   invite: Invite | null = null;
   image: string = 'sign-in/birds.jpg'
