@@ -25,7 +25,7 @@ export const inviteCodeGuard: CanActivateFn = (route, state) => {
         return false;
       }
       if (users.every((u: any) => u.status === 'DECLINED')) {
-        router.navigate([`/onboarding/${inviteCode}`]);
+        router.navigate([`/declined`]);
         return false;
       }
       return true; // Allow navigation if user is ACCEPTED

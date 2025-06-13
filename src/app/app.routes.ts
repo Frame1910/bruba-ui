@@ -6,6 +6,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { MainScreenComponent } from './main-screen/main-screen.component';
 import { OnboardingComponent } from './onboarding/onboarding.component';
 import { inviteCodeGuard } from './invite-code.guard';
+import { SadScreenComponent } from './sad-screen/sad-screen.component';
 
 export const appRoutes: Route[] = [
   {
@@ -35,6 +36,10 @@ export const appRoutes: Route[] = [
   {
     path: 'sign-in',
     component: InviteSigninComponentComponent,
+  },
+  {
+    path: 'declined',
+    component: SadScreenComponent,
   },
   {
     path: '**',
