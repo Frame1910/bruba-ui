@@ -20,6 +20,10 @@ export class ApiService {
     );
   }
 
+  getUserInviteStatus(inviteCode: string) {
+    return this.http.get(`${this.baseUrl}/user-invites/${inviteCode}/status`);
+  }
+
   updateInviteStatuses(
     statuses: { userId: string; status: string }[],
     inviteCode: string

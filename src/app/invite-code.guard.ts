@@ -1,16 +1,39 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { ApiService } from './api.service';
+import { catchError, map, of } from 'rxjs';
 
 export const inviteCodeGuard: CanActivateFn = (route, state) => {
+  const api = inject(ApiService);
   const router = inject(Router);
-  const storageKey = 'inviteCode';
-  const hasKey = localStorage.getItem(storageKey) !== null;
+  const inviteCode = localStorage.getItem('inviteCode');
 
-  if (!hasKey) {
-    // Redirect to login or another page if key is missing
+  if (!inviteCode) {
+    console.warn('No invite code found in local storage');
     router.navigate(['/sign-in']);
     return false;
   }
-
-  return true;
+  return api.getUserInviteStatus(inviteCode).pipe(
+    map((response: any) => {
+      const users = response.users || [];
+      if (users.length === 0) {
+        router.navigate(['/sign-in']);
+        return false;
+      }
+      if (users.every((u: any) => u.status === 'PENDING')) {
+        router.navigate([`/onboarding/${inviteCode}`]);
+        return false;
+      }
+      if (users.every((u: any) => u.status === 'DECLINED')) {
+        router.navigate([`/onboarding/${inviteCode}`]);
+        return false;
+      }
+      return true; // Allow navigation if user is ACCEPTED
+    }),
+    catchError((err) => {
+      // Handle 404 or any error
+      router.navigate(['/sign-in']);
+      return of(false);
+    })
+  );
 };
