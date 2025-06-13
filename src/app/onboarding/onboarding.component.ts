@@ -312,7 +312,7 @@ export class DeclineDialogComponent {
       .updateInviteStatuses(declinedStatuses, this.invite!.code)
       .subscribe((res) => {
         console.log('Invites declined successfully');
-        this.router.navigate(['/sign-in']);
+        this.router.navigate(['/declined']);
       });
   }
 
