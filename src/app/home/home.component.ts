@@ -47,6 +47,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   customImageStyling: string | undefined;
   weddingName: string = 'Wedding of Jakub & Brooke';
 
+  CUSTOM_IMAGES: Record<string, { image: string; style: string }> = {
+  '172449': { image: 'custom-main/breejake.jpg', style: 'object-position: 4%' },
+  '778468': { image: 'custom-main/arvin.jpeg', style: 'object-position: 45% 10%' },
+  '461467': { image: 'custom-main/kacpershayla-2.jpg', style: 'object-position: 36% 70%' },
+  '998733': { image: 'custom-main/dimmy.jpeg', style: 'object-position: 90% 50%' },
+  '759617': { image: 'custom-main/ted.jpg', style: 'object-position: 65% 40%' },
+  '473811': { image: 'custom-main/jaydenanabelle.jpg', style: 'object-position: 40% 60%' },
+  '717477': { image: 'custom-main/marks.jpg', style: 'object-position: 67% 70%' },
+  '894131': { image: 'custom-main/antoniewicz.jpeg', style: 'object-position: 50% 75%' },
+  '505004': { image: 'custom-main/antoniewicz-2.jpg', style: 'object-position: 50% 50%' },
+  '575022': { image: 'custom-main/antoniewicz-3.jpg', style: 'object-position: 62% 60%' },
+  };
+
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
   constructor(private el: ElementRef) {
@@ -79,49 +92,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   customBakgroundCheck(inviteCode: string | null) {
-    switch (inviteCode) {
-      case '172449':
-        this.customImage = 'custom-main/breejake.jpg';
-        this.customImageStyling = 'object-position: 4%';
-        break;
-      case '778468':
-        this.customImage = 'custom-main/arvin.jpeg';
-        this.customImageStyling = 'object-position: 45% 10%';
-        break;
-      case '461467':
-        // this.customImage = 'custom-main/kacpershayla.jpeg';
-        // this.customImageStyling = 'object-position: 45% 70%';
-        this.customImage = 'custom-main/kacpershayla-2.jpg';
-        this.customImageStyling = 'object-position: 36% 70%';
-        break;
-      case '998733':
-        this.customImage = 'custom-main/dimmy.jpeg';
-        this.customImageStyling = 'object-position: 90% 50%';
-        break;
-      case '759617':
-        this.customImage = 'custom-main/ted.jpg';
-        this.customImageStyling = 'object-position: 65% 40%';
-        break;
-      case '473811':
-        this.customImage = 'custom-main/jaydenanabelle.jpg';
-        this.customImageStyling = 'object-position: 40% 60%';
-        break;
-      case '575022':
-        this.customImage = 'custom-main/dorislukasz.jpg';
-        this.customImageStyling = 'object-position: 55% 60%';
-        break;
-      case '717477':
-        this.customImage = 'custom-main/marks.jpg';
-        this.customImageStyling = 'object-position: 67% 70%';
-        break;
-      case '505004':
-        this.customImage = 'custom-main/antoniewicz-2.jpg'; //Julia
-        this.customImageStyling = 'object-position: 50% 50%';
-        break;
-      case '894131':
-        this.customImage = 'custom-main/antoniewicz.jpeg'; //Parents
-        this.customImageStyling = 'object-position: 50% 75%';
-        break;
+    const custom = inviteCode ? this.CUSTOM_IMAGES[inviteCode] : undefined;
+    if (custom) {
+      this.customImage = custom.image;
+      this.customImageStyling = custom.style;
     }
   }
 
