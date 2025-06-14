@@ -2,12 +2,13 @@ import { User } from './../types';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invite, InviteWithUsers } from '../types';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  baseUrl = 'http://localhost:3000/api';
+  baseUrl = environment.apiUrl || 'http://localhost:3000/api';
   constructor(private http: HttpClient) {}
 
   getInviteByCode(code: string) {
@@ -62,7 +63,10 @@ export class ApiService {
     return this.http.patch(`${this.baseUrl}/users/${userId}`, userInfo);
   }
 
-  updateInvite(inviteId: string, inviteData: Invite){
-    return this.http.patch(`${this.baseUrl}/invites/${inviteId}/update-invite`, inviteData)
+  updateInvite(inviteId: string, inviteData: Invite) {
+    return this.http.patch(
+      `${this.baseUrl}/invites/${inviteId}/update-invite`,
+      inviteData
+    );
   }
 }
