@@ -264,6 +264,14 @@ export class OnboardingComponent implements OnInit {
     );
     this.router.navigate(['/app']);
   }
+
+  getDietaryViewValues(selected: string[] | string): string[] {
+    if (!selected || !this.dietaryOptions) return [];
+    const selectedArray = Array.isArray(selected) ? selected : [selected];
+    return this.dietaryOptions
+      .filter((opt) => selectedArray.includes(opt.value))
+      .map((opt) => opt.viewValue);
+  }
 }
 
 @Component({

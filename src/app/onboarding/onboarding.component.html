@@ -116,10 +116,7 @@
             <h2>
               {{
                 additionalInfoFormGroup?.get(plusOneId + "_name")?.value
-                  ? additionalInfoFormGroup?.get(plusOneId + "_name")?.value +
-                    " " +
-                    (additionalInfoFormGroup?.get(plusOneId + "_surname")
-                      ?.value || "")
+                  ? additionalInfoFormGroup?.get(plusOneId + "_name")?.value
                   : "Plus One"
               }}
             </h2>
@@ -194,7 +191,82 @@
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
 
-        <p>TODO: Present user information</p>
+        <div class="user-info-summary">
+          <div class="user-summary-container">
+            @for (user of invite.UserInvite; track user.userId) { @if
+            (checkAcceptance(user) === 'True') {
+            <div class="user-summary-card">
+              <h2>{{ user.user.firstName }}</h2>
+              <div class="summary-row">
+          <span class="summary-label"><strong>Email:</strong></span>
+          <span class="summary-value">
+            {{ additionalInfoFormGroup?.get(user.user.id + "_email")?.value }}
+          </span>
+              </div>
+              <div class="summary-row">
+          <span class="summary-label"><strong>Dietaries:</strong></span>
+          <span class="summary-value">
+            @if (additionalInfoFormGroup?.get(user.user.id + '_dietary')?.value?.length) {
+            {{
+              getDietaryViewValues(
+                additionalInfoFormGroup?.get(user.user.id + "_dietary")
+            ?.value
+              ).join(", ")
+            }}
+            } @else { None }
+          </span>
+              </div>
+              <div class="summary-row">
+          <span class="summary-label"><strong>Allergies:</strong></span>
+          <span class="summary-value">
+            {{
+              additionalInfoFormGroup?.get(user.user.id + "_allergies")
+                ?.value || "None"
+            }}
+          </span>
+              </div>
+            </div>
+            } } @if (invite.allowPlusOne && checkPlusOneAcceptance() === 'True')
+            {
+            <div class="user-summary-card">
+              <h2>
+          {{
+            additionalInfoFormGroup?.get(plusOneId + "_name")?.value
+              ? additionalInfoFormGroup?.get(plusOneId + "_name")?.value
+              : "Plus One"
+          }}
+              </h2>
+              <div class="summary-row">
+          <span class="summary-label"><strong>Email:</strong></span>
+          <span class="summary-value">
+            {{ additionalInfoFormGroup?.get(plusOneId + "_email")?.value }}
+          </span>
+              </div>
+              <div class="summary-row">
+          <span class="summary-label"><strong>Dietaries:</strong></span>
+          <span class="summary-value">
+            @if (additionalInfoFormGroup?.get(plusOneId + '_dietary')?.value?.length) {
+            {{
+              getDietaryViewValues(
+                additionalInfoFormGroup?.get(plusOneId + "_dietary")?.value
+              ).join(", ")
+            }}
+            } @else { None }
+          </span>
+              </div>
+              <div class="summary-row">
+          <span class="summary-label"><strong>Allergies:</strong></span>
+          <span class="summary-value">
+            {{
+              additionalInfoFormGroup?.get(plusOneId + "_allergies")
+                ?.value || "None"
+            }}
+          </span>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
 
         <div class="button-container">
           <button mat-button matStepperPrevious>Back</button>
