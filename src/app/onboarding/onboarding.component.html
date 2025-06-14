@@ -115,9 +115,13 @@
           <div class="card-container">
             <h2>
               {{
-                (additionalInfoFormGroup!.get("{{ plusOneId
-
-              }}_name")?.value || "Plus One") + " " }}
+                additionalInfoFormGroup?.get(plusOneId + "_name")?.value
+                  ? additionalInfoFormGroup?.get(plusOneId + "_name")?.value +
+                    " " +
+                    (additionalInfoFormGroup?.get(plusOneId + "_surname")
+                      ?.value || "")
+                  : "Plus One"
+              }}
             </h2>
             <div class="input-container">
               <div>
@@ -189,7 +193,9 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
+
         <p>TODO: Present user information</p>
+
         <div class="button-container">
           <button mat-button matStepperPrevious>Back</button>
           <button (click)="inviteAccepted()" mat-button>Let's Go!</button>
