@@ -218,7 +218,11 @@ export class OnboardingComponent implements OnInit {
           id: user,
           // mobile?
           email: this.additionalInfoFormGroup?.value[`${user}_email`],
-          dietary: this.additionalInfoFormGroup?.value[`${user}_dietary`],
+          dietary: Array.isArray(
+            this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value
+          )
+            ? this.additionalInfoFormGroup.get(`${user}_dietary`)?.value.join(',')
+            : this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value,
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
         };
         await lastValueFrom(this.api.updateUser(user, userData));
@@ -234,7 +238,11 @@ export class OnboardingComponent implements OnInit {
           lastName: this.additionalInfoFormGroup?.value[`${user}_surname`],
           //mobile?
           email: this.additionalInfoFormGroup?.value[`${user}_email`],
-          dietary: this.additionalInfoFormGroup?.value[`${user}_dietary`],
+          dietary: Array.isArray(
+            this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value
+          )
+            ? this.additionalInfoFormGroup.get(`${user}_dietary`)?.value.join(',')
+            : this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value,
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
         };
         await lastValueFrom(this.api.createUser(newUser));
