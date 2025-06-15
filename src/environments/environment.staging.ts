@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
+  apiUrl: 'http://dev.api.bruba.wedding/api',
   swingsLatLong: {
     lat: -33.68844903956983,
     lng: 115.02885291097918,

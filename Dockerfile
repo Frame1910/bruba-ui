@@ -3,6 +3,8 @@
 # Use official node image as the base image
 FROM node:22.12-alpine AS build
 
+ARG environment
+
 # Set the working directory
 WORKDIR /usr/local/app
 
@@ -13,7 +15,7 @@ COPY ./ /usr/local/app/
 RUN npm ci
 
 # Generate the build of the application
-RUN npm run build --prod
+RUN npm run build:${environment}
 
 
 # Stage 2: Serve app with nginx server
