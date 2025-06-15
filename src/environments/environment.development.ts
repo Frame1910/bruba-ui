@@ -1,9 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl:
-    process.env['API_URL']! +
-    process.env['API_PORT'] +
-    process.env['API_BASE_PATH'],
   swingsLatLong: {
     lat: -33.68844903956983,
     lng: 115.02885291097918,
