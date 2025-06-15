@@ -112,6 +112,11 @@
               RSVP <mat-icon>add</mat-icon>
             </button>
           </mat-card-actions>
+          <mat-card-footer>
+            @if (loading) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            }
+          </mat-card-footer>
         </form>
       </mat-card>
     </div>

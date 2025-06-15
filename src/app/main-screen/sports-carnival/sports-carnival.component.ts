@@ -16,6 +16,7 @@ import {
 } from '@angular/forms';
 import { ApiService } from '../../api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-sports-carnival',
@@ -28,6 +29,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatMenuModule,
     MatDividerModule,
     ReactiveFormsModule,
+    MatProgressBarModule
   ],
   templateUrl: './sports-carnival.component.html',
   styleUrl: './sports-carnival.component.scss',
@@ -37,6 +39,7 @@ export class SportsCarnivalComponent {
   private api = inject(ApiService);
   private _formBuilder = inject(FormBuilder);
   private _snackbar = inject(MatSnackBar);
+  loading = false;
 
   sportsCarnivalForm: FormGroup | undefined;
 
@@ -64,6 +67,7 @@ export class SportsCarnivalComponent {
   }
 
   sportsCarnivalRSVP() {
+    this.loading = true;
     const userIds: Array<{ userId: string; scstatus: string }> = [];
     for (let user in this.sportsCarnivalForm!.controls) {
       if (this.sportsCarnivalForm!.get(user)?.value === 'true') {
@@ -79,6 +83,7 @@ export class SportsCarnivalComponent {
     this.api
       .updateSportsCarnivalStatuses(userIds, this.inviteWithUsers!.code)
       .subscribe(() => {
+        this.loading = false;
         console.log('request complete');
         this._snackbar.open(
           'Sports Carnival RSVP updated successfully!',
