@@ -20,6 +20,7 @@ import { DeviceService } from '../../services/device.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../api.service';
 import { Invite, InviteWithUsers } from '../../../types';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-accommodation',
   imports: [
@@ -34,6 +35,7 @@ import { Invite, InviteWithUsers } from '../../../types';
     MatAutocompleteModule,
     MatChipsModule,
     ReactiveFormsModule,
+    MatProgressBarModule
   ],
   templateUrl: './accommodation.component.html',
   styleUrl: './accommodation.component.scss',
@@ -43,6 +45,7 @@ export class AccommodationComponent {
   readonly deviceService = inject(DeviceService);
   private _snackbar = inject(MatSnackBar);
   private api = inject(ApiService);
+  loading = false;
 
   @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
 
@@ -125,6 +128,7 @@ export class AccommodationComponent {
   }
 
   submitAddress() {
+    this.loading = true;
     let address;
     let needsTransport: 'ACCEPTED' | 'DECLINED' | 'PENDING' | undefined;
     if (
@@ -153,6 +157,7 @@ export class AccommodationComponent {
     this.api
       .updateInvite(this.inviteWithUsers?.code!, mockData)
       .subscribe(() => {
+        this.loading = false;
         console.log('request complete');
         this._snackbar.open('Stay info updated successfully!', 'OK', {
           duration: 3000,
