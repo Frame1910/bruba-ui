@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { catchError, of } from 'rxjs';
-
+import { BehaviorSubject, catchError, of } from 'rxjs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +24,7 @@ import { ApiService } from '../api.service';
     ReactiveFormsModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   templateUrl: './invite-signin.component.html',
   styleUrl: './invite-signin.component.scss',
@@ -31,6 +32,7 @@ import { ApiService } from '../api.service';
 export class InviteSigninComponentComponent {
   private router = inject(Router);
   private api = inject(ApiService);
+  loading = false
 
   codeControl = new FormControl<string>('', {
     nonNullable: true,
@@ -42,7 +44,6 @@ export class InviteSigninComponentComponent {
       }
     ]
   });
-  loading: boolean = false;
   invite: Invite | null = null;
   image: string = 'sign-in/birds.jpg'
 

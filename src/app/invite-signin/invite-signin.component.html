@@ -30,6 +30,9 @@
       <p style="text-align: center; color: #666; opacity: 0.7;">
         You can find your invite code on the invitation card
       </p>
+      @if (loading) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      }
       </mat-card-footer>
   </mat-card>
 </main>
