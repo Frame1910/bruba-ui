@@ -48,7 +48,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatOptionModule,
     MatSelectModule,
     MatDialogModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   templateUrl: './onboarding.component.html',
   styleUrl: './onboarding.component.scss',
@@ -303,9 +303,12 @@ export class OnboardingComponent implements OnInit {
       <button mat-button mat-dialog-close (click)="declineInvite()">Yes</button>
       <button mat-button (click)="closeDialog()">No</button>
     </mat-dialog-actions>
+    @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
   `,
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule],
+  imports: [MatDialogModule, MatButtonModule, MatProgressBarModule],
 })
 export class DeclineDialogComponent {
   private api = inject(ApiService);
@@ -313,6 +316,7 @@ export class DeclineDialogComponent {
   private dialog = inject(MatDialog);
   inviteAcceptFormGroup: FormGroup | undefined;
   invite: InviteWithUsers | undefined;
+  loading = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.inviteAcceptFormGroup = data.inviteAcceptFormGroup;
@@ -320,6 +324,7 @@ export class DeclineDialogComponent {
   }
 
   declineInvite() {
+    this.loading = true;
     console.log('No users accepted the invite, marking them as declined');
     const userIds: string[] = [];
     for (let user in this.inviteAcceptFormGroup!.controls) {
@@ -338,6 +343,7 @@ export class DeclineDialogComponent {
     this.api
       .updateInviteStatuses(declinedStatuses, this.invite!.code)
       .subscribe((res) => {
+        this.loading = false;
         console.log('Invites declined successfully');
         this.router.navigate(['/declined']);
       });
