@@ -198,70 +198,77 @@
             <div class="user-summary-card">
               <h2>{{ user.user.firstName }}</h2>
               <div class="summary-row">
-          <span class="summary-label"><strong>Email:</strong></span>
-          <span class="summary-value">
-            {{ additionalInfoFormGroup?.get(user.user.id + "_email")?.value }}
-          </span>
+                <span class="summary-label"><strong>Email:</strong></span>
+                <span class="summary-value">
+                  {{
+                    additionalInfoFormGroup?.get(user.user.id + "_email")?.value
+                  }}
+                </span>
               </div>
               <div class="summary-row">
-          <span class="summary-label"><strong>Dietaries:</strong></span>
-          <span class="summary-value">
-            @if (additionalInfoFormGroup?.get(user.user.id + '_dietary')?.value?.length) {
-            {{
-              getDietaryViewValues(
-                additionalInfoFormGroup?.get(user.user.id + "_dietary")
-            ?.value
-              ).join(", ")
-            }}
-            } @else { None }
-          </span>
+                <span class="summary-label"><strong>Dietaries:</strong></span>
+                <span class="summary-value">
+                  @if (additionalInfoFormGroup?.get(user.user.id +
+                  '_dietary')?.value?.length) {
+                  {{
+                    getDietaryViewValues(
+                      additionalInfoFormGroup?.get(user.user.id + "_dietary")
+                        ?.value
+                    ).join(", ")
+                  }}
+                  } @else { None }
+                </span>
               </div>
               <div class="summary-row">
-          <span class="summary-label"><strong>Allergies:</strong></span>
-          <span class="summary-value">
-            {{
-              additionalInfoFormGroup?.get(user.user.id + "_allergies")
-                ?.value || "None"
-            }}
-          </span>
+                <span class="summary-label"><strong>Allergies:</strong></span>
+                <span class="summary-value">
+                  {{
+                    additionalInfoFormGroup?.get(user.user.id + "_allergies")
+                      ?.value || "None"
+                  }}
+                </span>
               </div>
             </div>
             } } @if (invite.allowPlusOne && checkPlusOneAcceptance() === 'True')
             {
             <div class="user-summary-card">
               <h2>
-          {{
-            additionalInfoFormGroup?.get(plusOneId + "_name")?.value
-              ? additionalInfoFormGroup?.get(plusOneId + "_name")?.value
-              : "Plus One"
-          }}
+                {{
+                  additionalInfoFormGroup?.get(plusOneId + "_name")?.value
+                    ? additionalInfoFormGroup?.get(plusOneId + "_name")?.value
+                    : "Plus One"
+                }}
               </h2>
               <div class="summary-row">
-          <span class="summary-label"><strong>Email:</strong></span>
-          <span class="summary-value">
-            {{ additionalInfoFormGroup?.get(plusOneId + "_email")?.value }}
-          </span>
+                <span class="summary-label"><strong>Email:</strong></span>
+                <span class="summary-value">
+                  {{
+                    additionalInfoFormGroup?.get(plusOneId + "_email")?.value
+                  }}
+                </span>
               </div>
               <div class="summary-row">
-          <span class="summary-label"><strong>Dietaries:</strong></span>
-          <span class="summary-value">
-            @if (additionalInfoFormGroup?.get(plusOneId + '_dietary')?.value?.length) {
-            {{
-              getDietaryViewValues(
-                additionalInfoFormGroup?.get(plusOneId + "_dietary")?.value
-              ).join(", ")
-            }}
-            } @else { None }
-          </span>
+                <span class="summary-label"><strong>Dietaries:</strong></span>
+                <span class="summary-value">
+                  @if (additionalInfoFormGroup?.get(plusOneId +
+                  '_dietary')?.value?.length) {
+                  {{
+                    getDietaryViewValues(
+                      additionalInfoFormGroup?.get(plusOneId + "_dietary")
+                        ?.value
+                    ).join(", ")
+                  }}
+                  } @else { None }
+                </span>
               </div>
               <div class="summary-row">
-          <span class="summary-label"><strong>Allergies:</strong></span>
-          <span class="summary-value">
-            {{
-              additionalInfoFormGroup?.get(plusOneId + "_allergies")
-                ?.value || "None"
-            }}
-          </span>
+                <span class="summary-label"><strong>Allergies:</strong></span>
+                <span class="summary-value">
+                  {{
+                    additionalInfoFormGroup?.get(plusOneId + "_allergies")
+                      ?.value || "None"
+                  }}
+                </span>
               </div>
             </div>
             }
@@ -272,6 +279,9 @@
           <button mat-button matStepperPrevious>Back</button>
           <button (click)="inviteAccepted()" mat-button>Let's Go!</button>
         </div>
+        @if (loading) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
       </mat-step>
     </mat-vertical-stepper>
   </mat-card>

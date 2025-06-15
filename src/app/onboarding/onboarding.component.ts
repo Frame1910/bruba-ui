@@ -28,6 +28,7 @@ import {
   MatDialog,
   MatDialogModule,
 } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-onboarding',
   imports: [
@@ -47,6 +48,7 @@ import {
     MatOptionModule,
     MatSelectModule,
     MatDialogModule,
+    MatProgressBarModule
   ],
   templateUrl: './onboarding.component.html',
   styleUrl: './onboarding.component.scss',
@@ -66,6 +68,7 @@ export class OnboardingComponent implements OnInit {
   isSecondStepReady: boolean = false;
   private dialog = inject(MatDialog);
   plusOneId: string | undefined;
+  loading = false;
 
   dietaryOptions: any[] = [
     { value: 'NONE', viewValue: 'None' },
@@ -205,6 +208,7 @@ export class OnboardingComponent implements OnInit {
   }
 
   async inviteAccepted() {
+    this.loading = true;
     const userIds: Array<{ userId: string; status: string }> = [];
     for (let user in this.inviteAcceptFormGroup!.controls) {
       console.log(this.inviteAcceptFormGroup!.get(user)?.value);
@@ -221,7 +225,9 @@ export class OnboardingComponent implements OnInit {
           dietary: Array.isArray(
             this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value
           )
-            ? this.additionalInfoFormGroup.get(`${user}_dietary`)?.value.join(',')
+            ? this.additionalInfoFormGroup
+                .get(`${user}_dietary`)
+                ?.value.join(',')
             : this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value,
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
         };
@@ -241,7 +247,9 @@ export class OnboardingComponent implements OnInit {
           dietary: Array.isArray(
             this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value
           )
-            ? this.additionalInfoFormGroup.get(`${user}_dietary`)?.value.join(',')
+            ? this.additionalInfoFormGroup
+                .get(`${user}_dietary`)
+                ?.value.join(',')
             : this.additionalInfoFormGroup?.get(`${user}_dietary`)?.value,
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
         };
@@ -269,8 +277,11 @@ export class OnboardingComponent implements OnInit {
     console.log(userIds);
     await lastValueFrom(
       this.api.updateInviteStatuses(userIds, this.invite!.code)
-    );
-    this.router.navigate(['/app']);
+    ).then(() => {
+      console.log('Invite statuses updated successfully');
+      this.loading = false;
+      this.router.navigate(['/app']);
+    });
   }
 
   getDietaryViewValues(selected: string[] | string): string[] {
