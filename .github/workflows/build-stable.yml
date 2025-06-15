@@ -48,3 +48,17 @@ jobs:
           subject-name: index.docker.io/framed1910/bruba-ui
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and deploy Container App
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          imageToDeploy: docker.io/framed1910/bruba-ui:main
+          containerAppName: ca-bruba-wedding-app-ui-prod
+          resourceGroup: rg-bruba-wedding-app-prod
