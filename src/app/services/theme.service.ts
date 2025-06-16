@@ -13,7 +13,7 @@ export class ThemeService {
 
 
   toggleTheme() {
-    const themes: Theme[] = ['light', 'dark', 'dumb'];
+    const themes: Theme[] = ['light', 'dark'];
     const currentIndex = themes.indexOf(this.currentTheme());
     const nextIndex = (currentIndex + 1) % themes.length;
     this.setTheme(themes[nextIndex]);
@@ -33,13 +33,6 @@ export class ThemeService {
         this.document.documentElement.classList.remove('light-mode');
         this.document.documentElement.classList.remove('dumb-mode');
         this.currentTheme.set('dark');
-        localStorage.setItem('theme', theme);
-        break;
-      case 'dumb':
-        this.document.documentElement.classList.add('dumb-mode');
-        this.document.documentElement.classList.remove('light-mode');
-        this.document.documentElement.classList.remove('dark-mode');
-        this.currentTheme.set('dumb');
         localStorage.setItem('theme', theme);
         break;
     }

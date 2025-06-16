@@ -39,11 +39,6 @@
         <span>Light</span>
         <mat-icon>light_mode</mat-icon>
       </button>
-      } @case ('dumb') {
-      <button (click)="themeService.toggleTheme()" mat-menu-item>
-        <span>Dumb</span>
-        <mat-icon>emoji_objects</mat-icon>
-      </button>
       } @default () {
       <button (click)="themeService.toggleTheme()" mat-menu-item>
         <span>huh</span>
@@ -74,11 +69,6 @@
       <a (click)="themeService.toggleTheme()" mat-raised-button>
         <span>Light</span>
         <mat-icon>light_mode</mat-icon>
-      </a>
-      } @case ('dumb') {
-      <a (click)="themeService.toggleTheme()" mat-raised-button>
-        <span>Dumb</span>
-        <mat-icon>emoji_objects</mat-icon>
       </a>
       } @default () {
       <a (click)="themeService.toggleTheme()" mat-raised-button>
