@@ -25,12 +25,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: framed1910/bruba-ui
-
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v3
@@ -38,8 +32,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            framed1910/bruba-ui:latest
+            framed1910/bruba-ui:${{ github.sha }}
           build-args: environment=production
 
       - name: Generate artifact attestation
@@ -49,6 +44,16 @@ jobs:
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
 
+  deploy_image:
+    name: Deploy Docker image to Azure Container Apps
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
+    steps:
       - name: Log in to Azure
         uses: azure/login@v1
         with:
@@ -59,6 +64,6 @@ jobs:
       - name: Deploy Container App
         uses: azure/container-apps-deploy-action@v1
         with:
-          imageToDeploy: docker.io/framed1910/bruba-ui:main
-          containerAppName: ca-bruba-wedding-app-ui-prod
-          resourceGroup: rg-bruba-wedding-app-prod
+          imageToDeploy: docker.io/framed1910/bruba-ui:${{ github.sha }}
+          containerAppName: ca-bruba-wedding-app-ui-dev
+          resourceGroup: rg-bruba-wedding-app-dev
