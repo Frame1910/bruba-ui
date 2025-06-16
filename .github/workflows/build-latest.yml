@@ -45,6 +45,7 @@ jobs:
           push-to-registry: true
 
   deploy_image:
+    needs: push_to_registry
     name: Deploy Docker image to Azure Container Apps
     runs-on: ubuntu-latest
     environment: dev
