@@ -47,7 +47,7 @@ jobs:
   deploy_image:
     name: Deploy Docker image to Azure Container Apps
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     permissions:
       packages: write
       contents: read
@@ -65,5 +65,5 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           imageToDeploy: docker.io/framed1910/bruba-ui:${{ github.sha }}
-          containerAppName: ca-bruba-wedding-app-ui-dev
-          resourceGroup: rg-bruba-wedding-app-dev
+          containerAppName: ca-bruba-wedding-app-ui-prod
+          resourceGroup: rg-bruba-wedding-app-prod
