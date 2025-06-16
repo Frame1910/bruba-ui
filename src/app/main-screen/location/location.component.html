@@ -1,7 +1,6 @@
 @if (deviceService.isMobile()) {
 <div class="location-container-mobile">
-  @if (themeService.currentTheme() === 'dark' || themeService.currentTheme() ===
-  'dumb') {
+  @if (themeService.currentTheme() === 'dark') {
   <google-map
     [center]="center"
     [zoom]="zoom"
@@ -122,8 +121,7 @@
 </div>
 } @else {
 <div class="location-container">
-  @if (themeService.currentTheme() === 'dark' || themeService.currentTheme() ===
-  'dumb') {
+  @if (themeService.currentTheme() === 'dark') {
   <div class="map-container">
     <google-map
       [center]="center"
