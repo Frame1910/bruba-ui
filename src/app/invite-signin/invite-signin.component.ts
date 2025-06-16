@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { BehaviorSubject, catchError, of } from 'rxjs';
@@ -30,9 +31,11 @@ import { ApiService } from '../api.service';
   styleUrl: './invite-signin.component.scss',
 })
 export class InviteSigninComponentComponent {
+  private http = inject(HttpClient);
   private router = inject(Router);
   private api = inject(ApiService);
   loading = false
+  version: string | null = null;
 
   codeControl = new FormControl<string>('', {
     nonNullable: true,
@@ -50,6 +53,9 @@ export class InviteSigninComponentComponent {
   ngOnInit() {
     const images = ['sign-in/birds.jpg', 'sign-in/dogs.jpg'];
     this.image = images[Math.floor(Math.random() * images.length)];
+    this.http.get<{ version: string }>('/assets/package.json').subscribe(pkg => {
+    this.version = pkg.version;
+});
   }
 
   routeToInvite() {
