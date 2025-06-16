@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { Invite } from '../../types';
 import { ApiService } from '../api.service';
+import packageJson from '../../../package.json';
 
 @Component({
   selector: 'app-invite-signin.component',
@@ -34,28 +35,30 @@ export class InviteSigninComponentComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
   private api = inject(ApiService);
-  loading = false
-  version: string | null = null;
+  loading = false;
+  public version: string = packageJson.version;
 
   codeControl = new FormControl<string>('', {
     nonNullable: true,
     validators: [
-      control => {
+      (control) => {
         const value = control.value ?? '';
         const isValid = /^\d{6}$/.test(value);
         return isValid ? null : { sixDigitNumber: true };
-      }
-    ]
+      },
+    ],
   });
   invite: Invite | null = null;
-  image: string = 'sign-in/birds.jpg'
+  image: string = 'sign-in/birds.jpg';
 
   ngOnInit() {
     const images = ['sign-in/birds.jpg', 'sign-in/dogs.jpg'];
     this.image = images[Math.floor(Math.random() * images.length)];
-    this.http.get<{ version: string }>('/assets/package.json').subscribe(pkg => {
-    this.version = pkg.version;
-});
+    this.http
+      .get<{ version: string }>('/assets/package.json')
+      .subscribe((pkg) => {
+        this.version = pkg.version;
+      });
   }
 
   routeToInvite() {
