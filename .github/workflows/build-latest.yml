@@ -33,7 +33,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            framed1910/bruba-ui:latest
+            framed1910/bruba-ui:develop
             framed1910/bruba-ui:${{ github.sha }}
           build-args: environment=staging
 
