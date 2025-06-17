@@ -1,5 +1,5 @@
 import { InviteWithUsers } from './../../../types';
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -29,7 +29,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatMenuModule,
     MatDividerModule,
     ReactiveFormsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   templateUrl: './sports-carnival.component.html',
   styleUrl: './sports-carnival.component.scss',
@@ -39,6 +39,7 @@ export class SportsCarnivalComponent {
   private api = inject(ApiService);
   private _formBuilder = inject(FormBuilder);
   private _snackbar = inject(MatSnackBar);
+  @Output() submitted = new EventEmitter<void>();
   loading = false;
 
   sportsCarnivalForm: FormGroup | undefined;
@@ -84,6 +85,7 @@ export class SportsCarnivalComponent {
       .updateSportsCarnivalStatuses(userIds, this.inviteWithUsers!.code)
       .subscribe(() => {
         this.loading = false;
+        this.submitted.emit();
         console.log('request complete');
         this._snackbar.open(
           'Sports Carnival RSVP updated successfully!',

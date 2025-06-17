@@ -1,84 +1,15 @@
 <div class="main-container">
-  <mat-toolbar
-    class="example-toolbar"
-    style="
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1;
-      background: transparent;
-    "
-  >
-    <!-- <h1 class="name-title">Jakub & Brooke</h1> -->
-    <span style="flex: 1 1 auto"></span>
-    @if (isMobile()) {
-    <span style="flex: 1 1 auto"></span>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
+  <div class="theme-button-container">
+    @switch (themeService.currentTheme()) { @case ('dark') {
+    <button class="button" (click)="themeService.toggleTheme()" mat-icon-button>
+      <mat-icon>dark_mode</mat-icon>
     </button>
-    <mat-menu #menu="matMenu">
-      @for (item of navItems; track item.route) {
-      <button
-        mat-menu-item
-        [routerLink]="item.route"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="scrollToContent()"
-      >
-        <span>{{ item.name }}</span>
-        <mat-icon>{{ item.icon }}</mat-icon>
-      </button>
-      } @switch (themeService.currentTheme()) { @case ('dark') {
-      <button (click)="themeService.toggleTheme()" mat-menu-item>
-        <span>Dark</span>
-        <mat-icon>dark_mode</mat-icon>
-      </button>
-      } @case ('light') {
-      <button (click)="themeService.toggleTheme()" mat-menu-item>
-        <span>Light</span>
-        <mat-icon>light_mode</mat-icon>
-      </button>
-      } @default () {
-      <button (click)="themeService.toggleTheme()" mat-menu-item>
-        <span>huh</span>
-        <mat-icon>help_outline</mat-icon>
-      </button>
-      }}
-    </mat-menu>
-    } @else {
-    <span class="toolbar-buttons">
-      @for (item of navItems; track item.route) {
-      <a
-        mat-raised-button
-        [routerLink]="item.route"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        (click)="scrollToContent()"
-        class="toolbar-button"
-      >
-        <span>{{ item.name }}</span>
-        <mat-icon>{{ item.icon }}</mat-icon>
-      </a>
-      } @switch (themeService.currentTheme()) { @case ('dark') {
-      <a (click)="themeService.toggleTheme()" mat-raised-button>
-        <span>Dark</span>
-        <mat-icon>dark_mode</mat-icon>
-      </a>
-      } @case ('light') {
-      <a (click)="themeService.toggleTheme()" mat-raised-button>
-        <span>Light</span>
-        <mat-icon>light_mode</mat-icon>
-      </a>
-      } @default () {
-      <a (click)="themeService.toggleTheme()" mat-raised-button>
-        <span>huh</span>
-        <mat-icon>help_outline</mat-icon>
-      </a>
-      }}
-    </span>
-    }
-  </mat-toolbar>
+    } @case ('light') {
+    <button class="button" (click)="themeService.toggleTheme()" mat-icon-button>
+      <mat-icon>light_mode</mat-icon>
+    </button>
+    }}
+  </div>
   @if (customImage) {
   <img
     src="{{ customImage }}"
@@ -267,8 +198,8 @@
       {{ weddingName }}
     </h1>
   </div>
-} @case (9){
-    <img
+  } @case (9){
+  <img
     src="9.jpg"
     class="background-image"
     style="object-position: 60% 30%"

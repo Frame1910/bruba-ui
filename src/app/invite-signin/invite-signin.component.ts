@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { Invite } from '../../types';
 import { ApiService } from '../api.service';
 import packageJson from '../../../package.json';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-invite-signin.component',
@@ -35,6 +36,7 @@ export class InviteSigninComponentComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
   private api = inject(ApiService);
+  themeService = inject(ThemeService);
   loading = false;
   public version: string = packageJson.version;
 

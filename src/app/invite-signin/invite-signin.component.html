@@ -7,6 +7,17 @@
     background: var(--mat-sys-surface);
   "
 >
+  <div class="theme-button-container">
+    @switch (themeService.currentTheme()) { @case ('dark') {
+    <button class="button" (click)="themeService.toggleTheme()" mat-icon-button>
+      <mat-icon>dark_mode</mat-icon>
+    </button>
+    } @case ('light') {
+    <button class="button" (click)="themeService.toggleTheme()" mat-icon-button>
+      <mat-icon>light_mode</mat-icon>
+    </button>
+    }}
+  </div>
   <mat-card class="center-card" appearance="raised" style="width: 400px">
     <mat-card-header>
       <mat-card-title class='name-title'>Brooke & Kuba</mat-card-title>
