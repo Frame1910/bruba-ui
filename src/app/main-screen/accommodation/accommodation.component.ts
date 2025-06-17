@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   FormsModule,
   FormControl,
@@ -35,7 +43,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatAutocompleteModule,
     MatChipsModule,
     ReactiveFormsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   templateUrl: './accommodation.component.html',
   styleUrl: './accommodation.component.scss',
@@ -48,6 +56,7 @@ export class AccommodationComponent {
   loading = false;
 
   @ViewChild('addressInput') addressInput!: ElementRef<HTMLInputElement>;
+  @Output() submitted = new EventEmitter<void>();
 
   stayForm = new FormGroup({
     addressControl: new FormControl<string | null>(null, Validators.required),
@@ -158,6 +167,7 @@ export class AccommodationComponent {
       .updateInvite(this.inviteWithUsers?.code!, mockData)
       .subscribe(() => {
         this.loading = false;
+        this.submitted.emit();
         console.log('request complete');
         this._snackbar.open('Stay info updated successfully!', 'OK', {
           duration: 3000,

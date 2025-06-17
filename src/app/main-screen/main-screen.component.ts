@@ -15,6 +15,7 @@ import { LocationComponent } from './location/location.component';
 import { SportsCarnivalComponent } from './sports-carnival/sports-carnival.component';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-main-screen',
@@ -31,6 +32,7 @@ import { switchMap } from 'rxjs';
     LocationComponent,
     AccommodationComponent,
     SportsCarnivalComponent,
+    MatBadgeModule,
   ],
   templateUrl: './main-screen.component.html',
   styleUrl: './main-screen.component.scss',
@@ -40,6 +42,8 @@ export class MainScreenComponent {
   private activatedRoute = inject(ActivatedRoute);
   invite: InviteWithUsers | undefined;
   currentTab: number = 0;
+  accommodationSubmitted = false;
+  sportsCarnivalSubmitted = false;
 
   ngOnInit() {
     const code = localStorage.getItem('inviteCode');
@@ -48,6 +52,7 @@ export class MainScreenComponent {
       .pipe(
         switchMap((invite) => {
           this.invite = invite;
+          console.log('Invite data:', this.invite);
           return this.activatedRoute.queryParamMap;
         })
       )
@@ -55,5 +60,39 @@ export class MainScreenComponent {
         this.currentTab = parseInt(params.get('tabIndex') || '0', 10);
         console.log('Current tab index:', this.currentTab);
       });
+  }
+
+  onAccommodationSubmitted() {
+    this.accommodationSubmitted = true;
+  }
+
+  checkAccomodationCompletion() {
+    if (this.accommodationSubmitted) {
+      return '';
+    }
+    if (this.invite) {
+      return this.invite.bustransport === 'PENDING' ? '1' : '';
+    } else {
+      return '';
+    }
+  }
+
+  onSportsCarnivalSubmitted() {
+    this.sportsCarnivalSubmitted = true;
+  }
+
+  checkSportsCarnivalCompletion() {
+    if (this.sportsCarnivalSubmitted) {
+      return '';
+    }
+    if (this.invite) {
+      if (this.invite.UserInvite.every((user) => user.scstatus !== 'PENDING')) {
+        return '';
+      } else {
+        return this.invite.UserInvite.length;
+      }
+    } else {
+      return '1';
+    }
   }
 }
