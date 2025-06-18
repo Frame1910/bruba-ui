@@ -28,6 +28,8 @@ import { InviteWithUsers } from '../../types';
 import { FormGroup, FormControl, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
+import packageJson from '../../../package.json';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   imports: [
@@ -130,7 +132,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   renderWeddingName() {
     const groomName = localStorage.getItem('groomName') || 'Jakub';
     const nameOrder = localStorage.getItem('nameOrder') || 'BJ';
-    if (nameOrder === 'JB') {
+    if (nameOrder === 'BJ') {
       return `Wedding of Brooke & ${groomName}`;
     } else {
       return `Wedding of ${groomName} & Brooke`;
@@ -201,6 +203,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       </form>
       <!-- <h3>Cancel Invite</h3>
       <p>If you are no longer able to make it, click the button below</p> -->
+      <span
+        style="
+          position: absolute;
+          bottom: 0.5rem;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 0.8rem;
+          color: var(--mat-sys-on-surface);
+        "
+      >
+        V{{ version }}
+      </span>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button (click)="closeDialog()">Close</button>
@@ -217,9 +231,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ],
 })
 export class SettingsDialogComponent {
-  private api = inject(ApiService);
-  private router = inject(Router);
+  private http = inject(HttpClient);
   private dialog = inject(MatDialog);
+  public version: string = packageJson.version;
   inviteAcceptFormGroup: FormGroup | undefined;
   invite: InviteWithUsers | undefined;
   loading = false;
@@ -251,6 +265,11 @@ export class SettingsDialogComponent {
         this.nameOrderForm.controls.nameOrder.setValue('BJ');
       }
     }
+    this.http
+      .get<{ version: string }>('/assets/package.json')
+      .subscribe((pkg) => {
+        this.version = pkg.version;
+      });
   }
 
   setNamePreference(name: string) {
