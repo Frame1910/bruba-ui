@@ -177,6 +177,33 @@ export class OnboardingComponent implements OnInit {
     return this.inviteAcceptFormGroup?.get(`${this.plusOneId}`)?.value;
   }
 
+  specialCheck(){
+    if (!this.invite) return;
+    const hasKiwiAllergy = this.invite.UserInvite.some(userInvite => {
+      const allergies = (this.additionalInfoFormGroup?.get(`${userInvite.user.id}_allergies`)?.value || '').toLowerCase();
+      return allergies.includes('kiwi');
+    });
+    if (hasKiwiAllergy) {
+      const kiwi = document.createElement('div');
+      kiwi.innerText = '🥝';
+      kiwi.style.position = 'fixed';
+      kiwi.style.left = '-60px';
+      kiwi.style.top = '50%';
+      kiwi.style.fontSize = '48px';
+      kiwi.style.zIndex = '9999';
+      kiwi.style.transition = 'transform 2s cubic-bezier(.68,-0.55,.27,1.55)';
+      document.body.appendChild(kiwi);
+
+      setTimeout(() => {
+        kiwi.style.transform = 'translateX(110vw) scale(1.2) rotate(720deg)';
+      }, 100);
+
+      setTimeout(() => {
+        kiwi.remove();
+      }, 2200);
+    }
+  }
+
   //check if all users declined as well as if the user declined but said yes for a plus one
   handleNext(stepper: any) {
     if (
