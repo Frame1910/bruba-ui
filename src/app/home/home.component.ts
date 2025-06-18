@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  Inject,
   inject,
   OnDestroy,
   OnInit,
@@ -14,8 +15,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+} from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ApiService } from '../api.service';
+import { InviteWithUsers } from '../../types';
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-home',
   imports: [
@@ -40,6 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   protected readonly isMobile = signal(true);
   readonly themeService = inject(ThemeService);
+  private dialog = inject(MatDialog);
   randomSource: number | undefined;
   customImageFlag: boolean = false;
   customImage: string | undefined;
@@ -75,11 +86,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       image: 'custom-main/marks.jpg',
       style: 'object-position: 67% 70%',
     },
-    '894131': { //Parents
+    '894131': {
+      //Parents
       image: 'custom-main/antoniewicz.jpeg',
       style: 'object-position: 50% 75%',
     },
-    '505004': { //Julia
+    '505004': {
+      //Julia
       image: 'custom-main/antoniewicz-2.jpg',
       style: 'object-position: 50% 50%',
     },
@@ -90,16 +103,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   };
 
   randomImages = [
-  { src: '1.jpeg', style: 'object-position: 39% 65%' },
-  { src: '2.jpg',  style: 'object-position: 39%' },
-  { src: '3.jpg',  style: 'object-position: 50%' },
-  { src: '4.jpg',  style: 'object-position: 42%' },
-  { src: '5.jpeg', style: 'object-position: 78%' },
-  { src: '6.jpeg', style: 'object-position: 40%' },
-  { src: '7.jpeg', style: 'object-position: 45%' },
-  { src: '8.jpeg', style: 'object-position: 52%' },
-  { src: '9.jpg',  style: 'object-position: 60% 30%' }
-];
+    { src: '1.jpeg', style: 'object-position: 39% 65%' },
+    { src: '2.jpg', style: 'object-position: 39%' },
+    { src: '3.jpg', style: 'object-position: 50%' },
+    { src: '4.jpg', style: 'object-position: 42%' },
+    { src: '5.jpeg', style: 'object-position: 78%' },
+    { src: '6.jpeg', style: 'object-position: 40%' },
+    { src: '7.jpeg', style: 'object-position: 45%' },
+    { src: '8.jpeg', style: 'object-position: 52%' },
+    { src: '9.jpg', style: 'object-position: 60% 30%' },
+  ];
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
@@ -122,13 +135,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.randomSource = Math.floor(Math.random() * 9) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
-    // if (inviteCode) {
-    //   this.navItems.push({
-    //     name: 'Manage RSVP',
-    //     route: ['invite', inviteCode],
-    //     icon: 'mark_email_read',
-    //   });
-    // }
     this.customBakgroundCheck(inviteCode);
   }
 
@@ -140,7 +146,42 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  openSettings() {
+    this.dialog.open(SettingsDialogComponent, {});
+  }
+
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
+  }
+}
+
+@Component({
+  selector: 'settings-dialog',
+  template: `
+    <mat-dialog-content>
+      <p>settings dialog</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeDialog()">Close</button>
+    </mat-dialog-actions>
+    @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+  `,
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule, MatProgressBarModule],
+})
+export class SettingsDialogComponent {
+  private api = inject(ApiService);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  inviteAcceptFormGroup: FormGroup | undefined;
+  invite: InviteWithUsers | undefined;
+  loading = false;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  closeDialog() {
+    this.dialog.closeAll();
   }
 }

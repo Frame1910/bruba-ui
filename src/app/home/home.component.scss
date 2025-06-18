@@ -21,6 +21,8 @@
 }
 
 .theme-button-container {
+  display: flex;
+  gap: 0.5rem;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
