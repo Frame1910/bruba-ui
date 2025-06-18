@@ -25,7 +25,9 @@ import {
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ApiService } from '../api.service';
 import { InviteWithUsers } from '../../types';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-home',
   imports: [
@@ -125,6 +127,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
 
+  renderWeddingName() {
+    const groomName = localStorage.getItem('groomName') || 'Jakub';
+    const nameOrder = localStorage.getItem('nameOrder') || 'BJ';
+    if (nameOrder === 'JB') {
+      return `Wedding of Brooke & ${groomName}`;
+    } else {
+      return `Wedding of ${groomName} & Brooke`;
+    }
+  }
+
   scrollToContent() {
     const contentElement = this.el.nativeElement.querySelector('#content');
     if (contentElement) {
@@ -158,18 +170,51 @@ export class HomeComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'settings-dialog',
   template: `
+    <h2 mat-dialog-title>Settings</h2>
     <mat-dialog-content>
-      <p>settings dialog</p>
+      <h3>Name Preference</h3>
+      <p>
+        Who the hell is Jakub? Who the hell is Kuba? Select the preferred name
+        that you know the groom by below
+      </p>
+      <form [formGroup]="namePreferenceForm">
+        <mat-chip-listbox formControlName="namePreference">
+          <mat-chip-option [value]="'J'" (click)="setNamePreference('Jakub')"
+            >Jakub</mat-chip-option
+          >
+          <mat-chip-option [value]="'K'" (click)="setNamePreference('Kuba')"
+            >Kuba</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </form>
+      <h3>Name Order</h3>
+      <p>Choose how you want the names to be displayed on the wedding page</p>
+      <form [formGroup]="nameOrderForm">
+        <mat-chip-listbox formControlName="nameOrder">
+          <mat-chip-option [value]="'JB'" (click)="setNameOrder('JB')"
+            >Brooke & {{ groom }}</mat-chip-option
+          >
+          <mat-chip-option [value]="'BJ'" (click)="setNameOrder('BJ')"
+            >{{ groom }} & Brooke</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </form>
+      <!-- <h3>Cancel Invite</h3>
+      <p>If you are no longer able to make it, click the button below</p> -->
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button (click)="closeDialog()">Close</button>
     </mat-dialog-actions>
-    @if (loading) {
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    }
   `,
-  standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatProgressBarModule],
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+  ],
 })
 export class SettingsDialogComponent {
   private api = inject(ApiService);
@@ -178,8 +223,44 @@ export class SettingsDialogComponent {
   inviteAcceptFormGroup: FormGroup | undefined;
   invite: InviteWithUsers | undefined;
   loading = false;
+  groom = localStorage.getItem('groomName') || 'Jakub';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  nameOrderForm = new FormGroup({
+    nameOrder: new FormControl<string>('BJ'),
+  });
+  namePreferenceForm = new FormGroup({
+    namePreference: new FormControl<string>('J'),
+  });
+
+  ngOnInit() {
+    let groomName = localStorage.getItem('groomName');
+    let nameOrder = localStorage.getItem('nameOrder');
+    if (groomName) {
+      if (groomName === 'Kuba') {
+        this.namePreferenceForm.controls.namePreference.setValue('K');
+      } else {
+        this.namePreferenceForm.controls.namePreference.setValue('J');
+      }
+    }
+    if (nameOrder) {
+      if (nameOrder === 'JB') {
+        this.nameOrderForm.controls.nameOrder.setValue('JB');
+      } else {
+        this.nameOrderForm.controls.nameOrder.setValue('BJ');
+      }
+    }
+  }
+
+  setNamePreference(name: string) {
+    this.groom = name;
+    localStorage.setItem('groomName', name);
+  }
+
+  setNameOrder(name: string) {
+    localStorage.setItem('nameOrder', name);
+  }
 
   closeDialog() {
     this.dialog.closeAll();
