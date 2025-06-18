@@ -63,6 +63,16 @@ export class InviteSigninComponentComponent {
       });
   }
 
+  renderWeddingName() {
+    const groomName = localStorage.getItem('groomName') || 'Jakub';
+    const nameOrder = localStorage.getItem('nameOrder') || 'BJ';
+    if (nameOrder === 'JB') {
+      return `Brooke & ${groomName}`;
+    } else {
+      return `${groomName} & Brooke`;
+    }
+  }
+
   routeToInvite() {
     this.loading = true;
     this.api

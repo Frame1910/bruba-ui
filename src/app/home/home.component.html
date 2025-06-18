@@ -9,6 +9,9 @@
       <mat-icon>light_mode</mat-icon>
     </button>
     }}
+    <button class="button" (click)="openSettings()" mat-icon-button>
+      <mat-icon>info</mat-icon>
+    </button>
   </div>
   @if (customImage) {
   <img
@@ -31,7 +34,7 @@
       style="font-weight: 400"
       class="name-title"
     >
-      {{ weddingName }}
+      {{ renderWeddingName() }}
     </h1>
   </div>
   } @else if (randomSource) {
@@ -51,7 +54,7 @@
     "
   >
     <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
+      {{ renderWeddingName() }}
     </h1>
   </div>
   }

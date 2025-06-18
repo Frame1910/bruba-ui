@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  Inject,
   inject,
   OnDestroy,
   OnInit,
@@ -14,8 +15,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+} from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ApiService } from '../api.service';
+import { InviteWithUsers } from '../../types';
+import { FormGroup, FormControl, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-home',
   imports: [
@@ -40,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   protected readonly isMobile = signal(true);
   readonly themeService = inject(ThemeService);
+  private dialog = inject(MatDialog);
   randomSource: number | undefined;
   customImageFlag: boolean = false;
   customImage: string | undefined;
@@ -75,11 +88,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       image: 'custom-main/marks.jpg',
       style: 'object-position: 67% 70%',
     },
-    '894131': { //Parents
+    '894131': {
+      //Parents
       image: 'custom-main/antoniewicz.jpeg',
       style: 'object-position: 50% 75%',
     },
-    '505004': { //Julia
+    '505004': {
+      //Julia
       image: 'custom-main/antoniewicz-2.jpg',
       style: 'object-position: 50% 50%',
     },
@@ -90,16 +105,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   };
 
   randomImages = [
-  { src: '1.jpeg', style: 'object-position: 39% 65%' },
-  { src: '2.jpg',  style: 'object-position: 39%' },
-  { src: '3.jpg',  style: 'object-position: 50%' },
-  { src: '4.jpg',  style: 'object-position: 42%' },
-  { src: '5.jpeg', style: 'object-position: 78%' },
-  { src: '6.jpeg', style: 'object-position: 40%' },
-  { src: '7.jpeg', style: 'object-position: 45%' },
-  { src: '8.jpeg', style: 'object-position: 52%' },
-  { src: '9.jpg',  style: 'object-position: 60% 30%' }
-];
+    { src: '1.jpeg', style: 'object-position: 39% 65%' },
+    { src: '2.jpg', style: 'object-position: 39%' },
+    { src: '3.jpg', style: 'object-position: 50%' },
+    { src: '4.jpg', style: 'object-position: 42%' },
+    { src: '5.jpeg', style: 'object-position: 78%' },
+    { src: '6.jpeg', style: 'object-position: 40%' },
+    { src: '7.jpeg', style: 'object-position: 45%' },
+    { src: '8.jpeg', style: 'object-position: 52%' },
+    { src: '9.jpg', style: 'object-position: 60% 30%' },
+  ];
 
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
@@ -112,6 +127,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
 
+  renderWeddingName() {
+    const groomName = localStorage.getItem('groomName') || 'Jakub';
+    const nameOrder = localStorage.getItem('nameOrder') || 'BJ';
+    if (nameOrder === 'JB') {
+      return `Wedding of Brooke & ${groomName}`;
+    } else {
+      return `Wedding of ${groomName} & Brooke`;
+    }
+  }
+
   scrollToContent() {
     const contentElement = this.el.nativeElement.querySelector('#content');
     if (contentElement) {
@@ -122,13 +147,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.randomSource = Math.floor(Math.random() * 9) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
-    // if (inviteCode) {
-    //   this.navItems.push({
-    //     name: 'Manage RSVP',
-    //     route: ['invite', inviteCode],
-    //     icon: 'mark_email_read',
-    //   });
-    // }
     this.customBakgroundCheck(inviteCode);
   }
 
@@ -140,7 +158,111 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  openSettings() {
+    this.dialog.open(SettingsDialogComponent, {});
+  }
+
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
+  }
+}
+
+@Component({
+  selector: 'settings-dialog',
+  template: `
+    <h2 mat-dialog-title>Settings</h2>
+    <mat-dialog-content>
+      <h3>Name Preference</h3>
+      <p>
+        Who the hell is Jakub? Who the hell is Kuba? Select the preferred name
+        that you know the groom by below
+      </p>
+      <form [formGroup]="namePreferenceForm">
+        <mat-chip-listbox formControlName="namePreference">
+          <mat-chip-option [value]="'J'" (click)="setNamePreference('Jakub')"
+            >Jakub</mat-chip-option
+          >
+          <mat-chip-option [value]="'K'" (click)="setNamePreference('Kuba')"
+            >Kuba</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </form>
+      <h3>Name Order</h3>
+      <p>Choose how you want the names to be displayed on the wedding page</p>
+      <form [formGroup]="nameOrderForm">
+        <mat-chip-listbox formControlName="nameOrder">
+          <mat-chip-option [value]="'JB'" (click)="setNameOrder('JB')"
+            >Brooke & {{ groom }}</mat-chip-option
+          >
+          <mat-chip-option [value]="'BJ'" (click)="setNameOrder('BJ')"
+            >{{ groom }} & Brooke</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </form>
+      <!-- <h3>Cancel Invite</h3>
+      <p>If you are no longer able to make it, click the button below</p> -->
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeDialog()">Close</button>
+    </mat-dialog-actions>
+  `,
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+  ],
+})
+export class SettingsDialogComponent {
+  private api = inject(ApiService);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  inviteAcceptFormGroup: FormGroup | undefined;
+  invite: InviteWithUsers | undefined;
+  loading = false;
+  groom = localStorage.getItem('groomName') || 'Jakub';
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  nameOrderForm = new FormGroup({
+    nameOrder: new FormControl<string>('BJ'),
+  });
+  namePreferenceForm = new FormGroup({
+    namePreference: new FormControl<string>('J'),
+  });
+
+  ngOnInit() {
+    let groomName = localStorage.getItem('groomName');
+    let nameOrder = localStorage.getItem('nameOrder');
+    if (groomName) {
+      if (groomName === 'Kuba') {
+        this.namePreferenceForm.controls.namePreference.setValue('K');
+      } else {
+        this.namePreferenceForm.controls.namePreference.setValue('J');
+      }
+    }
+    if (nameOrder) {
+      if (nameOrder === 'JB') {
+        this.nameOrderForm.controls.nameOrder.setValue('JB');
+      } else {
+        this.nameOrderForm.controls.nameOrder.setValue('BJ');
+      }
+    }
+  }
+
+  setNamePreference(name: string) {
+    this.groom = name;
+    localStorage.setItem('groomName', name);
+  }
+
+  setNameOrder(name: string) {
+    localStorage.setItem('nameOrder', name);
+  }
+
+  closeDialog() {
+    this.dialog.closeAll();
   }
 }
