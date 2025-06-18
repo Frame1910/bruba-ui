@@ -34,11 +34,11 @@
       {{ weddingName }}
     </h1>
   </div>
-  } @else { @switch (randomSource) { @case (1) {
+  } @else if (randomSource) {
   <img
-    src="1.jpeg"
+    [src]="randomImages[randomSource - 1].src"
     class="background-image"
-    style="object-position: 39% 65%"
+    [style]="randomImages[randomSource - 1].style"
     alt=""
   />
   <div
@@ -54,171 +54,7 @@
       {{ weddingName }}
     </h1>
   </div>
-  } @case (2) {
-  <img
-    src="2.jpg"
-    class="background-image"
-    style="object-position: 39%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @case (3) {
-  <img
-    src="3.jpg"
-    class="background-image"
-    style="object-position: 50%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1
-      [style.font-size]="isMobile() ? '2.5rem' : '5rem'"
-      class="name-title"
-      style="mix-blend-mode: difference"
-    >
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @case (4) {
-  <img
-    src="4.jpg"
-    class="background-image"
-    style="object-position: 42%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @case (5) {
-  <img
-    src="5.jpeg"
-    class="background-image"
-    style="object-position: 78%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @case (6) {
-  <img
-    src="6.jpeg"
-    class="background-image"
-    style="object-position: 40%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @case (7) {
-  <img
-    src="7.jpeg"
-    class="background-image"
-    style="object-position: 45%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @case (8) {
-  <img
-    src="8.jpeg"
-    class="background-image"
-    style="object-position: 52%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @case (9){
-  <img
-    src="9.jpg"
-    class="background-image"
-    style="object-position: 60% 30%"
-    alt=""
-  />
-  <div
-    style="
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    "
-  >
-    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
-      {{ weddingName }}
-    </h1>
-  </div>
-  } @default () { } } }
+  }
 </div>
 @if(isMobile()){
 <button

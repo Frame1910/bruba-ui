@@ -89,6 +89,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
   };
 
+  randomImages = [
+  { src: '1.jpeg', style: 'object-position: 39% 65%' },
+  { src: '2.jpg',  style: 'object-position: 39%' },
+  { src: '3.jpg',  style: 'object-position: 50%' },
+  { src: '4.jpg',  style: 'object-position: 42%' },
+  { src: '5.jpeg', style: 'object-position: 78%' },
+  { src: '6.jpeg', style: 'object-position: 40%' },
+  { src: '7.jpeg', style: 'object-position: 45%' },
+  { src: '8.jpeg', style: 'object-position: 52%' },
+  { src: '9.jpg',  style: 'object-position: 60% 30%' }
+];
+
   private readonly _mobileQuery: MediaQueryList;
   private readonly _mobileQueryListener: () => void;
   constructor(private el: ElementRef) {
