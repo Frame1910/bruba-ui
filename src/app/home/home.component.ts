@@ -1,3 +1,4 @@
+import { lastValueFrom } from 'rxjs';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import {
@@ -203,6 +204,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       </form>
       <!-- <h3>Cancel Invite</h3>
       <p>If you are no longer able to make it, click the button below</p> -->
+      @if(devMode) {
+      <h3>Developer Mode</h3>
+      <mat-chip (click)="resetInvite()">Reset Invite</mat-chip>
+      }
       <span
         style="
           position: absolute;
@@ -219,6 +224,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     <mat-dialog-actions align="end">
       <button mat-button (click)="closeDialog()">Close</button>
     </mat-dialog-actions>
+    @if (loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
   `,
   imports: [
     MatDialogModule,
@@ -234,12 +242,14 @@ export class SettingsDialogComponent {
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
   public version: string = packageJson.version;
+  private api = inject(ApiService);
   inviteAcceptFormGroup: FormGroup | undefined;
   invite: InviteWithUsers | undefined;
   loading = false;
   groom = localStorage.getItem('groomName') || 'Jakub';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  devMode = localStorage.getItem('devMode') || false;
 
   nameOrderForm = new FormGroup({
     nameOrder: new FormControl<string>('BJ'),
@@ -272,6 +282,14 @@ export class SettingsDialogComponent {
       });
   }
 
+  @HostListener('document:keydown', ['$event'])
+  handleDevKey(event: KeyboardEvent) {
+    if (event.key.toLowerCase() === 'd' && event.ctrlKey && event.altKey) {
+      this.devMode = !this.devMode;
+      localStorage.setItem('devMode', this.devMode ? 'true' : 'false');
+    }
+  }
+
   setNamePreference(name: string) {
     this.groom = name;
     localStorage.setItem('groomName', name);
@@ -279,6 +297,65 @@ export class SettingsDialogComponent {
 
   setNameOrder(name: string) {
     localStorage.setItem('nameOrder', name);
+  }
+
+  async resetInvite() {
+    this.loading = true;
+    console.log('Resetting invite');
+    const userStatus: Array<{ userId: string; status: string }> = [];
+    const userSCStatus: Array<{ userId: string; scstatus: string }> = [];
+    const code = localStorage.getItem('inviteCode');
+    if (!code) return;
+
+    // Use firstValueFrom to await observables in order
+    const invite = await this.api.getInvitees(code).toPromise();
+    this.invite = invite;
+    console.log('Invite data:', this.invite);
+
+    if (this.invite) {
+      for (const user of this.invite.UserInvite) {
+        console.log(user);
+        if (user.isPlusOne) {
+          await this.api
+            .deleteUserInvite(user.userId, user.inviteCode)
+            .toPromise();
+          console.log(
+            `Deleted ${user.user.firstName} from invite: ${user.inviteCode}`
+          );
+          await this.api.deleteUser(user.userId).toPromise();
+          console.log(`Deleted user: ${user.user.firstName}`);
+        } else {
+          const userData = {
+            id: user.userId,
+            email: '',
+            dietary: '',
+            allergies: '',
+          };
+          await this.api.updateUser(user.userId, userData).toPromise();
+          console.log(
+            `Reset user data for ${user.user.firstName} in invite: ${user.inviteCode}`
+          );
+          userStatus.push({
+            userId: user.userId,
+            status: 'PENDING',
+          });
+          userSCStatus.push({
+            userId: user.userId,
+            scstatus: 'PENDING',
+          });
+          console.log(userStatus);
+          console.log(userSCStatus);
+        }
+      }
+      await lastValueFrom(this.api.updateInviteStatuses(userStatus, code));
+      console.log('Reset invite statuses');
+      await lastValueFrom(
+        this.api.updateSportsCarnivalStatuses(userSCStatus, code)
+      );
+      console.log('Reset sports carnival statuses');
+      localStorage.removeItem('inviteCode');
+      window.location.reload();
+    }
   }
 
   closeDialog() {

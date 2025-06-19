@@ -29,7 +29,7 @@ export interface User {
   email: string;
   // status: string;
   // relation: string;
-  dietary: DietaryRestriction[];
+  dietary: string;
   allergies: string;
   createdAt?: string;
   updatedAt?: string;

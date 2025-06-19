@@ -159,12 +159,12 @@ export class AccommodationComponent {
     }
     console.log('Submitting address:', address);
     console.log('Submitting transport needs:', needsTransport);
-    const mockData: Invite = {
+    const accomData: Invite = {
       bustransport: needsTransport,
       address: address,
     };
     this.api
-      .updateInvite(this.inviteWithUsers?.code!, mockData)
+      .updateInvite(this.inviteWithUsers?.code!, accomData)
       .subscribe(() => {
         this.loading = false;
         this.submitted.emit();
