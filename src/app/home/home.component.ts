@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   customImage: string | undefined;
   customImageStyling: string | undefined;
   weddingName: string = 'Wedding of Jakub & Brooke';
+  minecraftMode = localStorage.getItem('minecraftMode') || false;
 
   CUSTOM_IMAGES: Record<string, { image: string; style: string }> = {
     '172449': {
@@ -165,6 +166,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dialog.open(SettingsDialogComponent, {});
   }
 
+  minecraftModeCheck() {
+    const minecraftMode = localStorage.getItem('minecraftMode');
+    if (minecraftMode === 'true') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
@@ -206,7 +216,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       <p>If you are no longer able to make it, click the button below</p> -->
       @if(devMode) {
       <h3>Developer Mode</h3>
-      <mat-chip (click)="resetInvite()">Reset Invite</mat-chip>
+      <span style="display: flex; flex-direction: row; gap: 0.5rem;">
+        <mat-chip (click)="resetInvite()">Reset Invite</mat-chip>
+        <mat-chip-option [selected]="minecraftMode" (click)="setMinecraftMode()"
+          >Minecraft Mode</mat-chip-option
+        >
+      </span>
       }
       <span
         style="
@@ -247,6 +262,7 @@ export class SettingsDialogComponent {
   invite: InviteWithUsers | undefined;
   loading = false;
   groom = localStorage.getItem('groomName') || 'Jakub';
+  minecraftMode = localStorage.getItem('minecraftMode') || false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
   devMode = localStorage.getItem('devMode') || false;
@@ -299,6 +315,14 @@ export class SettingsDialogComponent {
     localStorage.setItem('nameOrder', name);
   }
 
+  setMinecraftMode() {
+    this.minecraftMode = !this.minecraftMode;
+    localStorage.setItem(
+      'minecraftMode',
+      this.minecraftMode ? 'true' : 'false'
+    );
+  }
+
   async resetInvite() {
     this.loading = true;
     console.log('Resetting invite');
@@ -315,8 +339,8 @@ export class SettingsDialogComponent {
       for (const user of this.invite.UserInvite) {
         console.log(user);
         if (user.isPlusOne) {
-          await lastValueFrom(this.api
-            .deleteUserInvite(user.userId, user.inviteCode)
+          await lastValueFrom(
+            this.api.deleteUserInvite(user.userId, user.inviteCode)
           );
           console.log(
             `Deleted ${user.user.firstName} from invite: ${user.inviteCode}`
@@ -355,7 +379,7 @@ export class SettingsDialogComponent {
       const accomData: Invite = {
         bustransport: 'PENDING',
         address: '',
-      }
+      };
       await lastValueFrom(this.api.updateInvite(code, accomData));
       localStorage.removeItem('inviteCode');
       window.location.reload();
