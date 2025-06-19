@@ -69,4 +69,14 @@ export class ApiService {
       inviteData
     );
   }
+
+  deleteUserInvite(userId: string, inviteCode: string) {
+    return this.http.delete(
+      `${this.baseUrl}/user-invites/${inviteCode}/${userId}`
+    );
+  }
+
+  deleteUser(userId: string) {
+    return this.http.delete(`${this.baseUrl}/users/${userId}`);
+  }
 }
