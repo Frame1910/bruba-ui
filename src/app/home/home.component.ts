@@ -25,7 +25,7 @@ import {
 } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ApiService } from '../api.service';
-import { InviteWithUsers } from '../../types';
+import { Invite, InviteWithUsers } from '../../types';
 import { FormGroup, FormControl, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
@@ -195,10 +195,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       <form [formGroup]="nameOrderForm">
         <mat-chip-listbox formControlName="nameOrder">
           <mat-chip-option [value]="'JB'" (click)="setNameOrder('JB')"
-            >Brooke & {{ groom }}</mat-chip-option
+            >{{ groom }} & Jakub</mat-chip-option
           >
           <mat-chip-option [value]="'BJ'" (click)="setNameOrder('BJ')"
-            >{{ groom }} & Brooke</mat-chip-option
+            >Brooke & {{ groom }}</mat-chip-option
           >
         </mat-chip-listbox>
       </form>
@@ -307,8 +307,7 @@ export class SettingsDialogComponent {
     const code = localStorage.getItem('inviteCode');
     if (!code) return;
 
-    // Use firstValueFrom to await observables in order
-    const invite = await this.api.getInvitees(code).toPromise();
+    const invite = await lastValueFrom(this.api.getInvitees(code));
     this.invite = invite;
     console.log('Invite data:', this.invite);
 
@@ -316,13 +315,13 @@ export class SettingsDialogComponent {
       for (const user of this.invite.UserInvite) {
         console.log(user);
         if (user.isPlusOne) {
-          await this.api
+          await lastValueFrom(this.api
             .deleteUserInvite(user.userId, user.inviteCode)
-            .toPromise();
+          );
           console.log(
             `Deleted ${user.user.firstName} from invite: ${user.inviteCode}`
           );
-          await this.api.deleteUser(user.userId).toPromise();
+          await lastValueFrom(this.api.deleteUser(user.userId));
           console.log(`Deleted user: ${user.user.firstName}`);
         } else {
           const userData = {
@@ -331,7 +330,7 @@ export class SettingsDialogComponent {
             dietary: '',
             allergies: '',
           };
-          await this.api.updateUser(user.userId, userData).toPromise();
+          await lastValueFrom(this.api.updateUser(user.userId, userData));
           console.log(
             `Reset user data for ${user.user.firstName} in invite: ${user.inviteCode}`
           );
@@ -353,6 +352,11 @@ export class SettingsDialogComponent {
         this.api.updateSportsCarnivalStatuses(userSCStatus, code)
       );
       console.log('Reset sports carnival statuses');
+      const accomData: Invite = {
+        bustransport: 'PENDING',
+        address: '',
+      }
+      await lastValueFrom(this.api.updateInvite(code, accomData));
       localStorage.removeItem('inviteCode');
       window.location.reload();
     }
