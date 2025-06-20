@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   customImageStyling: string | undefined;
   weddingName: string = 'Wedding of Jakub & Brooke';
   minecraftMode = localStorage.getItem('minecraftMode') || false;
+  inviteCode = localStorage.getItem('inviteCode') || '';
 
   CUSTOM_IMAGES: Record<string, { image: string; style: string }> = {
     '172449': {

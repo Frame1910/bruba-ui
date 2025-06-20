@@ -8,6 +8,7 @@ import { OnboardingComponent } from './onboarding/onboarding.component';
 import { inviteCodeGuard } from './invite-code.guard';
 import { SadScreenComponent } from './sad-screen/sad-screen.component';
 import { FrogScreenComponent } from './frog-screen/frog-screen.component';
+import { RiceCookerComponent } from './rice-cooker/rice-cooker.component';
 
 export const appRoutes: Route[] = [
   {
@@ -45,6 +46,10 @@ export const appRoutes: Route[] = [
   {
     path: 'frog',
     component: FrogScreenComponent,
+  },
+  {
+    path: 'rice-cooker',
+    component: RiceCookerComponent
   },
   {
     path: '**',
