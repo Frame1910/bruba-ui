@@ -262,7 +262,7 @@ export class SettingsDialogComponent {
   invite: InviteWithUsers | undefined;
   loading = false;
   groom = localStorage.getItem('groomName') || 'Jakub';
-  minecraftMode = localStorage.getItem('minecraftMode') || false;
+  minecraftMode = localStorage.getItem('minecraftMode') === 'true';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
   devMode = localStorage.getItem('devMode') || false;
