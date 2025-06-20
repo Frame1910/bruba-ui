@@ -178,7 +178,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @HostListener('click', ['$event'])
   playClickNoise(event: MouseEvent) {
-    if (this.minecraftMode === 'true') {
+    if (localStorage.getItem('minecraftMode') === 'true') {
       const audio = new Audio('minecraft-mode/minecraft_click.mp3');
       audio.play();
     }
@@ -332,7 +332,7 @@ export class SettingsDialogComponent {
 
   @HostListener('click', ['$event'])
   playClickNoise(event: MouseEvent) {
-    if (this.minecraftMode) {
+    if (localStorage.getItem('minecraftMode') === 'true') {
       const audio = new Audio('minecraft-mode/minecraft_click.mp3');
       audio.play();
     }
