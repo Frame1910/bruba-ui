@@ -175,6 +175,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('click', ['$event'])
+  playClickNoise(event: MouseEvent) {
+    if (this.minecraftMode === 'true') {
+      const audio = new Audio('minecraft-mode/minecraft_click.mp3');
+      audio.play();
+    }
+  }
+
   ngOnDestroy(): void {
     this._mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
@@ -183,7 +191,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'settings-dialog',
   template: `
-    <h2 mat-dialog-title>Settings</h2>
+    <h2 (click)='onTitleTap()' mat-dialog-title>Settings</h2>
     <mat-dialog-content>
       <h3>Name Preference</h3>
       <p>
@@ -297,12 +305,35 @@ export class SettingsDialogComponent {
         this.version = pkg.version;
       });
   }
-
   @HostListener('document:keydown', ['$event'])
   handleDevKey(event: KeyboardEvent) {
     if (event.key.toLowerCase() === 'd' && event.ctrlKey && event.altKey) {
       this.devMode = !this.devMode;
       localStorage.setItem('devMode', this.devMode ? 'true' : 'false');
+    }
+  }
+
+  private tapCount = 0;
+  private tapTimeout: any;
+
+  onTitleTap() {
+    this.tapCount++;
+    if (this.tapCount === 3) {
+      this.devMode = !this.devMode;
+      localStorage.setItem('devMode', this.devMode ? 'true' : 'false');
+      this.tapCount = 0;
+    }
+    clearTimeout(this.tapTimeout);
+    this.tapTimeout = setTimeout(() => {
+      this.tapCount = 0;
+    }, 1000);
+  }
+
+  @HostListener('click', ['$event'])
+  playClickNoise(event: MouseEvent) {
+    if (this.minecraftMode) {
+      const audio = new Audio('minecraft-mode/minecraft_click.mp3');
+      audio.play();
     }
   }
 
