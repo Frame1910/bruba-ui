@@ -68,20 +68,20 @@ export class MainScreenComponent {
       const now = new Date();
       const diffMs =
         now.getTime() - new Date(this.invite.lastSeenAt!).getTime();
-      // update lastSeenAt and visits if more than 5 minutes have passed
-      // 5 minutes in milliseconds: 300000
       console.log('Time since last visit:', diffMs, 'ms');
       console.log('Last seen at:', this.invite.lastSeenAt);
       console.log('Invite visits:', this.invite.visits);
-      if (diffMs > 60000) {
+      // update lastSeenAt and visits if more than 5 minutes have passed
+      // 5 minutes in milliseconds: 300000
+      if (diffMs > 300000) {
         const { UserInvite, ...inviteWithoutUsers } = this.invite;
         inviteWithoutUsers.visits = (inviteWithoutUsers.visits ?? 0) + 1;
         inviteWithoutUsers.lastSeenAt = new Date();
         this.api
           .updateInvite(this.invite.code, inviteWithoutUsers as Invite)
           .subscribe(() => {
-        console.log('updated lastSeenAt', inviteWithoutUsers.lastSeenAt);
-        console.log('updated visit count', inviteWithoutUsers.visits);
+            console.log('updated lastSeenAt', inviteWithoutUsers.lastSeenAt);
+            console.log('updated visit count', inviteWithoutUsers.visits);
           });
       }
     }
