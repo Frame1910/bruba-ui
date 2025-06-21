@@ -52,10 +52,9 @@ export class MainScreenComponent {
       .pipe(
         switchMap((invite) => {
           this.invite = invite;
-          const lastSeenDate = new Date(this.invite.lastSeenAt!);
           const now = new Date();
-          const diffMs = now.getTime() - lastSeenDate.getTime();
-          if (diffMs < 5 * 60 * 1000) {
+          const diffMs = now.getTime() - new Date(this.invite.lastSeenAt!).getTime();
+          if (diffMs > 300000) {
             const { UserInvite, ...inviteWithoutUsers } = invite;
             inviteWithoutUsers.lastSeenAt = new Date();
             this.api
