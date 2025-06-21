@@ -19,6 +19,7 @@ export interface Invite {
   lastSeenAt?: Date;
   createdAt?: string;
   updatedAt?: string;
+  visits?: number;
 }
 
 export interface User {
@@ -45,6 +46,7 @@ export interface InviteWithUsers {
   address?: string;
   sportsCarnival?: boolean;
   UserInvite: UserInvite[];
+  visits?: number;
 }
 
 export interface UserInvite {

@@ -57,6 +57,7 @@ export class MainScreenComponent {
           if (diffMs > 300000) {
             const { UserInvite, ...inviteWithoutUsers } = invite;
             inviteWithoutUsers.lastSeenAt = new Date();
+            inviteWithoutUsers.visits = inviteWithoutUsers.visits! + 1;
             this.api
               .updateInvite(this.invite.code, inviteWithoutUsers as Invite)
               .subscribe();
