@@ -93,7 +93,6 @@ export class InviteSigninComponentComponent {
             this.invite.firstSeenAt = new Date();
             this.api.updateInvite(invite.code!, this.invite).subscribe();
           }
-          this.invite.lastSeenAt = new Date();
           this.api.updateInvite(invite.code!, this.invite).subscribe();
           this.loading = false;
           this.router.navigate(['/onboarding', this.codeControl.value]);
