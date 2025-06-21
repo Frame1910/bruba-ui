@@ -15,8 +15,8 @@ export interface Invite {
   sportsCarnival?: boolean;
   bustransport?: 'ACCEPTED' | 'DECLINED' | 'PENDING';
   address?: string;
-  firstSeenAt?: string;
-  lastSeenAt?: string;
+  firstSeenAt?: Date;
+  lastSeenAt?: Date;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -36,14 +36,14 @@ export interface User {
 }
 export interface InviteWithUsers {
   code: string;
-  allowPlusOne: boolean;
-  firstSeenAt: string;
-  lastSeenAt: string;
-  createdAt: string;
-  updatedAt: string;
+  allowPlusOne?: boolean;
+  firstSeenAt?: string;
+  lastSeenAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
   bustransport?: 'ACCEPTED' | 'DECLINED' | 'PENDING';
   address?: string;
-  sportsCarnival: boolean;
+  sportsCarnival?: boolean;
   UserInvite: UserInvite[];
 }
 
