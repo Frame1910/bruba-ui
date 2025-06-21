@@ -1,4 +1,4 @@
-import { DietaryRestriction, User, UserInvite } from './../../types';
+import { User, UserInvite } from './../../types';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { CommonModule } from '@angular/common';
 import { Component, Inject, inject, Input, OnInit } from '@angular/core';

@@ -60,4 +60,9 @@ export interface UserInvite {
   user: User;
 }
 
+export interface Metadata {
+  event: string;
+  dateTime: Date;
+}
+
 export type Theme = 'light' | 'dark';

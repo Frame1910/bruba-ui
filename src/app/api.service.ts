@@ -1,4 +1,4 @@
-import { User } from './../types';
+import { Metadata, User } from './../types';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invite, InviteWithUsers } from '../types';
@@ -78,5 +78,9 @@ export class ApiService {
 
   deleteUser(userId: string) {
     return this.http.delete(`${this.baseUrl}/users/${userId}`);
+  }
+
+  getMetadata() {
+    return this.http.get<Metadata[]>(`${this.baseUrl}/metadata`);
   }
 }
