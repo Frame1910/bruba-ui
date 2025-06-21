@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { InviteWithUsers } from '../../types';
+import { Invite, InviteWithUsers } from '../../types';
 import { ApiService } from '../api.service';
 import { AccommodationComponent } from './accommodation/accommodation.component';
 import { LocationComponent } from './location/location.component';
@@ -52,6 +52,16 @@ export class MainScreenComponent {
       .pipe(
         switchMap((invite) => {
           this.invite = invite;
+          const now = new Date();
+          const diffMs = now.getTime() - new Date(this.invite.lastSeenAt!).getTime();
+          if (diffMs > 300000) {
+            const { UserInvite, ...inviteWithoutUsers } = invite;
+            inviteWithoutUsers.lastSeenAt = new Date();
+            this.api
+              .updateInvite(this.invite.code, inviteWithoutUsers as Invite)
+              .subscribe();
+          }
+
           console.log('Invite data:', this.invite);
           return this.activatedRoute.queryParamMap;
         })
