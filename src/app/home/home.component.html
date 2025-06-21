@@ -5,8 +5,12 @@
       <span>Click here to buy us a rice cooker</span>
       <mat-icon>person_alert</mat-icon>
     </a>
-    }
-    @switch (themeService.currentTheme()) { @case ('dark') {
+    } @if (inviteCode === '717477') {
+    <a href="https://www.lego.com/en-au/product/the-lord-of-the-rings-rivendell-10316" target="_blank" class="button" mat-button>
+      <span>Brooke's Special Reuqest</span>
+      <mat-icon>person_alert</mat-icon>
+    </a>
+    } @switch (themeService.currentTheme()) { @case ('dark') {
     <button class="button" (click)="themeService.toggleTheme()" mat-icon-button>
       <mat-icon>dark_mode</mat-icon>
     </button>

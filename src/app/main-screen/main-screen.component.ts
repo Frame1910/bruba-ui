@@ -54,6 +54,7 @@ export class MainScreenComponent {
           this.invite = invite;
           const now = new Date();
           const diffMs = now.getTime() - new Date(this.invite.lastSeenAt!).getTime();
+          // update lastSeenAt and visits if more than 5 minutes have passed
           if (diffMs > 300000) {
             const { UserInvite, ...inviteWithoutUsers } = invite;
             inviteWithoutUsers.lastSeenAt = new Date();
