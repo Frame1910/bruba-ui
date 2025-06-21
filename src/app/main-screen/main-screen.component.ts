@@ -52,19 +52,8 @@ export class MainScreenComponent {
       .pipe(
         switchMap((invite) => {
           this.invite = invite;
-          const now = new Date();
-          const diffMs = now.getTime() - new Date(this.invite.lastSeenAt!).getTime();
-          // update lastSeenAt and visits if more than 5 minutes have passed
-          if (diffMs > 300000) {
-            const { UserInvite, ...inviteWithoutUsers } = invite;
-            inviteWithoutUsers.lastSeenAt = new Date();
-            inviteWithoutUsers.visits = inviteWithoutUsers.visits! + 1;
-            this.api
-              .updateInvite(this.invite.code, inviteWithoutUsers as Invite)
-              .subscribe();
-          }
-
           console.log('Invite data:', this.invite);
+          this.updateVisit();
           return this.activatedRoute.queryParamMap;
         })
       )
@@ -72,6 +61,30 @@ export class MainScreenComponent {
         this.currentTab = parseInt(params.get('tabIndex') || '0', 10);
         console.log('Current tab index:', this.currentTab);
       });
+  }
+
+  updateVisit() {
+    if (this.invite) {
+      const now = new Date();
+      const diffMs =
+        now.getTime() - new Date(this.invite.lastSeenAt!).getTime();
+      // update lastSeenAt and visits if more than 5 minutes have passed
+      // 5 minutes in milliseconds: 300000
+      console.log('Time since last visit:', diffMs, 'ms');
+      console.log('Last seen at:', this.invite.lastSeenAt);
+      console.log('Invite visits:', this.invite.visits);
+      if (diffMs > 60000) {
+        const { UserInvite, ...inviteWithoutUsers } = this.invite;
+        inviteWithoutUsers.visits = (inviteWithoutUsers.visits ?? 0) + 1;
+        inviteWithoutUsers.lastSeenAt = new Date();
+        this.api
+          .updateInvite(this.invite.code, inviteWithoutUsers as Invite)
+          .subscribe(() => {
+        console.log('updated lastSeenAt', inviteWithoutUsers.lastSeenAt);
+        console.log('updated visit count', inviteWithoutUsers.visits);
+          });
+      }
+    }
   }
 
   onAccommodationSubmitted() {
