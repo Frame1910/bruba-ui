@@ -51,7 +51,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (event.key === 'T') {
       this.themeService.toggleTheme();
     }
+    if (event.key === 'S') {
+      this.themeService.comicSansToggle();
+    }
   }
+
 
   protected readonly isMobile = signal(true);
   readonly themeService = inject(ThemeService);

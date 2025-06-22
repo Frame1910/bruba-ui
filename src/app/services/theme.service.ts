@@ -24,17 +24,25 @@ export class ThemeService {
       case 'light':
         this.document.documentElement.classList.add('light-mode');
         this.document.documentElement.classList.remove('dark-mode');
-        this.document.documentElement.classList.remove('dumb-mode');
         this.currentTheme.set('light');
         localStorage.setItem('theme', theme);
         break;
       case 'dark':
         this.document.documentElement.classList.add('dark-mode');
         this.document.documentElement.classList.remove('light-mode');
-        this.document.documentElement.classList.remove('dumb-mode');
         this.currentTheme.set('dark');
         localStorage.setItem('theme', theme);
         break;
+    }
+  }
+
+  comicSansToggle(){
+    if (this.document.documentElement.classList.contains('comic-sans-font')) {
+      this.document.documentElement.classList.remove('comic-sans-font');
+      localStorage.removeItem('comicSans');
+    } else {
+      this.document.documentElement.classList.add('comic-sans-font');
+      localStorage.setItem('comicSans', 'true');
     }
   }
 }
