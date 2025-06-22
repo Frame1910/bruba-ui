@@ -62,7 +62,7 @@ export interface UserInvite {
 
 export interface Metadata {
   event: string;
-  dateTime: Date;
+  datetime: Date;
 }
 
 export type Theme = 'light' | 'dark';

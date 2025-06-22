@@ -1,3 +1,4 @@
+@if (metadata){
 <main
   style="
     display: flex;
@@ -20,25 +21,38 @@
   </div>
   <mat-card class="center-card" appearance="raised" style="width: 400px">
     <mat-card-header>
-      <mat-card-title class='name-title'>{{renderWeddingName()}}</mat-card-title>
-      <mat-card-subtitle>22 November, 2025</mat-card-subtitle>
+      <mat-card-title class="name-title">{{
+        renderWeddingName()
+      }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ getWeddingDate() | date: 'fullDate' }}
+      </mat-card-subtitle>
     </mat-card-header>
-    <img
-      src="{{image}}"
-      alt="Wedding"
-      id="wedding-image">
+    <img src="{{ image }}" alt="Wedding" id="wedding-image" />
     <mat-card-content style="margin-top: 15px">
       <mat-form-field appearance="outline">
         <mat-label>Invite Code</mat-label>
-        <input style="text-align:center;" matInput type="tel" [formControl]="codeControl" (keyup.enter)="routeToInvite()" />
+        <input
+          style="text-align: center"
+          matInput
+          type="tel"
+          [formControl]="codeControl"
+          (keyup.enter)="routeToInvite()"
+        />
         <mat-error>Invalid Code</mat-error>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-flat-button [disabled]="codeControl.invalid" (click)="routeToInvite()">Submit</button>
+      <button
+        mat-flat-button
+        [disabled]="codeControl.invalid"
+        (click)="routeToInvite()"
+      >
+        Submit
+      </button>
     </mat-card-actions>
     <mat-card-footer>
-      <p style="text-align: center; color: #666; opacity: 0.7;">
+      <p style="text-align: center; color: #666; opacity: 0.7">
         You can find your invite code on the invitation card
       </p>
       @if (loading) {
@@ -46,7 +60,6 @@
       }
     </mat-card-footer>
   </mat-card>
-  <span class="version-number">
-    V{{ version }}
-  </span>
+  <span class="version-number"> V{{ version }} </span>
 </main>
+}

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invite, InviteWithUsers } from '../types';
 import { environment } from '../environments/environment';
+import { of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { environment } from '../environments/environment';
 export class ApiService {
   baseUrl = environment.apiUrl ?? 'http://localhost:3000/api';
   constructor(private http: HttpClient) {}
+  private metadataCache: Metadata[] | null = null;
 
   getInviteByCode(code: string) {
     return this.http.get<Invite>(`${this.baseUrl}/invites/${code}`);
@@ -78,6 +80,18 @@ export class ApiService {
 
   deleteUser(userId: string) {
     return this.http.delete(`${this.baseUrl}/users/${userId}`);
+  }
+
+  getMetadataCached() {
+    if (this.metadataCache) {
+      // Return cached metadata as an observable
+      return of(this.metadataCache);
+    } else {
+      // Fetch from API and cache it
+      return this.getMetadata().pipe(
+        tap((data) => (this.metadataCache = data))
+      );
+    }
   }
 
   getMetadata() {

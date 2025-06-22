@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { Invite } from '../../types';
+import { Invite, Metadata } from '../../types';
 import { ApiService } from '../api.service';
 import packageJson from '../../../package.json';
 import { ThemeService } from '../services/theme.service';
@@ -39,6 +39,7 @@ export class InviteSigninComponentComponent {
   themeService = inject(ThemeService);
   loading = false;
   public version: string = packageJson.version;
+  metadata: Metadata[] | null = null;
 
   codeControl = new FormControl<string>('', {
     nonNullable: true,
@@ -61,6 +62,9 @@ export class InviteSigninComponentComponent {
       .subscribe((pkg) => {
         this.version = pkg.version;
       });
+    this.api.getMetadataCached().subscribe((metadata) => {
+      this.metadata = metadata;
+    });
   }
 
   renderWeddingName() {
@@ -71,6 +75,10 @@ export class InviteSigninComponentComponent {
     } else {
       return `${groomName} & Brooke`;
     }
+  }
+
+  getWeddingDate() {
+    return this.metadata?.find(m => m.event === 'arriveByTime')?.datetime
   }
 
   routeToInvite() {
@@ -89,7 +97,7 @@ export class InviteSigninComponentComponent {
         console.log(invite);
         if (invite) {
           this.invite = invite;
-          if(!this.invite.firstSeenAt) {
+          if (!this.invite.firstSeenAt) {
             this.invite.firstSeenAt = new Date();
             this.api.updateInvite(invite.code!, this.invite).subscribe();
           }
