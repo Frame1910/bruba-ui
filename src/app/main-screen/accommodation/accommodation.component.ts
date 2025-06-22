@@ -27,7 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { DeviceService } from '../../services/device.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../api.service';
-import { Invite, InviteWithUsers } from '../../../types';
+import { Invite, InviteWithUsers, Metadata } from '../../../types';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 @Component({
   selector: 'app-accommodation',
@@ -50,6 +50,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 })
 export class AccommodationComponent {
   @Input() inviteWithUsers: InviteWithUsers | undefined;
+  @Input() metadata: Metadata[] | null = null;
   readonly deviceService = inject(DeviceService);
   private _snackbar = inject(MatSnackBar);
   private api = inject(ApiService);
@@ -134,6 +135,10 @@ export class AccommodationComponent {
       .join('.*?');
     const regex = new RegExp(`(${pattern})`, 'gi');
     return text.replace(regex, '<b>$1</b>');
+  }
+
+  getBusRSVPDate(){
+    return this.metadata?.find((m) => m.event === 'busTransportRSVPDue')?.datetime;
   }
 
   submitAddress() {

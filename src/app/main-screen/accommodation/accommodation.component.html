@@ -82,8 +82,10 @@
             the bus transport, please let us know where you will be staying. We
             will try our best to provide you transport, and will let you know if
             we are not able to accommodate as soon as we have more information.
-            Please let us know by the
-            <strong>end of July.</strong>
+            Please let us know
+            <strong
+              >by {{ getBusRSVPDate() | date : "MMMM d" : "UTC+8" }}.</strong
+            >
           </p>
           <div class="bus-transport">
             <mat-chip-listbox formControlName="needsTransportControl">
