@@ -1,5 +1,5 @@
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { environment } from '../../../environments/environment';
 import { DeviceService } from '../../services/device.service';
 import { ThemeService } from '../../services/theme.service';
+import { Metadata } from '../../../types';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-location',
@@ -24,6 +26,7 @@ import { ThemeService } from '../../services/theme.service';
     MatButtonModule,
     MatDividerModule,
     MatMenuModule,
+    DatePipe,
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss',
@@ -38,6 +41,7 @@ export class LocationComponent {
   weddingVenueName: string = environment.weddingVenueName;
   googleCalendarURL: string = environment.googleCalendarURL;
   outlookCalendarURL: string = environment.outlookCalendarURL;
+  @Input() metadata: Metadata[] | null = null;
 
   // Latitude & Longitude for the location
   center: google.maps.LatLngLiteral = {
@@ -63,5 +67,14 @@ export class LocationComponent {
       duration: 2000,
     });
     this.clipboard.copy(this.weddingAddress);
+  }
+
+  getArrivalTime() {
+    return this.metadata?.find((m) => m.event === 'arriveByTime')?.datetime;
+  }
+
+  getCeremonyTime() {
+    return this.metadata?.find((m) => m.event === 'ceremonyStartTime')
+      ?.datetime;
   }
 }

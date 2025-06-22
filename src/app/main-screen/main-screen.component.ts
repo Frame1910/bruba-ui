@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Invite, InviteWithUsers } from '../../types';
+import { Invite, InviteWithUsers, Metadata } from '../../types';
 import { ApiService } from '../api.service';
 import { AccommodationComponent } from './accommodation/accommodation.component';
 import { LocationComponent } from './location/location.component';
@@ -44,6 +44,7 @@ export class MainScreenComponent {
   currentTab: number = 0;
   accommodationSubmitted = false;
   sportsCarnivalSubmitted = false;
+  metadata: Metadata[] | null = null;
 
   ngOnInit() {
     const code = localStorage.getItem('inviteCode');
@@ -61,6 +62,9 @@ export class MainScreenComponent {
         this.currentTab = parseInt(params.get('tabIndex') || '0', 10);
         console.log('Current tab index:', this.currentTab);
       });
+    this.api.getMetadataCached().subscribe((metadata) => {
+      this.metadata = metadata;
+    });
   }
 
   updateVisit() {
