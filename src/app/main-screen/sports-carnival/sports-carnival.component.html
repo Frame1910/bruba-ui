@@ -33,8 +33,15 @@
           <mat-card-title class="title">Details</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <p><strong>Date:</strong> Wednesday, 19th March 2025</p>
-          <p><strong>Time:</strong> 4:00 PM - Late</p>
+          <p>
+            <strong>Date:</strong>
+            {{ getSportsCarnivalDate() | date : "EEEE, MMMM d" }}
+          </p>
+          <p>
+            <strong>Time:</strong>
+            {{ getSportsCarnivalStartTime() | date : "shortTime" : "UTC+8" }} -
+            {{ getSportsCarnivalEndTime() | date : "shortTime" : "UTC+8" }}
+          </p>
           <p><strong>Location:</strong> 23 Palladio Pass, Clarkson WA 6030</p>
           <p><strong>Dress Code:</strong> Comfortable sportswear and shoes</p>
         </mat-card-content>
@@ -81,8 +88,11 @@
         <form [formGroup]="sportsCarnivalForm!">
           <mat-card-content>
             <p>
-              Please RSVP by <strong>October 5th</strong>, to confirm your
-              attendance and house preference.
+              Please RSVP by
+              <strong>{{
+                getSportsCarnivalRSVPDate() | date : "EEEE, MMMM d"
+              }}</strong>
+              to confirm your attendance.
             </p>
             @for (invite of this.inviteWithUsers?.UserInvite; track invite){
             <div class="rsvp-form">

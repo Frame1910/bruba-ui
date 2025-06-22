@@ -1,4 +1,4 @@
-import { InviteWithUsers } from './../../../types';
+import { InviteWithUsers, Metadata } from './../../../types';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,6 +17,7 @@ import {
 import { ApiService } from '../../api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sports-carnival',
@@ -30,12 +31,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatDividerModule,
     ReactiveFormsModule,
     MatProgressBarModule,
+    DatePipe,
   ],
   templateUrl: './sports-carnival.component.html',
   styleUrl: './sports-carnival.component.scss',
 })
 export class SportsCarnivalComponent {
   @Input() inviteWithUsers: InviteWithUsers | undefined;
+  @Input() metadata: Metadata[] | null = null;
   private api = inject(ApiService);
   private _formBuilder = inject(FormBuilder);
   private _snackbar = inject(MatSnackBar);
@@ -65,6 +68,23 @@ export class SportsCarnivalComponent {
       this.sportsCarnivalForm = this._formBuilder.group(group);
       console.log(this.sportsCarnivalRSVP);
     }
+  }
+
+  getSportsCarnivalDate() {
+    return this.metadata?.find((m) => m.event === 'sportsCarnivalStartTime')
+      ?.datetime;
+  }
+  getSportsCarnivalStartTime() {
+    return this.metadata?.find((m) => m.event === 'sportsCarnivalStartTime')
+      ?.datetime;
+  }
+  getSportsCarnivalEndTime() {
+    return this.metadata?.find((m) => m.event === 'sportsCarnivalEndTime')
+      ?.datetime;
+  }
+  getSportsCarnivalRSVPDate() {
+    return this.metadata?.find((m) => m.event === 'sportsCarnivalRSVPDue')
+      ?.datetime;
   }
 
   sportsCarnivalRSVP() {
