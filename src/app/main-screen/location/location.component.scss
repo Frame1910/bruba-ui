@@ -7,7 +7,7 @@
 }
 
 .map-container {
-  width: 50%;
+  width: 45%;
   height: 100%;
   background: gray;
 }
@@ -20,14 +20,12 @@
 .card-container-top {
   display: flex;
   height: 50%;
-  margin: 0 auto;
   justify-content: center;
 }
 
 .card-container-bottom {
   display: flex;
   height: 50%;
-  margin: 0 auto;
   justify-content: center;
 }
 
@@ -44,7 +42,7 @@
 
 .details {
   padding: 0.5rem;
-  max-width: 30rem;
+  // max-width: 30rem;
   width: 50%;
 }
 
@@ -68,13 +66,6 @@
   object-fit: cover;
   max-height: 12rem;
   object-position: 0 70%;
-}
-
-.venue-title {
-  font-family: 'Ms Madi';
-  font-size: 3rem;
-  font-weight: 400;
-  padding-bottom: 1rem;
 }
 
 .venue-image {
