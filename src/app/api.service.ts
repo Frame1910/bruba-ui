@@ -1,10 +1,9 @@
-import { Metadata, User } from './../types';
+import { Metadata, TokenResponse, User } from './../types';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Invite, InviteWithUsers } from '../types';
 import { environment } from '../environments/environment';
 import { of, tap } from 'rxjs';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -12,6 +11,12 @@ export class ApiService {
   baseUrl = environment.apiUrl ?? 'http://localhost:3000/api';
   constructor(private http: HttpClient) {}
   private metadataCache: Metadata[] | null = null;
+
+  getToken(inviteCode: string) {
+    return this.http.post<TokenResponse>(`${this.baseUrl}/auth/login`, {
+      inviteCode: inviteCode,
+    });
+  }
 
   getInviteByCode(code: string) {
     return this.http.get<Invite>(`${this.baseUrl}/invites/${code}`);

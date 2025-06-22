@@ -66,3 +66,8 @@ export interface Metadata {
 }
 
 export type Theme = 'light' | 'dark';
+
+export interface TokenResponse {
+  access_token: string;
+  ttl: number;
+}
