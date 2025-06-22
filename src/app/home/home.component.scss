@@ -37,8 +37,12 @@
   left: 50%;
   bottom: 0;
   transform: translateX(-50%) scale(0.5);
-  transform: translateX(-50%) scale(0.5);
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    transform: translateX(-50%) scale(0.25);
+    bottom: -70px;
+  }
 }
 
 .minecraft-fist {
@@ -46,6 +50,9 @@
   left: 85%;
   bottom: 0;
   transform: translateX(-50%);
-  transform: translateX(-50%);
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
