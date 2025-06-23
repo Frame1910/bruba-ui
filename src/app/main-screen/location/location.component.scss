@@ -1,0 +1,124 @@
+.location-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - var(--mat-tab-height));
+}
+
+.map-container {
+  width: 45%;
+  height: 100%;
+  background: gray;
+}
+
+.cards-container {
+  height: 100%;
+  width: 50%;
+}
+
+.card-container-top {
+  display: flex;
+  height: 50%;
+  justify-content: center;
+}
+
+.card-container-bottom {
+  display: flex;
+  height: 50%;
+  justify-content: center;
+}
+
+.card-container-mobile {
+  width: 100vw;
+}
+
+.title {
+  font-family: 'Ms Madi';
+  font-size: 3rem;
+  font-weight: 400;
+  padding-bottom: 1rem;
+}
+
+.details {
+  padding: 0.5rem;
+  // max-width: 30rem;
+  width: 50%;
+}
+
+.details-bottom {
+  padding: 0.5rem;
+  max-width: 61rem;
+  width: 100%;
+}
+
+.details-mobile {
+  padding: 0.5rem;
+  height: 50%;
+  margin: 0 auto;
+}
+
+.card {
+  height: 100%;
+}
+
+.card-image-mobile {
+  object-fit: cover;
+  max-height: 12rem;
+  object-position: 0 70%;
+}
+
+.venue-image {
+  object-fit: cover;
+  height: 100%;
+  overflow: hidden;
+}
+
+.venue-name {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.venue-address {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.time-image {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 75%;
+  overflow: hidden;
+}
+
+.time-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time {
+  text-align: center;
+  margin: 11px;
+}
+
+.time-name {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.time-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.dress-code-image {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  overflow: hidden;
+}

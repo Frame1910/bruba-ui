@@ -1,0 +1,21 @@
+<main
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+  "
+>
+<img src="not-found.jpg" alt="404 Not Found" style="width: 50%; height: auto;" />
+  <h1>What</h1>
+  <p>How did you get here</p>
+  <p>
+    "{{ router.url }}" isint a thing
+  </p>
+  <p>
+    <button mat-button [routerLink]="['/app']">
+      Home <mat-icon>home</mat-icon>
+    </button>
+  </p>
+</main>

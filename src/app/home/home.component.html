@@ -1,0 +1,112 @@
+<div class="main-container">
+  <div class="theme-button-container">
+    @if (inviteCode === '840870') {
+    <a href="rice-cooker" class="button" mat-button>
+      <span>Click here to buy us a rice cooker</span>
+      <mat-icon>person_alert</mat-icon>
+    </a>
+    } @if (inviteCode === '717477') {
+    <a href="https://www.lego.com/en-au/product/the-lord-of-the-rings-rivendell-10316" target="_blank" class="button" mat-button>
+      <span>Brooke's Special Reuqest</span>
+      <mat-icon>person_alert</mat-icon>
+    </a>
+    } @switch (themeService.currentTheme()) { @case ('dark') {
+    <button class="button" (click)="themeService.toggleTheme()" mat-icon-button>
+      <mat-icon>dark_mode</mat-icon>
+    </button>
+    } @case ('light') {
+    <button class="button" (click)="themeService.toggleTheme()" mat-icon-button>
+      <mat-icon>light_mode</mat-icon>
+    </button>
+    }}
+    <button class="button" (click)="openSettings()" mat-icon-button>
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
+  @if (customImage) {
+  <img
+    src="{{ customImage }}"
+    class="background-image"
+    [style]="customImageStyling"
+    alt=""
+  />
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    "
+  >
+    <h1
+      [style.font-size]="isMobile() ? '2.5rem' : '5rem'"
+      style="font-weight: 400"
+      class="name-title"
+    >
+      {{ renderWeddingName() }}
+    </h1>
+  </div>
+  } @else if (randomSource) {
+  <img
+    [src]="randomImages[randomSource - 1].src"
+    class="background-image"
+    [style]="randomImages[randomSource - 1].style"
+    alt=""
+  />
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    "
+  >
+    <h1 [style.font-size]="isMobile() ? '2.5rem' : '5rem'" class="name-title">
+      {{ renderWeddingName() }}
+    </h1>
+  </div>
+  }
+</div>
+@if(isMobile()){
+<button
+  mat-raised-button
+  color="primary"
+  (click)="scrollToContent()"
+  style="
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  "
+>
+  <mat-icon>keyboard_arrow_down</mat-icon>
+  Wedding Details
+</button>
+} @else {
+<button
+  mat-raised-button
+  color="primary"
+  (click)="scrollToContent()"
+  style="
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  "
+>
+  <mat-icon>keyboard_arrow_down</mat-icon>
+  Wedding Details
+</button>
+}
+<div class="content-container" id="content">
+  <router-outlet></router-outlet>
+</div>
+
+@if (minecraftModeCheck()){
+<img src="minecraft-mode/toolbar.png" alt="" class="minecraft-toolbar" />
+<img src="minecraft-mode/Fist.png" alt="" class="minecraft-fist" />
+}

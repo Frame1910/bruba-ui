@@ -1,0 +1,73 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--mat-sys-surface);
+  }
+
+.step-label{
+  white-space: normal;
+}
+
+.card-container{
+  padding-bottom: 10px;
+  color: var(--mat-sys-on-surface)
+}
+
+.card-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: var(--mat-sys-on-surface);
+}
+
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.input-field{
+    padding-right: 10px;
+}
+
+.input-container{
+  padding-top: 10px;
+}
+
+.fit-content{
+  width: fit-content;
+  padding-bottom: 10px;
+}
+
+.name-title {
+  font-family: 'Ms Madi';
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--mat-sys-on-surface);
+}
+
+.user-summary-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5rem;
+  width: 100%;
+  @media (max-width: 600px) {
+    gap: 2rem;
+  }
+}
+
+.summary-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.summary-label {
+  min-width: 6rem;
+}

@@ -1,59 +1,73 @@
 export enum DietaryRestriction {
   VEGETARIAN,
   VEGAN,
+  PESCATARIAN,
   GLUTEN_FREE,
   DAIRY_FREE,
-  NUT_FREE,
-  SHELLFISH_FREE,
-  OTHER,
+  KOSHER,
+  HALAL,
   NONE,
 }
 
 export interface Invite {
-  code: string;
-  allowPlusOne: boolean;
-  firstSeenAt: string;
-  lastSeenAt: string;
-  createdAt: string;
-  updatedAt: string;
+  code?: string;
+  allowPlusOne?: boolean;
+  sportsCarnival?: boolean;
+  bustransport?: 'ACCEPTED' | 'DECLINED' | 'PENDING';
+  address?: string;
+  firstSeenAt?: Date;
+  lastSeenAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
+  visits?: number;
 }
 
 export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  mobile: string;
+  id?: string | undefined;
+  firstName?: string;
+  lastName?: string;
+  mobile?: string;
   email: string;
-  status: string;
-  relation: string;
-  dietary: DietaryRestriction[];
-  createdAt: string;
-  updatedAt: string;
+  // status: string;
+  // relation: string;
+  dietary: string;
+  allergies: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
-
-export interface UserInvite {
-  userId: string;
-  inviteCode: string;
-  isPlusOne: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface InviteWithUsers {
   code: string;
-  allowPlusOne: boolean;
-  firstSeenAt: string;
-  lastSeenAt: string;
-  createdAt: string;
-  updatedAt: string;
+  allowPlusOne?: boolean;
+  firstSeenAt?: string;
+  lastSeenAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
+  bustransport?: 'ACCEPTED' | 'DECLINED' | 'PENDING';
+  address?: string;
+  sportsCarnival?: boolean;
   UserInvite: UserInvite[];
+  visits?: number;
 }
 
 export interface UserInvite {
   userId: string;
   inviteCode: string;
   isPlusOne: boolean;
-  createdAt: string;
-  updatedAt: string;
+  scstatus: 'ACCEPTED' | 'DECLINED' | 'PENDING';
+  status: 'ACCEPTED' | 'DECLINED' | 'PENDING';
+  createdAt?: string;
+  updatedAt?: string;
   user: User;
+}
+
+export interface Metadata {
+  event: string;
+  datetime: Date;
+}
+
+export type Theme = 'light' | 'dark';
+
+export interface TokenResponse {
+  access_token: string;
+  ttl: number;
 }

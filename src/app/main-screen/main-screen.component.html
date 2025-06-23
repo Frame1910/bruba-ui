@@ -1,0 +1,37 @@
+@if (invite){
+<mat-tab-group [selectedIndex]="currentTab">
+  <mat-tab label="Wedding Details">
+    <app-location [metadata]="metadata"></app-location>
+  </mat-tab>
+
+  <mat-tab label="Accommodation">
+    <ng-template matTabLabel
+      ><span [matBadge]="checkAccomodationCompletion()" matBadgeOverlap="false"
+        >Accommodation</span
+      ></ng-template
+    >
+    <app-accommodation
+      [inviteWithUsers]="invite"
+      [metadata]="metadata"
+      (submitted)="onAccommodationSubmitted()"
+    ></app-accommodation>
+  </mat-tab>
+
+  @if (invite.sportsCarnival) {
+  <mat-tab label="Sports Carnival">
+    <ng-template matTabLabel
+      ><span
+        [matBadge]="checkSportsCarnivalCompletion()"
+        matBadgeOverlap="false"
+        >Sports Carnival</span
+      ></ng-template
+    >
+    <app-sports-carnival
+      [inviteWithUsers]="invite"
+      [metadata]="metadata"
+      (submitted)="onSportsCarnivalSubmitted()"
+    ></app-sports-carnival>
+  </mat-tab>
+  }
+</mat-tab-group>
+}

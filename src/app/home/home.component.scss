@@ -1,0 +1,58 @@
+.main-container {
+  height: 100vh;
+  overflow: hidden;
+}
+.content-container {
+  justify-content: center;
+  background: var(--mat-sys-surface);
+}
+
+.background-image {
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.name-title {
+  font-family: "Ms Madi";
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: white;
+}
+
+.theme-button-container {
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.button {
+  background-color: var(--mat-sys-surface);
+}
+
+.minecraft-toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) scale(0.5);
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    transform: translateX(-50%) scale(0.25);
+    bottom: -70px;
+  }
+}
+
+.minecraft-fist {
+  position: fixed;
+  left: 85%;
+  bottom: 0;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
