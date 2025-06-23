@@ -218,7 +218,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       <form [formGroup]="nameOrderForm">
         <mat-chip-listbox formControlName="nameOrder">
           <mat-chip-option [value]="'JB'" (click)="setNameOrder('JB')"
-            >{{ groom }} & Jakub</mat-chip-option
+            >{{ groom }} & Brooke</mat-chip-option
           >
           <mat-chip-option [value]="'BJ'" (click)="setNameOrder('BJ')"
             >Brooke & {{ groom }}</mat-chip-option
