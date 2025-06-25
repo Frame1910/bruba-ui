@@ -56,7 +56,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-
   protected readonly isMobile = signal(true);
   readonly themeService = inject(ThemeService);
   private dialog = inject(MatDialog);
@@ -68,49 +67,113 @@ export class HomeComponent implements OnInit, OnDestroy {
   minecraftMode = localStorage.getItem('minecraftMode') || false;
   inviteCode = localStorage.getItem('inviteCode') || '';
 
-  CUSTOM_IMAGES: Record<string, { image: string; style: string }> = {
-    '172449': {
-      image: 'custom-main/breejake.jpg',
-      style: 'object-position: 4%',
-    },
-    '778468': {
-      image: 'custom-main/arvin.jpeg',
-      style: 'object-position: 45% 10%',
-    },
-    '461467': {
-      image: 'custom-main/kacpershayla-2.jpg',
-      style: 'object-position: 36% 70%',
-    },
-    '998733': {
-      image: 'custom-main/dimmy.jpeg',
-      style: 'object-position: 90% 50%',
-    },
-    '759617': {
-      image: 'custom-main/ted.jpg',
-      style: 'object-position: 65% 40%',
-    },
-    '473811': {
-      image: 'custom-main/jaydenanabelle.jpg',
-      style: 'object-position: 40% 60%',
-    },
-    '717477': {
-      image: 'custom-main/marks.jpg',
-      style: 'object-position: 67% 70%',
-    },
-    '894131': {
-      //Parents
-      image: 'custom-main/antoniewicz.jpeg',
-      style: 'object-position: 50% 75%',
-    },
-    '505004': {
-      //Julia
-      image: 'custom-main/antoniewicz-2.jpg',
-      style: 'object-position: 50% 50%',
-    },
-    '575022': {
-      image: 'custom-main/dorotalukasz.jpg',
-      style: 'object-position: 70% 60%',
-    },
+  CUSTOM_IMAGES: Record<string, Array<{ image: string; style: string }>> = {
+    '172449': [
+      {
+        image: 'custom-main/breejake.jpg',
+        style: 'object-position: 4%',
+      },
+      {
+        image: 'custom-main/bree-board.jpg',
+        style: 'object-position: 50%',
+      },
+    ],
+    '778468': [
+      {
+        image: 'custom-main/arvin.jpeg',
+        style: 'object-position: 45% 10%',
+      },
+    ],
+    '461467': [
+      {
+        image: 'custom-main/kacpershayla-2.jpg',
+        style: 'object-position: 36% 70%',
+      },
+    ],
+    '998733': [
+      {
+        image: 'custom-main/dimmy.jpeg',
+        style: 'object-position: 90% 50%',
+      },
+    ],
+    '759617': [
+      {
+        image: 'custom-main/ted.jpg',
+        style: 'object-position: 65% 40%',
+      },
+    ],
+    '473811': [
+      {
+        image: 'custom-main/jaydenanabelle.jpg',
+        style: 'object-position: 40% 60%',
+      },
+    ],
+    '717477': [
+      {
+        image: 'custom-main/marks.jpg',
+        style: 'object-position: 67% 70%',
+      },
+      {
+        image: 'custom-main/marks-board.jpg',
+        style: 'object-position: 50%',
+      },
+    ],
+    //Parents
+    '894131': [
+      {
+        image: 'custom-main/antoniewicz.jpeg',
+        style: 'object-position: 50% 75%',
+      },
+      {
+        image: 'custom-main/anton-board.jpg',
+        style: 'object-position: 50% 50%',
+      },
+    ],
+    //Julia
+    '505004': [
+      {
+        image: 'custom-main/antoniewicz-2.jpg',
+        style: 'object-position: 50% 50%',
+      },
+      {
+        image: 'custom-main/anton-board.jpg',
+        style: 'object-position: 50% 50%',
+      },
+    ],
+    '575022': [
+      {
+        image: 'custom-main/dorotalukasz.jpg',
+        style: 'object-position: 70% 60%',
+      },
+      {
+        image: 'custom-main/dorislukasz-board.jpg',
+        style: 'object-position: 30% 70%',
+      },
+    ],
+    '245554': [
+      {
+        image: 'custom-main/jamestanieka-board.jpg',
+        style: 'object-position: 50% 50%',
+      },
+    ],
+    '134556': [
+      {
+        image: 'custom-main/darrenkara-board.jpg',
+        style: 'object-position: 50% 50%',
+      },
+    ],
+    '583715': [
+      {
+        image: 'custom-main/ashpatryk-board.jpg',
+        style: 'object-position: 50% 50%',
+      },
+    ],
+    '554135': [
+      {
+        image: 'custom-main/ashpatryk-board.jpg',
+        style: 'object-position: 50% 50%',
+      },
+    ],
   };
 
   randomImages = [
@@ -123,6 +186,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     { src: '7.jpeg', style: 'object-position: 45%' },
     { src: '8.jpeg', style: 'object-position: 52%' },
     { src: '9.jpg', style: 'object-position: 60% 30%' },
+    { src: 'board.jpg', style: 'object-position: 60% 30%' },
   ];
 
   private readonly _mobileQuery: MediaQueryList;
@@ -154,7 +218,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.randomSource = Math.floor(Math.random() * 9) + 1; // chooses random imgage
+    this.randomSource = Math.floor(Math.random() * 10) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
     this.customBakgroundCheck(inviteCode);
   }
@@ -162,8 +226,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   customBakgroundCheck(inviteCode: string | null) {
     const custom = inviteCode ? this.CUSTOM_IMAGES[inviteCode] : undefined;
     if (custom) {
-      this.customImage = custom.image;
-      this.customImageStyling = custom.style;
+      const randomIndex = Math.floor(Math.random() * custom.length);
+      this.customImageFlag = true;
+      this.customImage = custom[randomIndex].image;
+      this.customImageStyling = custom[randomIndex].style;
     }
   }
 
@@ -196,7 +262,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'settings-dialog',
   template: `
-    <h2 (click)='onTitleTap()' mat-dialog-title>Settings</h2>
+    <h2 (click)="onTitleTap()" mat-dialog-title>Settings</h2>
     <mat-dialog-content>
       <h3>Name Preference</h3>
       <p>
