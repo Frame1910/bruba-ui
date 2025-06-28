@@ -66,7 +66,7 @@ export class SportsCarnivalComponent {
         group[`${user.userId}`] = [chipStatus, Validators.required];
       }
       this.sportsCarnivalForm = this._formBuilder.group(group);
-      console.log(this.sportsCarnivalRSVP);
+      // console.log(this.sportsCarnivalRSVP);
     }
   }
 
@@ -92,12 +92,12 @@ export class SportsCarnivalComponent {
     const userIds: Array<{ userId: string; scstatus: string }> = [];
     for (let user in this.sportsCarnivalForm!.controls) {
       if (this.sportsCarnivalForm!.get(user)?.value === 'true') {
-        console.log('user accepted');
-        console.log(user);
+        // console.log('user accepted');
+        // console.log(user);
         userIds.push({ userId: user, scstatus: 'ACCEPTED' });
       } else {
-        console.log('user declined');
-        console.log(user);
+        // console.log('user declined');
+        // console.log(user);
         userIds.push({ userId: user, scstatus: 'DECLINED' });
       }
     }
@@ -106,7 +106,7 @@ export class SportsCarnivalComponent {
       .subscribe(() => {
         this.loading = false;
         this.submitted.emit();
-        console.log('request complete');
+        // console.log('request complete');
         this._snackbar.open(
           'Sports Carnival RSVP updated successfully!',
           'OK',

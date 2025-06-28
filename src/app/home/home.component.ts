@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
+import { Title } from '@angular/platform-browser';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -59,6 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected readonly isMobile = signal(true);
   readonly themeService = inject(ThemeService);
   private dialog = inject(MatDialog);
+  private titleService = inject(Title);
   randomSource: number | undefined;
   customImageFlag: boolean = false;
   customImage: string | undefined;
@@ -66,6 +68,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   weddingName: string = 'Wedding of Jakub & Brooke';
   minecraftMode = localStorage.getItem('minecraftMode') || false;
   inviteCode = localStorage.getItem('inviteCode') || '';
+
+  // Image cycling properties
+  allAvailableImages: Array<{ src: string; style: string; isCustom: boolean }> =
+    [];
+  currentImageIndex: number = 0;
+  isManualMode: boolean = false;
+  isTransitioning: boolean = false;
 
   CUSTOM_IMAGES: Record<string, Array<{ image: string; style: string }>> = {
     '172449': [
@@ -210,6 +219,97 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateTitle() {
+    const dynamicTitle = this.renderWeddingName();
+    this.titleService.setTitle(dynamicTitle);
+  }
+
+  setupAvailableImages(inviteCode: string | null) {
+    // Start with random images
+    this.allAvailableImages = this.randomImages.map((img) => ({
+      src: img.src,
+      style: img.style,
+      isCustom: false,
+    }));
+
+    // Add custom images if available
+    const customImages = inviteCode
+      ? this.CUSTOM_IMAGES[inviteCode]
+      : undefined;
+    if (customImages) {
+      const customImageObjects = customImages.map((img) => ({
+        src: img.image,
+        style: img.style,
+        isCustom: true,
+      }));
+      this.allAvailableImages = [
+        ...this.allAvailableImages,
+        ...customImageObjects,
+      ];
+    }
+
+    // Set initial index - will be updated after customBakgroundCheck runs
+    if (this.randomSource) {
+      this.currentImageIndex = this.randomSource - 1;
+    }
+  }
+
+  cycleImage() {
+    if (this.isTransitioning) return; // Prevent multiple clicks during transition
+
+    this.isManualMode = true;
+    this.isTransitioning = true;
+
+    // Fade out current image
+    const currentImageElement = document.querySelector(
+      '.background-image'
+    ) as HTMLElement;
+    if (currentImageElement) {
+      currentImageElement.style.opacity = '0';
+    }
+
+    // Wait for fade out, then change image and fade in
+    setTimeout(() => {
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.allAvailableImages.length;
+
+      const currentImage = this.allAvailableImages[this.currentImageIndex];
+
+      if (currentImage.isCustom) {
+        this.customImageFlag = true;
+        this.customImage = currentImage.src;
+        this.customImageStyling = currentImage.style;
+        this.randomSource = undefined;
+      } else {
+        this.customImageFlag = false;
+        this.customImage = undefined;
+        this.customImageStyling = undefined;
+        this.randomSource = this.currentImageIndex + 1;
+      }
+
+      // Wait for Angular to update the DOM, then fade in new image
+      setTimeout(() => {
+        const newImageElement = document.querySelector(
+          '.background-image'
+        ) as HTMLElement;
+        if (newImageElement) {
+          newImageElement.style.opacity = '1';
+        }
+        this.isTransitioning = false;
+      }, 50);
+    }, 300); // 300ms fade out duration
+  }
+
+  getCurrentImageInfo() {
+    if (this.allAvailableImages.length > 0) {
+      const current = this.allAvailableImages[this.currentImageIndex];
+      return `${this.currentImageIndex + 1} / ${
+        this.allAvailableImages.length
+      }`;
+    }
+    return '';
+  }
+
   scrollToContent() {
     const contentElement = this.el.nativeElement.querySelector('#content');
     if (contentElement) {
@@ -220,7 +320,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.randomSource = Math.floor(Math.random() * 10) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
+    this.setupAvailableImages(inviteCode);
     this.customBakgroundCheck(inviteCode);
+    this.updateTitle();
   }
 
   customBakgroundCheck(inviteCode: string | null) {
@@ -230,6 +332,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.customImageFlag = true;
       this.customImage = custom[randomIndex].image;
       this.customImageStyling = custom[randomIndex].style;
+
+      // Update current image index for cycling
+      this.currentImageIndex = this.allAvailableImages.findIndex(
+        (img) => img.src === this.customImage
+      );
+      if (this.currentImageIndex === -1) {
+        this.currentImageIndex = 0;
+      }
     }
   }
 
@@ -335,6 +445,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 export class SettingsDialogComponent {
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
+  private titleService = inject(Title);
   public version: string = packageJson.version;
   private api = inject(ApiService);
   inviteAcceptFormGroup: FormGroup | undefined;
@@ -411,10 +522,24 @@ export class SettingsDialogComponent {
   setNamePreference(name: string) {
     this.groom = name;
     localStorage.setItem('groomName', name);
+    this.updatePageTitle();
   }
 
   setNameOrder(name: string) {
     localStorage.setItem('nameOrder', name);
+    this.updatePageTitle();
+  }
+
+  private updatePageTitle() {
+    const groomName = localStorage.getItem('groomName') || 'Jakub';
+    const nameOrder = localStorage.getItem('nameOrder') || 'BJ';
+    let dynamicTitle;
+    if (nameOrder === 'BJ') {
+      dynamicTitle = `Wedding of Brooke & ${groomName}`;
+    } else {
+      dynamicTitle = `Wedding of ${groomName} & Brooke`;
+    }
+    this.titleService.setTitle(dynamicTitle);
   }
 
   setMinecraftMode() {
@@ -427,7 +552,7 @@ export class SettingsDialogComponent {
 
   async resetInvite() {
     this.loading = true;
-    console.log('Resetting invite');
+    // console.log('Resetting invite');
     const userStatus: Array<{ userId: string; status: string }> = [];
     const userSCStatus: Array<{ userId: string; scstatus: string }> = [];
     const code = localStorage.getItem('inviteCode');
@@ -435,20 +560,18 @@ export class SettingsDialogComponent {
 
     const invite = await lastValueFrom(this.api.getInvitees(code));
     this.invite = invite;
-    console.log('Invite data:', this.invite);
+    // console.log('Invite data:', this.invite);
 
     if (this.invite) {
       for (const user of this.invite.UserInvite) {
-        console.log(user);
+        // console.log(user);
         if (user.isPlusOne) {
           await lastValueFrom(
             this.api.deleteUserInvite(user.userId, user.inviteCode)
           );
-          console.log(
-            `Deleted ${user.user.firstName} from invite: ${user.inviteCode}`
-          );
+          // console.log(`Deleted ${user.user.firstName} from invite: ${user.inviteCode}`);
           await lastValueFrom(this.api.deleteUser(user.userId));
-          console.log(`Deleted user: ${user.user.firstName}`);
+          // console.log(`Deleted user: ${user.user.firstName}`);
         } else {
           const userData = {
             id: user.userId,
@@ -457,9 +580,7 @@ export class SettingsDialogComponent {
             allergies: '',
           };
           await lastValueFrom(this.api.updateUser(user.userId, userData));
-          console.log(
-            `Reset user data for ${user.user.firstName} in invite: ${user.inviteCode}`
-          );
+          // console.log(`Reset user data for ${user.user.firstName} in invite: ${user.inviteCode}`);
           userStatus.push({
             userId: user.userId,
             status: 'PENDING',
@@ -468,16 +589,16 @@ export class SettingsDialogComponent {
             userId: user.userId,
             scstatus: 'PENDING',
           });
-          console.log(userStatus);
-          console.log(userSCStatus);
+          // console.log(userStatus);
+          // console.log(userSCStatus);
         }
       }
       await lastValueFrom(this.api.updateInviteStatuses(userStatus, code));
-      console.log('Reset invite statuses');
+      // console.log('Reset invite statuses');
       await lastValueFrom(
         this.api.updateSportsCarnivalStatuses(userSCStatus, code)
       );
-      console.log('Reset sports carnival statuses');
+      // console.log('Reset sports carnival statuses');
       const accomData: Invite = {
         bustransport: 'PENDING',
         address: '',

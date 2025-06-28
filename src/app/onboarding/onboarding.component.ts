@@ -85,7 +85,7 @@ export class OnboardingComponent implements OnInit {
     if (this.invite$) {
       this.invite$.subscribe((invite) => {
         this.invite = invite;
-        console.log(invite);
+        // console.log(invite);
         if (this.checkInviteStatus(invite)) {
           const group: { [key: string]: any } = {};
           for (let index = 0; index < invite.UserInvite.length; index++) {
@@ -108,14 +108,14 @@ export class OnboardingComponent implements OnInit {
 
   checkInviteStatus(invite: InviteWithUsers) {
     if (invite.UserInvite.some((user) => user.status === 'ACCEPTED')) {
-      console.log('user acceptance detected');
+      // console.log('user acceptance detected');
       this.router.navigate(['/app']);
       return false;
     } else if (invite.UserInvite.some((user) => user.status === 'PENDING')) {
-      console.log('Onboarding valid');
+      // console.log('Onboarding valid');
       return true;
     } else {
-      console.log('invite was previously denied');
+      // console.log('invite was previously denied');
       this.router.navigate(['/declined']);
       return false;
     }
@@ -238,12 +238,12 @@ export class OnboardingComponent implements OnInit {
     this.loading = true;
     const userIds: Array<{ userId: string; status: string }> = [];
     for (let user in this.inviteAcceptFormGroup!.controls) {
-      console.log(this.inviteAcceptFormGroup!.get(user)?.value);
+      // console.log(this.inviteAcceptFormGroup!.get(user)?.value);
       if (
         this.inviteAcceptFormGroup!.get(user)?.value === 'True' &&
         !user.includes('plusOne')
       ) {
-        console.log(user);
+        // console.log(user);
         userIds.push({ userId: user, status: 'ACCEPTED' });
         const userData = {
           id: user,
@@ -263,8 +263,8 @@ export class OnboardingComponent implements OnInit {
         this.inviteAcceptFormGroup!.get(user)?.value === 'True' &&
         user.includes('plusOne')
       ) {
-        console.log('theres a plus one!');
-        console.log(this.additionalInfoFormGroup!.get(user));
+        // console.log('theres a plus one!');
+        // console.log(this.additionalInfoFormGroup!.get(user));
         const newUser: User = {
           id: user,
           firstName: this.additionalInfoFormGroup?.value[`${user}_name`],
@@ -281,17 +281,17 @@ export class OnboardingComponent implements OnInit {
           allergies: this.additionalInfoFormGroup?.value[`${user}_allergies`],
         };
         await lastValueFrom(this.api.createUser(newUser));
-        console.log('new user created');
+        // console.log('new user created');
         await lastValueFrom(
           this.api.addPlusOne(
             { userId: user, isPlusOne: true },
             this.invite!.code
           )
         );
-        console.log('plus one added to invite');
+        // console.log('plus one added to invite');
         userIds.push({ userId: user, status: 'ACCEPTED' });
-        console.log(userIds);
-        console.log('plus one set to accepted');
+        // console.log(userIds);
+        // console.log('plus one set to accepted');
       } else {
         if (
           this.inviteAcceptFormGroup!.get(user)?.value === 'False' &&
@@ -301,11 +301,11 @@ export class OnboardingComponent implements OnInit {
         }
       }
     }
-    console.log(userIds);
+    // console.log(userIds);
     await lastValueFrom(
       this.api.updateInviteStatuses(userIds, this.invite!.code)
     ).then(() => {
-      console.log('Invite statuses updated successfully');
+      // console.log('Invite statuses updated successfully');
       this.loading = false;
       this.router.navigate(['/app']);
     });
@@ -352,14 +352,14 @@ export class DeclineDialogComponent {
 
   declineInvite() {
     this.loading = true;
-    console.log('No users accepted the invite, marking them as declined');
+    // console.log('No users accepted the invite, marking them as declined');
     const userIds: string[] = [];
     for (let user in this.inviteAcceptFormGroup!.controls) {
       if (
         this.inviteAcceptFormGroup!.get(user)?.value === 'False' &&
         !user.includes('plusOne')
       ) {
-        console.log(user);
+        // console.log(user);
         userIds.push(user);
       }
     }
@@ -371,7 +371,7 @@ export class DeclineDialogComponent {
       .updateInviteStatuses(declinedStatuses, this.invite!.code)
       .subscribe((res) => {
         this.loading = false;
-        console.log('Invites declined successfully');
+        // console.log('Invites declined successfully');
         this.router.navigate(['/declined']);
       });
   }
