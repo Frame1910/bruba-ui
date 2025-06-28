@@ -96,11 +96,11 @@
   </button>
   } @else {
   <button
-    mat-fab
+    mat-mini-fab
     color="accent"
     (click)="cycleImage()"
     [disabled]="isTransitioning"
-    style="position: absolute; bottom: 20px; right: 20px; z-index: 1000"
+    style="position: absolute; bottom: 0.5rem; right: 0.5rem; z-index: 1000"
     title="{{
       isTransitioning
         ? 'Transitioning...'
