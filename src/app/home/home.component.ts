@@ -68,9 +68,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   weddingName: string = 'Wedding of Jakub & Brooke';
   minecraftMode = localStorage.getItem('minecraftMode') || false;
   inviteCode = localStorage.getItem('inviteCode') || '';
-  
+
   // Image cycling properties
-  allAvailableImages: Array<{ src: string; style: string; isCustom: boolean }> = [];
+  allAvailableImages: Array<{ src: string; style: string; isCustom: boolean }> =
+    [];
   currentImageIndex: number = 0;
   isManualMode: boolean = false;
   isTransitioning: boolean = false;
@@ -225,21 +226,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   setupAvailableImages(inviteCode: string | null) {
     // Start with random images
-    this.allAvailableImages = this.randomImages.map(img => ({
+    this.allAvailableImages = this.randomImages.map((img) => ({
       src: img.src,
       style: img.style,
-      isCustom: false
+      isCustom: false,
     }));
 
     // Add custom images if available
-    const customImages = inviteCode ? this.CUSTOM_IMAGES[inviteCode] : undefined;
+    const customImages = inviteCode
+      ? this.CUSTOM_IMAGES[inviteCode]
+      : undefined;
     if (customImages) {
-      const customImageObjects = customImages.map(img => ({
+      const customImageObjects = customImages.map((img) => ({
         src: img.image,
         style: img.style,
-        isCustom: true
+        isCustom: true,
       }));
-      this.allAvailableImages = [...this.allAvailableImages, ...customImageObjects];
+      this.allAvailableImages = [
+        ...this.allAvailableImages,
+        ...customImageObjects,
+      ];
     }
 
     // Set initial index - will be updated after customBakgroundCheck runs
@@ -250,22 +256,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   cycleImage() {
     if (this.isTransitioning) return; // Prevent multiple clicks during transition
-    
+
     this.isManualMode = true;
     this.isTransitioning = true;
-    
+
     // Fade out current image
-    const currentImageElement = document.querySelector('.background-image') as HTMLElement;
+    const currentImageElement = document.querySelector(
+      '.background-image'
+    ) as HTMLElement;
     if (currentImageElement) {
       currentImageElement.style.opacity = '0';
     }
-    
+
     // Wait for fade out, then change image and fade in
     setTimeout(() => {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.allAvailableImages.length;
-      
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.allAvailableImages.length;
+
       const currentImage = this.allAvailableImages[this.currentImageIndex];
-      
+
       if (currentImage.isCustom) {
         this.customImageFlag = true;
         this.customImage = currentImage.src;
@@ -277,10 +286,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.customImageStyling = undefined;
         this.randomSource = this.currentImageIndex + 1;
       }
-      
+
       // Wait for Angular to update the DOM, then fade in new image
       setTimeout(() => {
-        const newImageElement = document.querySelector('.background-image') as HTMLElement;
+        const newImageElement = document.querySelector(
+          '.background-image'
+        ) as HTMLElement;
         if (newImageElement) {
           newImageElement.style.opacity = '1';
         }
@@ -292,7 +303,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   getCurrentImageInfo() {
     if (this.allAvailableImages.length > 0) {
       const current = this.allAvailableImages[this.currentImageIndex];
-      return `${this.currentImageIndex + 1} / ${this.allAvailableImages.length}`;
+      return `${this.currentImageIndex + 1} / ${
+        this.allAvailableImages.length
+      }`;
     }
     return '';
   }
@@ -319,9 +332,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.customImageFlag = true;
       this.customImage = custom[randomIndex].image;
       this.customImageStyling = custom[randomIndex].style;
-      
+
       // Update current image index for cycling
-      this.currentImageIndex = this.allAvailableImages.findIndex(img => img.src === this.customImage);
+      this.currentImageIndex = this.allAvailableImages.findIndex(
+        (img) => img.src === this.customImage
+      );
       if (this.currentImageIndex === -1) {
         this.currentImageIndex = 0;
       }

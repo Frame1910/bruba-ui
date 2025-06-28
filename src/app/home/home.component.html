@@ -6,7 +6,12 @@
       <mat-icon>person_alert</mat-icon>
     </a>
     } @if (inviteCode === '717477') {
-    <a href="https://www.lego.com/en-au/product/the-lord-of-the-rings-rivendell-10316" target="_blank" class="button" mat-button>
+    <a
+      href="https://www.lego.com/en-au/product/the-lord-of-the-rings-rivendell-10316"
+      target="_blank"
+      class="button"
+      mat-button
+    >
       <span>Brooke's Special Reuqest</span>
       <mat-icon>person_alert</mat-icon>
     </a>
@@ -27,7 +32,9 @@
   <img
     src="{{ customImage }}"
     class="background-image"
-    [style]="customImageStyling + '; transition: opacity 0.3s ease-in-out; opacity: 1;'"
+    [style]="
+      customImageStyling + '; transition: opacity 0.3s ease-in-out; opacity: 1;'
+    "
     alt=""
   />
   <div
@@ -51,7 +58,10 @@
   <img
     [src]="randomImages[randomSource - 1].src"
     class="background-image"
-    [style]="randomImages[randomSource - 1].style + '; transition: opacity 0.3s ease-in-out; opacity: 1;'"
+    [style]="
+      randomImages[randomSource - 1].style +
+      '; transition: opacity 0.3s ease-in-out; opacity: 1;'
+    "
     alt=""
   />
   <div
@@ -68,7 +78,7 @@
     </h1>
   </div>
   }
-  
+
   <!-- Image cycling button - positioned within image container -->
   @if(isMobile()) {
   <button
@@ -76,15 +86,10 @@
     color="accent"
     (click)="cycleImage()"
     [disabled]="isTransitioning"
-    style="
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      z-index: 1000;
-    "
+    style="position: absolute; bottom: 16px; right: 16px; z-index: 1000"
     title="Cycle images"
   >
-    <mat-icon>{{ isTransitioning ? 'hourglass_empty' : 'image' }}</mat-icon>
+    <mat-icon>{{ isTransitioning ? "hourglass_empty" : "image" }}</mat-icon>
   </button>
   } @else {
   <button
@@ -92,15 +97,14 @@
     color="accent"
     (click)="cycleImage()"
     [disabled]="isTransitioning"
-    style="
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-    "
-    title="{{ isTransitioning ? 'Transitioning...' : 'Cycle through images (' + getCurrentImageInfo() + ')' }}"
+    style="position: absolute; bottom: 20px; right: 20px; z-index: 1000"
+    title="{{
+      isTransitioning
+        ? 'Transitioning...'
+        : 'Cycle through images (' + getCurrentImageInfo() + ')'
+    }}"
   >
-    <mat-icon>{{ isTransitioning ? 'hourglass_empty' : 'image' }}</mat-icon>
+    <mat-icon>{{ isTransitioning ? "hourglass_empty" : "image" }}</mat-icon>
   </button>
   }
 </div>
