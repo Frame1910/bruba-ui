@@ -552,7 +552,7 @@ export class SettingsDialogComponent {
 
   async resetInvite() {
     this.loading = true;
-    console.log('Resetting invite');
+    // console.log('Resetting invite');
     const userStatus: Array<{ userId: string; status: string }> = [];
     const userSCStatus: Array<{ userId: string; scstatus: string }> = [];
     const code = localStorage.getItem('inviteCode');
@@ -560,20 +560,18 @@ export class SettingsDialogComponent {
 
     const invite = await lastValueFrom(this.api.getInvitees(code));
     this.invite = invite;
-    console.log('Invite data:', this.invite);
+    // console.log('Invite data:', this.invite);
 
     if (this.invite) {
       for (const user of this.invite.UserInvite) {
-        console.log(user);
+        // console.log(user);
         if (user.isPlusOne) {
           await lastValueFrom(
             this.api.deleteUserInvite(user.userId, user.inviteCode)
           );
-          console.log(
-            `Deleted ${user.user.firstName} from invite: ${user.inviteCode}`
-          );
+          // console.log(`Deleted ${user.user.firstName} from invite: ${user.inviteCode}`);
           await lastValueFrom(this.api.deleteUser(user.userId));
-          console.log(`Deleted user: ${user.user.firstName}`);
+          // console.log(`Deleted user: ${user.user.firstName}`);
         } else {
           const userData = {
             id: user.userId,
@@ -582,9 +580,7 @@ export class SettingsDialogComponent {
             allergies: '',
           };
           await lastValueFrom(this.api.updateUser(user.userId, userData));
-          console.log(
-            `Reset user data for ${user.user.firstName} in invite: ${user.inviteCode}`
-          );
+          // console.log(`Reset user data for ${user.user.firstName} in invite: ${user.inviteCode}`);
           userStatus.push({
             userId: user.userId,
             status: 'PENDING',
@@ -593,16 +589,16 @@ export class SettingsDialogComponent {
             userId: user.userId,
             scstatus: 'PENDING',
           });
-          console.log(userStatus);
-          console.log(userSCStatus);
+          // console.log(userStatus);
+          // console.log(userSCStatus);
         }
       }
       await lastValueFrom(this.api.updateInviteStatuses(userStatus, code));
-      console.log('Reset invite statuses');
+      // console.log('Reset invite statuses');
       await lastValueFrom(
         this.api.updateSportsCarnivalStatuses(userSCStatus, code)
       );
-      console.log('Reset sports carnival statuses');
+      // console.log('Reset sports carnival statuses');
       const accomData: Invite = {
         bustransport: 'PENDING',
         address: '',

@@ -34,8 +34,8 @@ export class AuthService {
         localStorage.setItem('inviteCode', code);
         this.tokenExpiry = new Date(response.ttl + Date.now());
         localStorage.setItem('tokenExpiry', this.tokenExpiry.toISOString());
-        console.log('Token received and stored:', response.access_token);
-        console.log('Token expiry set to:', this.tokenExpiry);
+        // console.log('Token received and stored:', response.access_token);
+        // console.log('Token expiry set to:', this.tokenExpiry);
       })
     );
   }

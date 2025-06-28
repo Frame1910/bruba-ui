@@ -102,7 +102,7 @@ export class InviteSigninComponentComponent {
         })
       )
       .subscribe((invite) => {
-        console.log(invite);
+        // console.log(invite);
         if (invite) {
           this.invite = invite;
           if (!this.invite.firstSeenAt) {

@@ -123,7 +123,7 @@ export class AccommodationComponent {
       console.error('No address selected');
       return;
     }
-    console.log('Submitting address:', this.stayForm.value.addressControl);
+    // console.log('Submitting address:', this.stayForm.value.addressControl);
   }
 
   highlightMatch(text: string, query: string): string {
@@ -162,8 +162,8 @@ export class AccommodationComponent {
       default:
         needsTransport = 'PENDING';
     }
-    console.log('Submitting address:', address);
-    console.log('Submitting transport needs:', needsTransport);
+    // console.log('Submitting address:', address);
+    // console.log('Submitting transport needs:', needsTransport);
     const accomData: Invite = {
       bustransport: needsTransport,
       address: address,
@@ -173,7 +173,7 @@ export class AccommodationComponent {
       .subscribe(() => {
         this.loading = false;
         this.submitted.emit();
-        console.log('request complete');
+        // console.log('request complete');
         this._snackbar.open('Stay info updated successfully!', 'OK', {
           duration: 3000,
         });
