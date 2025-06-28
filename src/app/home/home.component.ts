@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterModule } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
+import { Title } from '@angular/platform-browser';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -59,6 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected readonly isMobile = signal(true);
   readonly themeService = inject(ThemeService);
   private dialog = inject(MatDialog);
+  private titleService = inject(Title);
   randomSource: number | undefined;
   customImageFlag: boolean = false;
   customImage: string | undefined;
@@ -210,6 +212,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateTitle() {
+    const dynamicTitle = this.renderWeddingName();
+    this.titleService.setTitle(dynamicTitle);
+  }
+
   scrollToContent() {
     const contentElement = this.el.nativeElement.querySelector('#content');
     if (contentElement) {
@@ -221,6 +228,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.randomSource = Math.floor(Math.random() * 10) + 1; // chooses random imgage
     const inviteCode = localStorage.getItem('inviteCode');
     this.customBakgroundCheck(inviteCode);
+    this.updateTitle();
   }
 
   customBakgroundCheck(inviteCode: string | null) {
@@ -335,6 +343,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 export class SettingsDialogComponent {
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
+  private titleService = inject(Title);
   public version: string = packageJson.version;
   private api = inject(ApiService);
   inviteAcceptFormGroup: FormGroup | undefined;
@@ -411,10 +420,24 @@ export class SettingsDialogComponent {
   setNamePreference(name: string) {
     this.groom = name;
     localStorage.setItem('groomName', name);
+    this.updatePageTitle();
   }
 
   setNameOrder(name: string) {
     localStorage.setItem('nameOrder', name);
+    this.updatePageTitle();
+  }
+
+  private updatePageTitle() {
+    const groomName = localStorage.getItem('groomName') || 'Jakub';
+    const nameOrder = localStorage.getItem('nameOrder') || 'BJ';
+    let dynamicTitle;
+    if (nameOrder === 'BJ') {
+      dynamicTitle = `Wedding of Brooke & ${groomName}`;
+    } else {
+      dynamicTitle = `Wedding of ${groomName} & Brooke`;
+    }
+    this.titleService.setTitle(dynamicTitle);
   }
 
   setMinecraftMode() {
