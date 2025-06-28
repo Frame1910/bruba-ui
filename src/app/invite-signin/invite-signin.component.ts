@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Invite, Metadata } from '../../types';
 import { ApiService } from '../api.service';
 import packageJson from '../../../package.json';
@@ -36,6 +37,7 @@ export class InviteSigninComponentComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
   private api = inject(ApiService);
+  private titleService = inject(Title);
   themeService = inject(ThemeService);
   loading = false;
   public version: string = packageJson.version;
@@ -65,6 +67,7 @@ export class InviteSigninComponentComponent {
     this.api.getMetadataCached().subscribe((metadata) => {
       this.metadata = metadata;
     });
+    this.updateTitle();
   }
 
   renderWeddingName() {
@@ -75,6 +78,11 @@ export class InviteSigninComponentComponent {
     } else {
       return `${groomName} & Brooke`;
     }
+  }
+
+  updateTitle() {
+    const dynamicTitle = `Wedding of ${this.renderWeddingName()}`;
+    this.titleService.setTitle(dynamicTitle);
   }
 
   getWeddingDate() {
