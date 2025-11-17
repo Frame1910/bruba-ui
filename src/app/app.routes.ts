@@ -9,6 +9,7 @@ import { inviteCodeGuard } from './invite-code.guard';
 import { SadScreenComponent } from './sad-screen/sad-screen.component';
 import { FrogScreenComponent } from './frog-screen/frog-screen.component';
 import { RiceCookerComponent } from './rice-cooker/rice-cooker.component';
+import { WishingWellComponent } from './wishing-well/wishing-well.component';
 
 export const appRoutes: Route[] = [
   {
@@ -50,6 +51,10 @@ export const appRoutes: Route[] = [
   {
     path: 'rice-cooker',
     component: RiceCookerComponent
+  },
+  {
+    path: 'wishing-well',
+    component: WishingWellComponent
   },
   {
     path: '**',
