@@ -1,0 +1,35 @@
+<main style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+  ">
+    <p style="font-family: 'Ms Madi'; font-size: 3.5rem; margin-bottom: 1rem;">Thank You</p>
+    <p>Your presence at our wedding is enough.</p>
+    <span style="text-align: center;">If you still want to contribute to the next chapter of our lives, here are our
+        bank details:</span>
+    <br>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <p></p>
+        <span><b>Account Name</b></span>
+        <span matRipple (click)="copySnackbar('Jakub Antoniewicz', 'Name')">Jakub Antoniewicz</span> or<span matRipple
+            (click)="copySnackbar('Brooke Marks', 'Name')"> Brooke Marks</span>
+        <p></p>
+        <span><b>BSB</b></span>
+        <span matRipple (click)="copySnackbar('182182', 'BSB')">182-182</span>
+        <p></p>
+        <span><b>Account Number</b></span>
+        <span matRipple (click)="copySnackbar('030702716', 'Account number')">030702716</span>
+    </div>
+    <p>
+        <button mat-button
+            (click)="copySnackbar('Account Name: Jakub Antoniewicz, BSB: 182182, Account Number: 030702716', 'Bank details')">
+            Copy Details <mat-icon>content_copy</mat-icon>
+        </button>
+    </p>
+
+    <p class="sign-off">
+        {{ renderName() }}
+    </p>
+</main>
